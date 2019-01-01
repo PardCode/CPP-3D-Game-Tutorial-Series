@@ -1,6 +1,5 @@
 #include "GraphicsEngine.h"
-#include "SwapChain.h"
-#include "DeviceContext.h"
+
 
 GraphicsEngine::GraphicsEngine()
 {
