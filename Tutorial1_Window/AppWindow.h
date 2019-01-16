@@ -6,8 +6,7 @@
 class AppWindow: public Window
 {
 public:
-	AppWindow();
-	~AppWindow();
+	AppWindow() = default;
 
 	// Inherited via Window
 	virtual void onCreate() override;

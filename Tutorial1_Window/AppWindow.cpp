@@ -1,16 +1,6 @@
 #include "AppWindow.h"
 
 
-
-AppWindow::AppWindow()
-{
-}
-
-
-AppWindow::~AppWindow()
-{
-}
-
 void AppWindow::onCreate()
 {
 	Window::onCreate();

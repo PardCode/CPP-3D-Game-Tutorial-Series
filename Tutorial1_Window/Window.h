@@ -6,12 +6,9 @@
 class Window
 {
 public:
-	Window();
 	//Initialize the window
-	bool init();
-	bool broadcast();
-	//Release the window
-	bool release();
+	Window();
+	void broadcast();
 	bool isRun();
 
 	//EVENTS
@@ -19,10 +16,11 @@ public:
 	virtual void onUpdate();
 	virtual void onDestroy();
 
-
+	//Release the window
 	~Window();
 protected:
-	HWND m_hwnd;
-	bool m_is_run;
+	HWND m_hwnd = nullptr;
+	//set this flag to true to indicate that the window is initialized and running
+	bool m_is_run = true;
 };
 
