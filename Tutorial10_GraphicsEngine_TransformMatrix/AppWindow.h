@@ -39,8 +39,8 @@ private:
 	PixelShader* m_ps;
 	ConstantBuffer* m_cb;
 private:
-	float m_old_delta;
-	float m_new_delta;
+	long m_old_delta;
+	long m_new_delta;
 	float m_delta_time;
 
 	float m_delta_pos;
