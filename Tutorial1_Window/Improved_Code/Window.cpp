@@ -16,6 +16,11 @@
 LRESULT CALLBACK WndProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam );
 Window::Window()
 {
+
+}
+
+bool Window::init()
+{	
 	//Setting up WNDCLASSEX object
 	WNDCLASSEX wc{}; // Using {} to initialize a struct sets all fields to 0 in C++
 	wc.cbSize = sizeof( WNDCLASSEX );
@@ -60,6 +65,7 @@ Window::Window()
 
 	//show up the window
 	ShowWindow( m_hwnd, SW_SHOW );
+	return true;
 }
 
 

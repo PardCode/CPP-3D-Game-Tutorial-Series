@@ -19,9 +19,12 @@ int main()
 	try
 	{
 		AppWindow app;
-		while( app.isRun() )
+		if (app.init())
 		{
-			app.broadcast();
+			while (app.isRun())
+			{
+				app.broadcast();
+			}
 		}
 	}
 	catch( const std::runtime_error& error )

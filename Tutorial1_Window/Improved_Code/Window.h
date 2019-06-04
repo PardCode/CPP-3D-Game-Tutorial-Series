@@ -20,6 +20,7 @@ class Window
 public:
 	//Initialize the window
 	Window();
+	bool init();
 	void broadcast();
 	bool isRun();
 
