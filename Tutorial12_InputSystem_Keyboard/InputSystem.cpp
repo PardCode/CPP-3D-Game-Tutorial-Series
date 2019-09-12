@@ -33,11 +33,11 @@ void InputSystem::update()
 			// KEY IS DOWN
 			if (m_keys_state[i] & 0x80)
 			{
-				std::map<InputListener*, InputListener*>::iterator it = m_map_listeners.begin();
+				std::unordered_set<InputListener*>::iterator it = m_set_listeners.begin();
 
-				while (it != m_map_listeners.end())
+				while (it != m_set_listeners.end())
 				{
-					it->second->onKeyDown(i);
+					(*it)->onKeyDown(i);
 					++it;
 				}
 			}
@@ -45,11 +45,11 @@ void InputSystem::update()
 			{
 				if (m_keys_state[i] != m_old_keys_state[i])
 				{
-					std::map<InputListener*, InputListener*>::iterator it = m_map_listeners.begin();
+					std::unordered_set<InputListener*>::iterator it = m_set_listeners.begin();
 
-					while (it != m_map_listeners.end())
+					while (it != m_set_listeners.end())
 					{
-						it->second->onKeyUp(i);
+						(*it)->onKeyUp(i);
 						++it;
 					}
 				}
@@ -64,18 +64,12 @@ void InputSystem::update()
 
 void InputSystem::addListener(InputListener * listener)
 {
-	m_map_listeners.insert(std::make_pair<InputListener *, InputListener *>
-		(std::forward<InputListener *>(listener), std::forward<InputListener *>(listener)));
+	m_set_listeners.insert(listener);
 }
 
 void InputSystem::removeListener(InputListener * listener)
 {
-	std::map<InputListener*, InputListener*>::iterator it = m_map_listeners.find(listener);
-
-	if (it != m_map_listeners.end())
-	{
-		m_map_listeners.erase(it);
-	}
+	m_set_listeners.erase(listener);
 }
 
 InputSystem * InputSystem::get()
