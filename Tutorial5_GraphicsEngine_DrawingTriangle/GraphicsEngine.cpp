@@ -119,7 +119,7 @@ bool GraphicsEngine::setShaders()
 void GraphicsEngine::getShaderBufferAndSize(void ** bytecode, UINT * size)
 {
 	*bytecode = this->m_vsblob->GetBufferPointer();
-	*size = this->m_vsblob->GetBufferSize();
+	*size = (UINT)this->m_vsblob->GetBufferSize();
 }
 
 GraphicsEngine * GraphicsEngine::get()
