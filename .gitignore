@@ -86,6 +86,8 @@ StyleCopReport.xml
 *.svclog
 *.scc
 
+!Assets/Meshes/*.obj
+
 # Chutzpah Test files
 _Chutzpah*
 
