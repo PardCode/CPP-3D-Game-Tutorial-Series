@@ -1,4 +1,4 @@
-![](Media/banner_github.png)
+![](Media/cpp3dgame-showcase.jpg)
 
 ![CPP11](https://img.shields.io/badge/C++->=11-blue)
 [![TutorialNumber](https://img.shields.io/badge/NumberOfTutorials-30-blue)]()
@@ -19,7 +19,7 @@ to the making of all the necessary sub-systems in order to achieve a 3D Game Dem
 - Phong-Based Lighting</br>
 
 ---
-![](Media/cpp3dgame-showcase.jpg)
+![](Media/banner_github.png)
 ---
 
 
