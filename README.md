@@ -6,23 +6,22 @@
 [![Patreon](https://img.shields.io/badge/Patreon-Donate-orange)](https://www.patreon.com/pardcode)
 [![YouTube](https://img.shields.io/badge/YouTube-Subscribe-red)](https://www.youtube.com/channel/UCs1ssVSR49YItKE7DZ3-Jcw)
 
-[`C++ 3D Game Tutorial Series`](https://www.youtube.com/playlist?list=PLv8DnRaQOs5-ST_VDqgbbMRtzMtpK36Hy) is a YouTube Tutorial Series,</br>
+[`C++ 3D Game Tutorial Series`](https://www.youtube.com/playlist?list=PLv8DnRaQOs5-ST_VDqgbbMRtzMtpK36Hy) is a YouTube Tutorial Series</br>
 whose purpose is to help all those who want to take their first steps in the game development from scratch.</br>
-In this series you'll learn how to create a 3D Game Demo, starting from the creation of a Window by using Win32 API</br>
-to the making of all the necessary sub-systems in order to achieve a 3D Game Demo, like</br>
+The tutorial series allows to learn how to design and implement a C++ 3D Game and its subsystems: 
 
-- DirectX 3D Graphics Engine</br>
-- Windowing System</br>
+- 3D Graphics Engine, by using DirectX 11 Graphics API</br>
+- Windowing System, by using Win32 API</br>
 - Input System</br>
 - Entity System</br>
 - Forward Rendering</br>
 - Phong-Based Lighting</br>
 
-This repository is subdivided in 3 branches:</br>
+The **C++ 3D Game Tutorial Series** repository is **subdivided in 3 branches**:</br>
 
-- master: it contains the source code of the C++ DirectX 3D Game written during the tutorial series (with further improvements),</br>
-- AllTutorials: it contains the source code of each tutorial of the YouTube Tutorial Series,</br>
-- AssetsAndLibs: it contains the assets and libs necessary to complete the tutorial series</br>
+- **master**: it contains the source code of the C++ DirectX 3D Game written during the tutorial series (with further improvements),</br>
+- **AllTutorials**: it contains the source code of each tutorial of the YouTube Tutorial Series,</br>
+- **AssetsAndLibs**: it contains the assets and libs necessary to complete the tutorial series</br>
 
 ---
 ![](Media/banner_github.png)
