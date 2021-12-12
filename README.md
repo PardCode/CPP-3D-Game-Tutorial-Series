@@ -18,6 +18,12 @@ to the making of all the necessary sub-systems in order to achieve a 3D Game Dem
 - Forward Rendering</br>
 - Phong-Based Lighting</br>
 
+This repository is subdivided in 3 branches:</br>
+
+- master: it contains the source code of the C++ DirectX 3D Game written during the tutorial series (with further improvements),</br>
+- AllTutorials: it contains the source code of each tutorial of the YouTube Tutorial Series,</br>
+- AssetsAndLibs: it contains the assets and libs necessary to complete the tutorial series</br>
+
 ---
 ![](Media/banner_github.png)
 ---
