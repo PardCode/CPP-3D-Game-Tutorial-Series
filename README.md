@@ -58,9 +58,9 @@ Matthew - Miles H. - Mohammed A. - Murdo M. - Nikhil R. - Neil W. - Oliver H. - 
 REX Li - Robson - Snip - Squeegiefilms - Tentacle Princess - The Spygineer - The Tutorial Chef - TheDevUK - Tim. A. - Tom L.<br/>
 Valgard - Werner O. - WyattFlash<br/>
 
-**All YouTube, Discord, GitHub, Twitter followers and viewers** 
+**All YouTube - Discord - GitHub - Twitter - Facebook followers and viewers**  
 
-P.S.: If you are a Patron and you want to be added or removed from this list,
+P.S.: If you are a Patron and you want to be added/removed to/from this list,
 please send a message to PardCode through Patreon.
 
 # License
