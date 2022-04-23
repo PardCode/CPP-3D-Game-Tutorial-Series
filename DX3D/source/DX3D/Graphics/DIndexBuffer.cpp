@@ -22,40 +22,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#include <DX3D/Graphics/DIndexBuffer.h>
+#include <DX3D/Graphics/DGraphicsEngine.h>
+#include <stdexcept>
 
-Projectile::Projectile()
+DIndexBuffer::DIndexBuffer(void* list_indices, ui32 size_list, DGraphicsEngine * system) : m_system(system) , m_buffer(0)
 {
+	D3D11_BUFFER_DESC buff_desc = {};
+	buff_desc.Usage = D3D11_USAGE_DEFAULT;
+	buff_desc.ByteWidth = 4 * size_list;
+	buff_desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	buff_desc.CPUAccessFlags = 0;
+	buff_desc.MiscFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA init_data = {};
+	init_data.pSysMem = list_indices;
+
+	m_size_list = size_list;
+
+	if (FAILED(m_system->m_d3dDevice->CreateBuffer(&buff_desc, &init_data, &m_buffer)))
+		throw std::runtime_error("DIndexBuffer not created successfully");
 	
 }
 
-Projectile::~Projectile()
+
+ui32 DIndexBuffer::getSizeIndexList()
 {
+	return this->m_size_list;
 }
 
-void Projectile::onCreate()
-{
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
-}
-
-void Projectile::onUpdate(f32 deltaTime)
-{
-	m_elapsed += deltaTime;
-
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
-}

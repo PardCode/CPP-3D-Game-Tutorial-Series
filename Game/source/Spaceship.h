@@ -25,12 +25,13 @@ SOFTWARE.*/
 #pragma once
 #include <DX3D/All.h>
 
-class Spaceship: public Entity
+class Spaceship: public DMeshEntity
 {
 public:
-	Spaceship(Game* game);
+	Spaceship();
 	~Spaceship();
 
+	virtual void onCreate();
 	virtual void onUpdate(f32 deltaTime);
 
 private:
@@ -53,6 +54,6 @@ private:
 	f32 m_cam_distance = 18.0f;
 
 
-	Camera* m_camera = nullptr;
+	DCameraEntity* m_camera = nullptr;
 };
 

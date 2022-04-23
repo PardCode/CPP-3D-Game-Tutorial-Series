@@ -22,40 +22,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#pragma once
+#include <DX3D/Math/DVec3.h>
+#include <DX3D/Math/DVec2.h>
 
-Projectile::Projectile()
+class DVertexMesh
 {
-	
-}
-
-Projectile::~Projectile()
-{
-}
-
-void Projectile::onCreate()
-{
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
-}
-
-void Projectile::onUpdate(f32 deltaTime)
-{
-	m_elapsed += deltaTime;
-
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
+public:
+	DVertexMesh() :m_position(), m_texcoord(),m_normal()
 	{
-		release();
 	}
-}
+	DVertexMesh(const DVec3& position, const DVec2& texcoord, const DVec3& normal, 
+		const DVec3& tangent, const DVec3& binormal) :
+		m_position(position), 
+		m_texcoord(texcoord),
+		m_normal(normal),
+		m_tangent(tangent),
+		m_binormal(binormal)
+	{
+	}
+	DVertexMesh(const DVertexMesh& vertex) :
+		m_position(vertex.m_position),
+		m_texcoord(vertex.m_texcoord),
+		m_normal(vertex.m_normal),
+		m_tangent(vertex.m_tangent),
+		m_binormal(vertex.m_binormal)
+	{
+	}
+
+public:
+	DVec3 m_position;
+	DVec2 m_texcoord;
+	DVec3 m_normal;
+	DVec3 m_tangent;
+	DVec3 m_binormal;
+};

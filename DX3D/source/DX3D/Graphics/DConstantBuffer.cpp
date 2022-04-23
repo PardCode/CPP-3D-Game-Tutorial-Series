@@ -22,40 +22,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#include <DX3D/Graphics/DConstantBuffer.h>
+#include <DX3D/Graphics/DGraphicsEngine.h>
 
-Projectile::Projectile()
+#include <stdexcept>
+#include <d3d11.h>
+
+DConstantBuffer::DConstantBuffer(void* buffer, ui32 size_buffer,DGraphicsEngine * system) : m_system(system)
 {
+	D3D11_BUFFER_DESC buff_desc = {};
+	buff_desc.Usage = D3D11_USAGE_DEFAULT;
+	buff_desc.ByteWidth = size_buffer;
+	buff_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	buff_desc.CPUAccessFlags = 0;
+	buff_desc.MiscFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA init_data = {};
+	init_data.pSysMem = buffer;
+	auto device = m_system->m_d3dDevice;
+
+	if (FAILED(device->CreateBuffer(&buff_desc, &init_data, &m_buffer)))
+		throw std::runtime_error("DConstantBuffer not created successfully");
+	
 	
 }
 
-Projectile::~Projectile()
+
+void DConstantBuffer::update(void * buffer)
 {
-}
-
-void Projectile::onCreate()
-{
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
-}
-
-void Projectile::onUpdate(f32 deltaTime)
-{
-	m_elapsed += deltaTime;
-
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
+	m_system->m_immContext->UpdateSubresource(this->m_buffer.Get(), NULL, NULL, buffer, NULL, NULL);
 }

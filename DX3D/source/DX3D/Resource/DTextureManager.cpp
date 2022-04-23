@@ -22,40 +22,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#include <DX3D/Resource/DTextureManager.h>
+#include <DX3D/Resource/DTexture.h>
 
-Projectile::Projectile()
-{
-	
-}
 
-Projectile::~Projectile()
+DTextureManager::DTextureManager(DGraphicsEngine* graphicsEngine): DGraphicsManager(graphicsEngine)
 {
 }
 
-void Projectile::onCreate()
+
+DTextureManager::~DTextureManager()
 {
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
 }
 
-void Projectile::onUpdate(f32 deltaTime)
+DTexturePtr DTextureManager::createTextureFromFile(const wchar_t * file_path)
 {
-	m_elapsed += deltaTime;
+	return std::static_pointer_cast<DTexture>(createResourceFromFile(file_path));
+}
 
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
+DTexturePtr DTextureManager::createTexture(const DRect& size, const DTextureType& type)
+{
+	return std::make_shared<DTexture>(size, type, this);
+}
+
+DResource * DTextureManager::createResourceFromFileConcrete(const wchar_t * file_path)
+{
+	return new DTexture(file_path,this);
 }

@@ -22,40 +22,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#include <DX3D/Resource/DResourceManager.h>
+#include <filesystem>
 
-Projectile::Projectile()
-{
-	
-}
 
-Projectile::~Projectile()
+DResourceManager::DResourceManager()
 {
 }
 
-void Projectile::onCreate()
+
+DResourceManager::~DResourceManager()
 {
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
 }
 
-void Projectile::onUpdate(f32 deltaTime)
+DResourcePtr DResourceManager::createResourceFromFile(const wchar_t * file_path)
 {
-	m_elapsed += deltaTime;
+	std::wstring full_path = std::filesystem::absolute(file_path);
 
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
+	auto it = m_map_resources.find(full_path);
+
+	if (it != m_map_resources.end())
+		return it->second;
+
+	DResource* raw_res = this->createResourceFromFileConcrete(full_path.c_str());
+
+	if (raw_res)
 	{
-		release();
+		DResourcePtr res(raw_res);
+		m_map_resources[full_path] = res;
+		return res;
 	}
+
+	return nullptr;
 }

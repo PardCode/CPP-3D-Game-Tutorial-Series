@@ -54,7 +54,7 @@ cbuffer constant: register(b0)
 
 
 float3 computePhongDirLighting(float ka,float3 ia,float kd,float3 id,float ks,float3 is,float shininess,
- float3 color, float3 normal,float3 lightDir,float3 dirToCamera)
+ float3 color, float3 normal,float3 lightDir,float3 dirToDCamera)
 {
 	//AMBIENT LIGHT
 	ia *= (color.rgb);
@@ -67,7 +67,7 @@ float3 computePhongDirLighting(float ka,float3 ia,float kd,float3 id,float ks,fl
 
 	//SPECULAR LIGHT
 	float3 reflected_light = reflect(lightDir, normal);
-	float amount_specular_light = pow(max(0.0, dot(reflected_light, dirToCamera)), shininess);
+	float amount_specular_light = pow(max(0.0, dot(reflected_light, dirToDCamera)), shininess);
 
 	float3 specular_light = ks * amount_specular_light * is;
 
@@ -77,7 +77,7 @@ float3 computePhongDirLighting(float ka,float3 ia,float kd,float3 id,float ks,fl
 }
 
 
-float3 processLighting(float3 color, float3 normal, float3 dirToCamera)
+float3 processLighting(float3 color, float3 normal, float3 dirToDCamera)
 {
 	
 	float3 final_light = float3(0,0,0);
@@ -97,7 +97,7 @@ float3 processLighting(float3 color, float3 normal, float3 dirToCamera)
 		float shininess = 30.0;
 		
 		
-		final_light += computePhongDirLighting(ka,ia,kd,id,ks,is,shininess,color,normal, m_lights[i].m_lightDirection.xyz, dirToCamera);
+		final_light += computePhongDirLighting(ka,ia,kd,id,ks,is,shininess,color,normal, m_lights[i].m_lightDirection.xyz, dirToDCamera);
 	}
 
 	return final_light;

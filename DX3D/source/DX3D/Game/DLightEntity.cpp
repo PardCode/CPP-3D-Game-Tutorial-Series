@@ -22,40 +22,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#include <DX3D/Game/DLightEntity.h>
 
-Projectile::Projectile()
-{
-	
-}
-
-Projectile::~Projectile()
+DLightEntity::DLightEntity()
 {
 }
 
-void Projectile::onCreate()
+DLightEntity::~DLightEntity()
 {
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
 }
 
-void Projectile::onUpdate(f32 deltaTime)
+void DLightEntity::setColor(const DVec3& color)
 {
-	m_elapsed += deltaTime;
+	m_color = color;
+}
 
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
+DVec3 DLightEntity::getColor()
+{
+	return m_color;
 }

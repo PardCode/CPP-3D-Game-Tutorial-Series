@@ -22,40 +22,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#pragma once
 
-Projectile::Projectile()
+class DVec2
 {
-	
-}
+public:
+	DVec2(){}
+	DVec2(f32 x, f32 y) :x(x), y(y){}
+	DVec2(const DVec2& vector) :x(vector.x), y(vector.y){}
 
-Projectile::~Projectile()
-{
-}
-
-void Projectile::onCreate()
-{
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
-}
-
-void Projectile::onUpdate(f32 deltaTime)
-{
-	m_elapsed += deltaTime;
-
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
+	DVec2 operator *(f32 num) const
 	{
-		release();
+		return DVec2(x*num, y*num);
 	}
-}
+	DVec2 operator +(const DVec2& vec) const
+	{
+		return DVec2(x + vec.x, y + vec.y);
+	}
+	DVec2 operator -(const DVec2& vec) const
+	{
+		return DVec2(x - vec.x, y - vec.y);
+	}
+
+public:
+	f32 x = 0.0f, y = 0.0f;
+};

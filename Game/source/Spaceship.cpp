@@ -26,7 +26,15 @@ SOFTWARE.*/
 #include "Projectile.h"
 
 
-Spaceship::Spaceship(Game* game): Entity(game)
+Spaceship::Spaceship()
+{
+}
+
+Spaceship::~Spaceship()
+{
+}
+
+void Spaceship::onCreate()
 {
 	//Load all the assets
 	auto tex = m_game->createTexture(L"Assets/Textures/spaceship.jpg");
@@ -40,12 +48,8 @@ Spaceship::Spaceship(Game* game): Entity(game)
 	addMaterial(mat);
 
 	//Create the camera that follows the spaceship
-	m_camera = m_game->createEntity<Camera>();
+	m_camera = m_game->createEntity<DCameraEntity>();
 	m_camera->setFarPlane(40000.0f);
-}
-
-Spaceship::~Spaceship()
-{
 }
 
 void Spaceship::onUpdate(f32 deltaTime)
@@ -57,23 +61,23 @@ void Spaceship::onUpdate(f32 deltaTime)
 	bool turbo = false;
 
 	//Spaceship controls
-	if (m_game->getInputManager()->isKeyDown(KeyW))
+	if (m_game->getInputManager()->isKeyDown(DKey::W))
 	{
 		forward = 1.0f;
 	}
-	if (m_game->getInputManager()->isKeyDown(KeyS))
+	if (m_game->getInputManager()->isKeyDown(DKey::S))
 	{
 		forward = -1.0f;
 	}
-	if (m_game->getInputManager()->isKeyDown(KeyA))
+	if (m_game->getInputManager()->isKeyDown(DKey::A))
 	{
 		rightward = -1.0f;
 	}
-	if (m_game->getInputManager()->isKeyDown(KeyD))
+	if (m_game->getInputManager()->isKeyDown(DKey::D))
 	{
 		rightward = 1.0f;
 	}
-	if (m_game->getInputManager()->isKeyDown(KeyShift))
+	if (m_game->getInputManager()->isKeyDown(DKey::Shift))
 	{
 		speed = 3.0f;
 		turbo = true;
@@ -100,8 +104,8 @@ void Spaceship::onUpdate(f32 deltaTime)
 		m_cam_distance = 18.0f;
 	}
 
-	auto vec = Vector3D::lerp(Vector3D(m_current_cam_distance,0,0),
-		Vector3D(m_cam_distance,0,0), 2.0f * deltaTime);
+	auto vec = DVec3::lerp(DVec3(m_current_cam_distance,0,0),
+		DVec3(m_cam_distance,0,0), 2.0f * deltaTime);
 	m_current_cam_distance = vec.x;
 
 
@@ -114,20 +118,20 @@ void Spaceship::onUpdate(f32 deltaTime)
 		m_pitch = 1.57f;
 	
 	
-	auto curr = Vector3D::lerp(Vector3D(m_oldPitch, m_oldYaw, 0), Vector3D(m_pitch, m_yaw, 0), 5.0f * deltaTime);
+	auto curr = DVec3::lerp(DVec3(m_oldPitch, m_oldYaw, 0), DVec3(m_pitch, m_yaw, 0), 5.0f * deltaTime);
 	m_oldPitch = curr.x;
 	m_oldYaw = curr.y;
 
-	setRotation(Vector3D(m_oldPitch, m_oldYaw, 0));
+	setRotation(DVec3(m_oldPitch, m_oldYaw, 0));
 
-	auto curr_cam = Vector3D::lerp(Vector3D(m_camPitch, m_camYaw, 0), Vector3D(m_pitch, m_yaw, 0), 3.0f * deltaTime);
+	auto curr_cam = DVec3::lerp(DVec3(m_camPitch, m_camYaw, 0), DVec3(m_pitch, m_yaw, 0), 3.0f * deltaTime);
 	m_camPitch = curr_cam.x;
 	m_camYaw = curr_cam.y;
 
-	m_camera->setRotation(Vector3D(m_camPitch, m_camYaw, 0));
+	m_camera->setRotation(DVec3(m_camPitch, m_camYaw, 0));
 
 
-	Matrix4x4 w;
+	DMat4 w;
 	getWorldMatrix(w);
 	auto zdir = w.getZDirection();
 	auto xdir = w.getXDirection();
@@ -138,20 +142,20 @@ void Spaceship::onUpdate(f32 deltaTime)
 	setPosition(pos);
 
 
-	Matrix4x4 w2;
+	DMat4 w2;
 	m_camera->getWorldMatrix(w2);
 	 zdir = w2.getZDirection();
 	 xdir = w2.getXDirection();
 	 ydir = w2.getYDirection();
 
 
-	auto camPos = Vector3D(pos + zdir * -m_current_cam_distance);
+	auto camPos = DVec3(pos + zdir * -m_current_cam_distance);
 	camPos = camPos + ydir * 6.5f;
 
 	m_camera->setPosition(camPos);
 
 	//On left mouse click, spawn the projectile along the spaceship direction
-	if (m_game->getInputManager()->isMouseUp(MouseButtonLeft))
+	if (m_game->getInputManager()->isMouseUp(DMouseButton::Left))
 	{
 		auto proj = m_game->createEntity<Projectile>();
 		proj->m_dir = zdir;

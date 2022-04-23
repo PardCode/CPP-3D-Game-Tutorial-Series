@@ -22,40 +22,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#pragma once
+#include <DX3D/Resource/DGraphicsManager.h>
+#include <DX3D/Resource/DMesh.h>
 
-Projectile::Projectile()
+class DMeshManager: public DGraphicsManager
 {
-	
-}
+public:
+	DMeshManager(DGraphicsEngine* graphicsEngine);
+	~DMeshManager();
+	DMeshPtr createMeshFromFile(const wchar_t* file_path);
+	DMeshPtr createMesh(
+	DVertexMesh* vertex_list_data, unsigned int vertex_list_size,
+	unsigned int* index_list_data, unsigned int index_list_size,
+	DMaterialSlot* material_slot_list, unsigned int material_slot_list_size
+	);
+protected:
+	virtual DResource* createResourceFromFileConcrete(const wchar_t* file_path);
+};
 
-Projectile::~Projectile()
-{
-}
-
-void Projectile::onCreate()
-{
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
-}
-
-void Projectile::onUpdate(f32 deltaTime)
-{
-	m_elapsed += deltaTime;
-
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
-}

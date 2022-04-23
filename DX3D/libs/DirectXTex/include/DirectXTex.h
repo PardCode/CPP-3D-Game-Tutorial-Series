@@ -653,19 +653,19 @@ namespace DirectX
     //---------------------------------------------------------------------------------
     // Misc image operations
 
-    struct Rect
+    struct DRect
     {
         size_t x;
         size_t y;
         size_t w;
         size_t h;
 
-        Rect() = default;
-        Rect(size_t _x, size_t _y, size_t _w, size_t _h) noexcept : x(_x), y(_y), w(_w), h(_h) {}
+        DRect() = default;
+        DRect(size_t _x, size_t _y, size_t _w, size_t _h) noexcept : x(_x), y(_y), w(_w), h(_h) {}
     };
 
-    HRESULT __cdecl CopyRectangle(
-        _In_ const Image& srcImage, _In_ const Rect& srcRect, _In_ const Image& dstImage,
+    HRESULT __cdecl CopyDRectangle(
+        _In_ const Image& srcImage, _In_ const DRect& srcDRect, _In_ const Image& dstImage,
         _In_ DWORD filter, _In_ size_t xOffset, _In_ size_t yOffset);
 
     enum CMSE_FLAGS

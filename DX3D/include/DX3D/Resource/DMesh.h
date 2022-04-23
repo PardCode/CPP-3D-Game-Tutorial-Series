@@ -22,40 +22,44 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#pragma once
+#include <DX3D/Resource/DResource.h>
+#include <DX3D/DPrerequisites.h>
+#include <DX3D/Math/DVec3.h>
+#include <DX3D/Math/DVec2.h>
+#include <DX3D/Math/DVertexMesh.h>
+#include <vector>
 
-Projectile::Projectile()
+
+class DMesh: public DResource
 {
-	
-}
+public:
+	DMesh(const wchar_t* full_path, DResourceManager* manager);
+	DMesh(DVertexMesh * vertex_list_data, unsigned int vertex_list_size,
+		unsigned int * index_list_data, unsigned int index_list_size,
+		DMaterialSlot * material_slot_list, unsigned int material_slot_list_size, DResourceManager* manager);
+	const DVertexBufferPtr& getVertexBuffer();
+	const DIndexBufferPtr& getIndexBuffer();
 
-Projectile::~Projectile()
-{
-}
+	const DMaterialSlot& getMaterialSlot(unsigned int slot);
+	size_t getNumMaterialSlots();
 
-void Projectile::onCreate()
-{
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
+	DVec3 getMaxCorner();
+	DVec3 getMinCorner();
+private:
+	void computeTangents(
+		const DVec3& v0, const DVec3& v1, const DVec3& v2,
+		const DVec2& t0, const DVec2& t1, const DVec2& t2,
+		DVec3& tangent, DVec3& binormal);
+private:
+	DVertexBufferPtr m_vertex_buffer;
+	DIndexBufferPtr m_index_buffer;
+	std::vector<DMaterialSlot> m_mat_slots;
 
-	setMesh(mesh);
-	addMaterial(mat);
+	DVec3 m_maxCorner;
+	DVec3 m_minCorner = DVec3(10000,10000,10000);
 
-	setScale(DVec3(2, 2, 2));
-}
+private:
+	friend class DGraphicsEngine;
+};
 
-void Projectile::onUpdate(f32 deltaTime)
-{
-	m_elapsed += deltaTime;
-
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
-}

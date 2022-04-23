@@ -22,40 +22,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#include <DX3D/Resource/DMaterialManager.h>
+#include <DX3D/Resource/DMaterial.h>
+#include <filesystem>
 
-Projectile::Projectile()
+
+DMaterialManager::DMaterialManager(DGraphicsEngine* graphicsEngine) : DGraphicsManager(graphicsEngine)
 {
+}
+
+DMaterialManager::~DMaterialManager()
+{
+}
+
+DMaterialPtr DMaterialManager::createMaterialFromFile(const wchar_t* file_path)
+{
+	std::wstring full_path = std::filesystem::absolute(file_path);
+	auto it = m_map_resources.find(full_path);
+	if (it != m_map_resources.end()) return std::make_shared<DMaterial>(std::static_pointer_cast<DMaterial>(it->second), this);
+	else return std::static_pointer_cast<DMaterial>(createResourceFromFile(file_path));	
+}
+
+DMaterialPtr DMaterialManager::createMaterial(const DMaterialPtr& material)
+{
+	return std::make_shared<DMaterial>(material,this);
+}
+
+DResource* DMaterialManager::createResourceFromFileConcrete(const wchar_t* file_path)
+{
+
+	return new DMaterial(file_path, this);
 	
-}
-
-Projectile::~Projectile()
-{
-}
-
-void Projectile::onCreate()
-{
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
-}
-
-void Projectile::onUpdate(f32 deltaTime)
-{
-	m_elapsed += deltaTime;
-
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
 }

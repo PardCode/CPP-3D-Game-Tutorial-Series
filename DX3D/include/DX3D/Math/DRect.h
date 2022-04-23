@@ -22,40 +22,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#pragma once
+#include <DX3D/DPrerequisites.h>
 
-Projectile::Projectile()
+
+class DRect
 {
-	
-}
+public:
+	DRect(){}
+	DRect(i32 width, i32 height) : width(width), height(height){}
+	DRect(i32 left, i32 top, i32 width, i32 height) :left(left), top(top), width(width), height(height){}
+	DRect(const DRect& rect) :left(rect.left), top(rect.top), width(rect.width), height(rect.height){}
 
-Projectile::~Projectile()
-{
-}
-
-void Projectile::onCreate()
-{
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
-}
-
-void Projectile::onUpdate(f32 deltaTime)
-{
-	m_elapsed += deltaTime;
-
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
-}
+public:
+	i32 width = 0, height = 0, left = 0, top = 0;
+};

@@ -25,9 +25,9 @@ SOFTWARE.*/
 #pragma once
 
 
-#include <DX3D/Game/BaseEntity.h>
-#include <DX3D/Game/Camera.h>
-#include <DX3D/Game/Display.h>
-#include <DX3D/Game/Entity.h>
-#include <DX3D/Game/Light.h>
-#include <DX3D/Game/Game.h>
+#include <DX3D/Game/DEntity.h>
+#include <DX3D/Game/DCameraEntity.h>
+#include <DX3D/Game/DDisplay.h>
+#include <DX3D/Game/DMeshEntity.h>
+#include <DX3D/Game/DLightEntity.h>
+#include <DX3D/Game/DGame.h>

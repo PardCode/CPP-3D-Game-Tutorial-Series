@@ -22,40 +22,40 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#pragma once
 
-Projectile::Projectile()
+#include <DX3D/DPrerequisites.h>
+#include <DX3D/Math/DVec2.h>
+#include <DX3D/Math/DRect.h>
+
+class  DInputManager
 {
-	
-}
+public:
+	DInputManager();
 
-Projectile::~Projectile()
-{
-}
+	virtual bool isKeyDown(const DKey& key);
+	virtual bool isKeyUp(const DKey& key);
 
-void Projectile::onCreate()
-{
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
+	virtual bool isMouseDown(const DMouseButton& button);
+	virtual bool isMouseUp(const DMouseButton& button);
 
-	setMesh(mesh);
-	addMaterial(mat);
+	virtual f32 getMouseXAxis();
+	virtual f32 getMouseYAxis();
 
-	setScale(DVec3(2, 2, 2));
-}
+	virtual void enablePlayMode(bool enable);
 
-void Projectile::onUpdate(f32 deltaTime)
-{
-	m_elapsed += deltaTime;
+	void setScreenArea(const DRect& area);
+	void update();
 
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
-}
+private:
+	short m_keys_state[256] = {};
+	short m_old_keys_state[256] = {};
+	short m_keys_state_res[256] = {};
+
+	bool m_playEnable = false;
+	DVec2 m_old_mouse_pos;
+	bool m_first_time = true;
+	DRect m_screenArea;
+	DVec2 m_deltaMouse;
+	int states_index = 0;
+};

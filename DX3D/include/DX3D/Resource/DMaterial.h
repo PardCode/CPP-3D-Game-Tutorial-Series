@@ -22,40 +22,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#pragma once
 
-Projectile::Projectile()
+#include <DX3D/DPrerequisites.h>
+#include <vector>
+#include <DX3D/Resource/DResource.h>
+
+
+class DGraphicsEngine;
+class DMaterial : public DResource
 {
-	
-}
+public:
+	DMaterial(const wchar_t* full_path, DResourceManager* manager);
+	DMaterial(const DMaterialPtr & material, DResourceManager* manager);
 
-Projectile::~Projectile()
-{
-}
+	void addTexture(const DTexturePtr& texture);
+	void removeTexture(unsigned int index);
 
-void Projectile::onCreate()
-{
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
+	void setData(void * data, unsigned int size);
+	void setUserData(void* data, unsigned int size);
 
-	setMesh(mesh);
-	addMaterial(mat);
+	void setCullMode(const DCullMode& mode);
+	DCullMode getCullMode();
+private:
+	DVertexShaderPtr m_vertex_shader;
+	DPixelShaderPtr m_pixel_shader;
+	DConstantBufferPtr m_constant_buffer;
+	DConstantBufferPtr m_userBuffer;
+	std::vector<DTexturePtr> m_vec_textures;
+	DCullMode m_cull_mode = DCullMode::Back;
+	friend class DGraphicsEngine;
+};
 
-	setScale(DVec3(2, 2, 2));
-}
-
-void Projectile::onUpdate(f32 deltaTime)
-{
-	m_elapsed += deltaTime;
-
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
-}

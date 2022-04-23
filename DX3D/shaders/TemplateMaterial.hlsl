@@ -49,12 +49,12 @@ cbuffer constant: register(b0)
 	row_major float4x4 m_proj;
 	float4 m_camera_position;
 	light m_lights[32];
-	int m_numLights;
+	int m_numDLightEntitys;
 };
 
 
-float3 computePhongDirLighting(float ka,float3 ia,float kd,float3 id,float ks,float3 is,float shininess,
- float3 color, float3 normal,float3 lightDir,float3 dirToCamera)
+float3 computePhongDirDLightEntitying(float ka,float3 ia,float kd,float3 id,float ks,float3 is,float shininess,
+ float3 color, float3 normal,float3 lightDir,float3 dirToDCameraEntity)
 {
 	//AMBIENT LIGHT
 	ia *= (color.rgb);
@@ -67,7 +67,7 @@ float3 computePhongDirLighting(float ka,float3 ia,float kd,float3 id,float ks,fl
 
 	//SPECULAR LIGHT
 	float3 reflected_light = reflect(lightDir, normal);
-	float amount_specular_light = pow(max(0.0, dot(reflected_light, dirToCamera)), shininess);
+	float amount_specular_light = pow(max(0.0, dot(reflected_light, dirToDCameraEntity)), shininess);
 
 	float3 specular_light = ks * amount_specular_light * is;
 
@@ -77,12 +77,12 @@ float3 computePhongDirLighting(float ka,float3 ia,float kd,float3 id,float ks,fl
 }
 
 
-float3 processLighting(float3 color, float3 normal, float3 dirToCamera)
+float3 processDLightEntitying(float3 color, float3 normal, float3 dirToDCameraEntity)
 {
 	
 	float3 final_light = float3(0,0,0);
 
-	for (int i = 0; i< m_numLights;i++)
+	for (int i = 0; i< m_numDLightEntitys;i++)
 	{
 		//AMBIENT LIGHT
 		float ka = 4.5;
@@ -97,7 +97,7 @@ float3 processLighting(float3 color, float3 normal, float3 dirToCamera)
 		float shininess = 30.0;
 		
 		
-		final_light += computePhongDirLighting(ka,ia,kd,id,ks,is,shininess,color,normal, m_lights[i].m_lightDirection.xyz, dirToCamera);
+		final_light += computePhongDirDLightEntitying(ka,ia,kd,id,ks,is,shininess,color,normal, m_lights[i].m_lightDirection.xyz, dirToDCameraEntity);
 	}
 
 	return final_light;
@@ -133,7 +133,7 @@ VS_OUTPUT vsmain(VS_INPUT input)
 }
 
 
-Texture2D Color: register(t0);
+DTexture2D Color: register(t0);
 sampler ColorSampler: register(s0);
 
 struct PS_INPUT
@@ -148,6 +148,6 @@ float4 psmain(PS_INPUT input) : SV_TARGET
 {
 	float4 color = Color.Sample(ColorSampler, (input.texcoord));
 
-	float3 final_light = processLighting(color.rgb,input.normal.xyz,input.direction_to_camera.xyz);
+	float3 final_light = processDLightEntitying(color.rgb,input.normal.xyz,input.direction_to_camera.xyz);
 	return float4(final_light,1.0); 
 }

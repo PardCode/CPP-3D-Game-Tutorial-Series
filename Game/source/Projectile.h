@@ -25,14 +25,16 @@ SOFTWARE.*/
 #pragma once
 #include <DX3D/All.h>
 
-class Projectile: public Entity
+class Projectile: public DMeshEntity
 {
 public:
-	Projectile(Game* game);
+	Projectile();
 	~Projectile();
+
+	virtual void onCreate();
 	virtual void onUpdate(f32 deltaTime);
 
-	Vector3D m_dir;
+	DVec3 m_dir;
 	f32 m_elapsed = 0.0f;
 
 };

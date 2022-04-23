@@ -22,40 +22,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#include <DX3D/Resource/DMeshManager.h>
+#include <DX3D/Resource/DMesh.h>
 
-Projectile::Projectile()
-{
-	
-}
 
-Projectile::~Projectile()
+DMeshManager::DMeshManager(DGraphicsEngine* graphicsEngine) : DGraphicsManager(graphicsEngine)
 {
 }
 
-void Projectile::onCreate()
+
+DMeshManager::~DMeshManager()
 {
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
 }
 
-void Projectile::onUpdate(f32 deltaTime)
+DMeshPtr DMeshManager::createMeshFromFile(const wchar_t * file_path)
 {
-	m_elapsed += deltaTime;
+	return std::static_pointer_cast<DMesh>(createResourceFromFile(file_path));
+}
 
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
+DMeshPtr DMeshManager::createMesh(
+	DVertexMesh * vertex_list_data, unsigned int vertex_list_size, 
+	unsigned int * index_list_data, unsigned int index_list_size, 
+	DMaterialSlot * material_slot_list, unsigned int material_slot_list_size)
+{
+	return std::make_shared<DMesh>(vertex_list_data, vertex_list_size,
+		index_list_data, index_list_size,
+		material_slot_list, material_slot_list_size, this);
+}
+
+DResource * DMeshManager::createResourceFromFileConcrete(const wchar_t * file_path)
+{
+	return new DMesh(file_path, this);
 }

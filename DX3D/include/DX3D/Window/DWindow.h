@@ -22,40 +22,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#pragma once
 
-Projectile::Projectile()
+
+#include <DX3D/Math/DRect.h>
+#include <DX3D/Graphics/DSwapChain.h>
+#include <set>
+
+class DWindow
 {
-	
-}
+public:
+	DWindow();
+	~DWindow();
 
-Projectile::~Projectile()
-{
-}
+	DRect getClientSize();
+	DRect getScreenSize();
 
-void Projectile::onCreate()
-{
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
+	//EVENT
+	virtual void onCreate() {}
+	virtual void onUpdate() {}
+	virtual void onDestroy() {}
+	virtual void onFocus() {}
+	virtual void onKillFocus() {}
+	virtual void onSize(const DRect& size) {}
 
-	setMesh(mesh);
-	addMaterial(mat);
+	void* getHandle();
+	void setTitle(const wchar_t* title);
 
-	setScale(DVec3(2, 2, 2));
-}
+protected:
+	void* m_hwnd = nullptr;
+};
 
-void Projectile::onUpdate(f32 deltaTime)
-{
-	m_elapsed += deltaTime;
-
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
-}

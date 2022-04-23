@@ -22,40 +22,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#include <DX3D/Game/DCameraEntity.h>
 
-Projectile::Projectile()
+DCameraEntity::DCameraEntity()
+{
+}
+
+DCameraEntity::~DCameraEntity()
+{
+}
+
+void DCameraEntity::getViewMatrix(DMat4& view)
 {
 	
+	m_view = m_world;
+	m_view.inverse();
+	view = m_view;
 }
 
-Projectile::~Projectile()
+void DCameraEntity::getProjectionMatrix(DMat4& proj)
 {
+	proj = m_projection;
 }
 
-void Projectile::onCreate()
+
+void DCameraEntity::setFarPlane(f32 farPlane)
 {
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
+	m_farPlane = farPlane;
+	m_projection.setPerspectiveFovLH(1.3f, (f32)m_screenArea.width / (f32)m_screenArea.height, 0.1f, m_farPlane);
 }
 
-void Projectile::onUpdate(f32 deltaTime)
+void DCameraEntity::setScreenArea(const DRect& screen)
 {
-	m_elapsed += deltaTime;
-
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
+	m_screenArea = screen;
+	m_projection.setPerspectiveFovLH(1.3f, (f32)m_screenArea.width / (f32)m_screenArea.height, 0.1f, m_farPlane);
 }

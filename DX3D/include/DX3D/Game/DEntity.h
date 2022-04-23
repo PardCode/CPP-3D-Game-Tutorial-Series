@@ -22,40 +22,47 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#pragma once
 
-Projectile::Projectile()
+#include <DX3D/Math/DRect.h>
+#include <DX3D/Math/DMat4.h>
+#include <DX3D/Math/DVec3.h>
+#include <DX3D/Window/DWindow.h>
+#include <vector>
+
+class DGame;
+class DEntity
 {
-	
-}
+public:
+	DEntity();
+	virtual ~DEntity();
 
-Projectile::~Projectile()
-{
-}
+public:
+	size_t getId();
+	void getWorldMatrix(DMat4& world);
+	void setPosition(const DVec3& position);
+	void setRotation(const DVec3& rotation);
+	void setScale(const DVec3& scale);
 
-void Projectile::onCreate()
-{
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
+	DVec3 getPosition();
+	DVec3 getScale();
 
-	setMesh(mesh);
-	addMaterial(mat);
+	virtual void onCreate() {}
+	virtual void onUpdate(f32 deltaTime) {}
+	virtual void release();
+protected:
+	void processWorldMatrix();
+protected:
+	DMat4 m_world;
 
-	setScale(DVec3(2, 2, 2));
-}
+	DVec3 m_position;
+	DVec3 m_rotation;
+	DVec3 m_scale = DVec3(1,1,1);
 
-void Projectile::onUpdate(f32 deltaTime)
-{
-	m_elapsed += deltaTime;
+	size_t m_id = 0;
 
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
-}
+	DGame* m_game = nullptr;
+
+	friend class DGame;
+};
+

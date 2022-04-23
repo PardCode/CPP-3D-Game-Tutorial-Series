@@ -27,8 +27,8 @@ THE SOFTWARE.
 //                 * Support line primitive.
 //                 * Support points primitive.
 //                 * Support multiple search path for .mtl(v1 API).
-// version 1.4.0 : Modifed ParseTextureNameAndOption API
-// version 1.3.1 : Make ParseTextureNameAndOption API public
+// version 1.4.0 : Modifed ParseDTextureNameAndOption API
+// version 1.3.1 : Make ParseDTextureNameAndOption API public
 // version 1.3.0 : Separate warning and error message(breaking API of LoadObj)
 // version 1.2.3 : Added color space extension('-colorspace') to tex opts.
 // version 1.2.2 : Parse multiple group names.
@@ -428,10 +428,10 @@ struct callback_t {
         object_cb(NULL) {}
 };
 
-class MaterialReader {
+class DMaterialReader {
  public:
-  MaterialReader() {}
-  virtual ~MaterialReader();
+  DMaterialReader() {}
+  virtual ~DMaterialReader();
 
   virtual bool operator()(const std::string &matId,
                           std::vector<material_t> *materials,
@@ -442,12 +442,12 @@ class MaterialReader {
 ///
 /// Read .mtl from a file.
 ///
-class MaterialFileReader : public MaterialReader {
+class DMaterialFileReader : public DMaterialReader {
  public:
   // Path could contain separator(';' in Windows, ':' in Posix)
-  explicit MaterialFileReader(const std::string &mtl_basedir)
+  explicit DMaterialFileReader(const std::string &mtl_basedir)
       : m_mtlBaseDir(mtl_basedir) {}
-  virtual ~MaterialFileReader() TINYOBJ_OVERRIDE {}
+  virtual ~DMaterialFileReader() TINYOBJ_OVERRIDE {}
   virtual bool operator()(const std::string &matId,
                           std::vector<material_t> *materials,
                           std::map<std::string, int> *matMap, std::string *warn,
@@ -460,11 +460,11 @@ class MaterialFileReader : public MaterialReader {
 ///
 /// Read .mtl from a stream.
 ///
-class MaterialStreamReader : public MaterialReader {
+class DMaterialStreamReader : public DMaterialReader {
  public:
-  explicit MaterialStreamReader(std::istream &inStream)
+  explicit DMaterialStreamReader(std::istream &inStream)
       : m_inStream(inStream) {}
-  virtual ~MaterialStreamReader() TINYOBJ_OVERRIDE {}
+  virtual ~DMaterialStreamReader() TINYOBJ_OVERRIDE {}
   virtual bool operator()(const std::string &matId,
                           std::vector<material_t> *materials,
                           std::map<std::string, int> *matMap, std::string *warn,
@@ -532,7 +532,7 @@ class ObjReader {
 
   const std::vector<shape_t> &GetShapes() const { return shapes_; }
 
-  const std::vector<material_t> &GetMaterials() const { return materials_; }
+  const std::vector<material_t> &GetDMaterials() const { return materials_; }
 
   ///
   /// Warning message(may be filled after `Load` or `Parse`)
@@ -583,7 +583,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
 /// See `examples/callback_api/` for how to use this function.
 bool LoadObjWithCallback(std::istream &inStream, const callback_t &callback,
                          void *user_data = NULL,
-                         MaterialReader *readMatFn = NULL,
+                         DMaterialReader *readMatFn = NULL,
                          std::string *warn = NULL, std::string *err = NULL);
 
 /// Loads object from a std::istream, uses `readMatFn` to retrieve
@@ -593,7 +593,7 @@ bool LoadObjWithCallback(std::istream &inStream, const callback_t &callback,
 bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
              std::vector<material_t> *materials, std::string *warn,
              std::string *err, std::istream *inStream,
-             MaterialReader *readMatFn = NULL, bool triangulate = true,
+             DMaterialReader *readMatFn = NULL, bool triangulate = true,
              bool default_vcols_fallback = true);
 
 /// Loads materials into std::map
@@ -609,7 +609,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
 /// @param[out] texopt Parsed texopt
 /// @param[in] linebuf Input string
 ///
-bool ParseTextureNameAndOption(std::string *texname, texture_option_t *texopt,
+bool ParseDTextureNameAndOption(std::string *texname, texture_option_t *texopt,
                                const char *linebuf);
 
 /// =<<========== Legacy v1 API =============================================
@@ -633,7 +633,7 @@ bool ParseTextureNameAndOption(std::string *texname, texture_option_t *texopt,
 
 namespace tinyobj {
 
-MaterialReader::~MaterialReader() {}
+DMaterialReader::~DMaterialReader() {}
 
 struct vertex_index_t {
   int v_idx, vt_idx, vn_idx;
@@ -1023,7 +1023,7 @@ static inline bool parseOnOff(const char **token, bool default_value = true) {
   return ret;
 }
 
-static inline texture_type_t parseTextureType(
+static inline texture_type_t parseDTextureType(
     const char **token, texture_type_t default_value = TEXTURE_TYPE_NONE) {
   (*token) += strspn((*token), " \t");
   const char *end = (*token) + strcspn((*token), " \t\r");
@@ -1161,7 +1161,7 @@ static vertex_index_t parseRawTriple(const char **token) {
   return vi;
 }
 
-bool ParseTextureNameAndOption(std::string *texname, texture_option_t *texopt,
+bool ParseDTextureNameAndOption(std::string *texname, texture_option_t *texopt,
                                const char *linebuf) {
   // @todo { write more robust lexer and parser. }
   bool found_texname = false;
@@ -1200,7 +1200,7 @@ bool ParseTextureNameAndOption(std::string *texname, texture_option_t *texopt,
                  &(texopt->turbulence[2]), &token);
     } else if ((0 == strncmp(token, "-type", 5)) && IS_SPACE((token[5]))) {
       token += 5;
-      texopt->type = parseTextureType((&token), TEXTURE_TYPE_NONE);
+      texopt->type = parseDTextureType((&token), TEXTURE_TYPE_NONE);
     } else if ((0 == strncmp(token, "-texres", 7)) && IS_SPACE((token[7]))) {
       token += 7;
       // TODO(syoyo): Check if arg is int type.
@@ -1273,7 +1273,7 @@ static void InitTexOpt(texture_option_t *texopt, const bool is_bump) {
   texopt->type = TEXTURE_TYPE_NONE;
 }
 
-static void InitMaterial(material_t *material) {
+static void InitDMaterial(material_t *material) {
   InitTexOpt(&material->ambient_texopt, /* is_bump */ false);
   InitTexOpt(&material->diffuse_texopt, /* is_bump */ false);
   InitTexOpt(&material->specular_texopt, /* is_bump */ false);
@@ -1674,7 +1674,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
 
   // Create a default material anyway.
   material_t material;
-  InitMaterial(&material);
+  InitDMaterial(&material);
 
   // Issue 43. `d` wins against `Tr` since `Tr` is not in the MTL specification.
   bool has_d = false;
@@ -1731,7 +1731,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
       }
 
       // initial temporary material
-      InitMaterial(&material);
+      InitDMaterial(&material);
 
       has_d = false;
       has_tr = false;
@@ -1908,7 +1908,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // ambient texture
     if ((0 == strncmp(token, "map_Ka", 6)) && IS_SPACE(token[6])) {
       token += 7;
-      ParseTextureNameAndOption(&(material.ambient_texname),
+      ParseDTextureNameAndOption(&(material.ambient_texname),
                                 &(material.ambient_texopt), token);
       continue;
     }
@@ -1916,7 +1916,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // diffuse texture
     if ((0 == strncmp(token, "map_Kd", 6)) && IS_SPACE(token[6])) {
       token += 7;
-      ParseTextureNameAndOption(&(material.diffuse_texname),
+      ParseDTextureNameAndOption(&(material.diffuse_texname),
                                 &(material.diffuse_texopt), token);
 
       // Set a decent diffuse default value if a diffuse texture is specified
@@ -1934,7 +1934,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // specular texture
     if ((0 == strncmp(token, "map_Ks", 6)) && IS_SPACE(token[6])) {
       token += 7;
-      ParseTextureNameAndOption(&(material.specular_texname),
+      ParseDTextureNameAndOption(&(material.specular_texname),
                                 &(material.specular_texopt), token);
       continue;
     }
@@ -1942,7 +1942,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // specular highlight texture
     if ((0 == strncmp(token, "map_Ns", 6)) && IS_SPACE(token[6])) {
       token += 7;
-      ParseTextureNameAndOption(&(material.specular_highlight_texname),
+      ParseDTextureNameAndOption(&(material.specular_highlight_texname),
                                 &(material.specular_highlight_texopt), token);
       continue;
     }
@@ -1950,7 +1950,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // bump texture
     if ((0 == strncmp(token, "map_bump", 8)) && IS_SPACE(token[8])) {
       token += 9;
-      ParseTextureNameAndOption(&(material.bump_texname),
+      ParseDTextureNameAndOption(&(material.bump_texname),
                                 &(material.bump_texopt), token);
       continue;
     }
@@ -1958,7 +1958,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // bump texture
     if ((0 == strncmp(token, "map_Bump", 8)) && IS_SPACE(token[8])) {
       token += 9;
-      ParseTextureNameAndOption(&(material.bump_texname),
+      ParseDTextureNameAndOption(&(material.bump_texname),
                                 &(material.bump_texopt), token);
       continue;
     }
@@ -1966,7 +1966,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // bump texture
     if ((0 == strncmp(token, "bump", 4)) && IS_SPACE(token[4])) {
       token += 5;
-      ParseTextureNameAndOption(&(material.bump_texname),
+      ParseDTextureNameAndOption(&(material.bump_texname),
                                 &(material.bump_texopt), token);
       continue;
     }
@@ -1975,7 +1975,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     if ((0 == strncmp(token, "map_d", 5)) && IS_SPACE(token[5])) {
       token += 6;
       material.alpha_texname = token;
-      ParseTextureNameAndOption(&(material.alpha_texname),
+      ParseDTextureNameAndOption(&(material.alpha_texname),
                                 &(material.alpha_texopt), token);
       continue;
     }
@@ -1983,7 +1983,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // displacement texture
     if ((0 == strncmp(token, "disp", 4)) && IS_SPACE(token[4])) {
       token += 5;
-      ParseTextureNameAndOption(&(material.displacement_texname),
+      ParseDTextureNameAndOption(&(material.displacement_texname),
                                 &(material.displacement_texopt), token);
       continue;
     }
@@ -1991,7 +1991,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // reflection map
     if ((0 == strncmp(token, "refl", 4)) && IS_SPACE(token[4])) {
       token += 5;
-      ParseTextureNameAndOption(&(material.reflection_texname),
+      ParseDTextureNameAndOption(&(material.reflection_texname),
                                 &(material.reflection_texopt), token);
       continue;
     }
@@ -1999,7 +1999,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // PBR: roughness texture
     if ((0 == strncmp(token, "map_Pr", 6)) && IS_SPACE(token[6])) {
       token += 7;
-      ParseTextureNameAndOption(&(material.roughness_texname),
+      ParseDTextureNameAndOption(&(material.roughness_texname),
                                 &(material.roughness_texopt), token);
       continue;
     }
@@ -2007,7 +2007,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // PBR: metallic texture
     if ((0 == strncmp(token, "map_Pm", 6)) && IS_SPACE(token[6])) {
       token += 7;
-      ParseTextureNameAndOption(&(material.metallic_texname),
+      ParseDTextureNameAndOption(&(material.metallic_texname),
                                 &(material.metallic_texopt), token);
       continue;
     }
@@ -2015,7 +2015,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // PBR: sheen texture
     if ((0 == strncmp(token, "map_Ps", 6)) && IS_SPACE(token[6])) {
       token += 7;
-      ParseTextureNameAndOption(&(material.sheen_texname),
+      ParseDTextureNameAndOption(&(material.sheen_texname),
                                 &(material.sheen_texopt), token);
       continue;
     }
@@ -2023,7 +2023,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // PBR: emissive texture
     if ((0 == strncmp(token, "map_Ke", 6)) && IS_SPACE(token[6])) {
       token += 7;
-      ParseTextureNameAndOption(&(material.emissive_texname),
+      ParseDTextureNameAndOption(&(material.emissive_texname),
                                 &(material.emissive_texopt), token);
       continue;
     }
@@ -2031,7 +2031,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
     // PBR: normal map texture
     if ((0 == strncmp(token, "norm", 4)) && IS_SPACE(token[4])) {
       token += 5;
-      ParseTextureNameAndOption(&(material.normal_texname),
+      ParseDTextureNameAndOption(&(material.normal_texname),
                                 &(material.normal_texopt), token);
       continue;
     }
@@ -2059,7 +2059,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
   }
 }
 
-bool MaterialFileReader::operator()(const std::string &matId,
+bool DMaterialFileReader::operator()(const std::string &matId,
                                     std::vector<material_t> *materials,
                                     std::map<std::string, int> *matMap,
                                     std::string *warn, std::string *err) {
@@ -2091,7 +2091,7 @@ bool MaterialFileReader::operator()(const std::string &matId,
     }
 
     std::stringstream ss;
-    ss << "Material file [ " << matId
+    ss << "DMaterial file [ " << matId
        << " ] not found in a path : " << m_mtlBaseDir << std::endl;
     if (warn) {
       (*warn) += ss.str();
@@ -2108,7 +2108,7 @@ bool MaterialFileReader::operator()(const std::string &matId,
     }
 
     std::stringstream ss;
-    ss << "Material file [ " << filepath
+    ss << "DMaterial file [ " << filepath
        << " ] not found in a path : " << m_mtlBaseDir << std::endl;
     if (warn) {
       (*warn) += ss.str();
@@ -2118,7 +2118,7 @@ bool MaterialFileReader::operator()(const std::string &matId,
   }
 }
 
-bool MaterialStreamReader::operator()(const std::string &matId,
+bool DMaterialStreamReader::operator()(const std::string &matId,
                                       std::vector<material_t> *materials,
                                       std::map<std::string, int> *matMap,
                                       std::string *warn, std::string *err) {
@@ -2126,7 +2126,7 @@ bool MaterialStreamReader::operator()(const std::string &matId,
   (void)matId;
   if (!m_inStream) {
     std::stringstream ss;
-    ss << "Material stream in error state. " << std::endl;
+    ss << "DMaterial stream in error state. " << std::endl;
     if (warn) {
       (*warn) += ss.str();
     }
@@ -2168,7 +2168,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
 #endif
     if (baseDir[baseDir.length() - 1] != dirsep) baseDir += dirsep;
   }
-  MaterialFileReader matFileReader(baseDir);
+  DMaterialFileReader matFileReader(baseDir);
 
   return LoadObj(attrib, shapes, materials, warn, err, &ifs, &matFileReader,
                  trianglulate, default_vcols_fallback);
@@ -2177,7 +2177,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
 bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
              std::vector<material_t> *materials, std::string *warn,
              std::string *err, std::istream *inStream,
-             MaterialReader *readMatFn /*= NULL*/, bool triangulate,
+             DMaterialReader *readMatFn /*= NULL*/, bool triangulate,
              bool default_vcols_fallback) {
   std::stringstream errss;
 
@@ -2388,9 +2388,9 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
       token += 6;
       std::string namebuf = parseString(&token);
 
-      int newMaterialId = -1;
+      int newDMaterialId = -1;
       if (material_map.find(namebuf) != material_map.end()) {
-        newMaterialId = material_map[namebuf];
+        newDMaterialId = material_map[namebuf];
       } else {
         // { error!! material not found }
         if (warn) {
@@ -2398,14 +2398,14 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
         }
       }
 
-      if (newMaterialId != material) {
+      if (newDMaterialId != material) {
         // Create per-face material. Thus we don't add `shape` to `shapes` at
         // this time.
         // just clear `faceGroup` after `exportGroupsToShape()` call.
         exportGroupsToShape(&shape, prim_group, tags, material, name,
                             triangulate, v);
         prim_group.faceGroup.clear();
-        material = newMaterialId;
+        material = newDMaterialId;
       }
 
       continue;
@@ -2685,7 +2685,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
 
 bool LoadObjWithCallback(std::istream &inStream, const callback_t &callback,
                          void *user_data /*= NULL*/,
-                         MaterialReader *readMatFn /*= NULL*/,
+                         DMaterialReader *readMatFn /*= NULL*/,
                          std::string *warn, /* = NULL*/
                          std::string *err /*= NULL*/) {
   std::stringstream errss;
@@ -2796,9 +2796,9 @@ bool LoadObjWithCallback(std::istream &inStream, const callback_t &callback,
       ss << token;
       std::string namebuf = ss.str();
 
-      int newMaterialId = -1;
+      int newDMaterialId = -1;
       if (material_map.find(namebuf) != material_map.end()) {
-        newMaterialId = material_map[namebuf];
+        newDMaterialId = material_map[namebuf];
       } else {
         // { warn!! material not found }
         if (warn && (!callback.usemtl_cb)) {
@@ -2806,8 +2806,8 @@ bool LoadObjWithCallback(std::istream &inStream, const callback_t &callback,
         }
       }
 
-      if (newMaterialId != material_id) {
-        material_id = newMaterialId;
+      if (newDMaterialId != material_id) {
+        material_id = newDMaterialId;
       }
 
       if (callback.usemtl_cb) {
@@ -2997,7 +2997,7 @@ bool ObjReader::ParseFromString(const std::string &obj_text,
   std::istream obj_ifs(&obj_buf);
   std::istream mtl_ifs(&mtl_buf);
 
-  MaterialStreamReader mtl_ss(mtl_ifs);
+  DMaterialStreamReader mtl_ss(mtl_ifs);
 
   valid_ = LoadObj(&attrib_, &shapes_, &materials_, &warning_, &error_,
                    &obj_ifs, &mtl_ss, config.triangulate, config.vertex_color);

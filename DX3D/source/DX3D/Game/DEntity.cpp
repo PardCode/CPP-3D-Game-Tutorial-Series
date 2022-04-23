@@ -22,40 +22,86 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "Projectile.h"
-#include "Spaceship.h"
+#include <DX3D/Game/DEntity.h>
+#include <DX3D/Game/DGame.h>
 
-Projectile::Projectile()
-{
-	
-}
-
-Projectile::~Projectile()
+DEntity::DEntity()
 {
 }
 
-void Projectile::onCreate()
+DEntity::~DEntity()
 {
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
-
-	setMesh(mesh);
-	addMaterial(mat);
-
-	setScale(DVec3(2, 2, 2));
 }
 
-void Projectile::onUpdate(f32 deltaTime)
+void DEntity::release()
 {
-	m_elapsed += deltaTime;
+	m_game->removeEntity(this);
+}
 
-	//Move the projectile along the defined direction (spaceship direction)
-	auto pos = m_position + m_dir * deltaTime * 800.0f;
-	setPosition(pos);
-	
-	//After 3 seconds, delete the projectile
-	if (m_elapsed > 3.0f)
-	{
-		release();
-	}
+void DEntity::processWorldMatrix()
+{
+		DMat4 temp;
+
+		m_world.setIdentity();
+
+		temp.setIdentity();
+		temp.setScale(m_scale);
+		m_world *= temp;
+
+
+		temp.setIdentity();
+		temp.setRotationX(m_rotation.x);
+		m_world *= temp;
+
+		temp.setIdentity();
+		temp.setRotationY(m_rotation.y);
+		m_world *= temp;
+
+		temp.setIdentity();
+		temp.setRotationZ(m_rotation.z);
+		m_world *= temp;
+
+
+		temp.setIdentity();
+		temp.setTranslation(m_position);
+		m_world *= temp;	
+}
+
+
+size_t DEntity::getId()
+{
+	return m_id;
+}
+
+void DEntity::getWorldMatrix(DMat4& world)
+{
+	world = m_world;
+}
+
+void DEntity::setPosition(const DVec3& position)
+{
+	m_position = position;
+	processWorldMatrix();
+}
+
+void DEntity::setRotation(const DVec3& rotation)
+{
+	m_rotation = rotation;
+	processWorldMatrix();
+}
+
+void DEntity::setScale(const DVec3& scale)
+{
+	m_scale = scale;
+	processWorldMatrix();
+}
+
+DVec3 DEntity::getPosition()
+{
+	return m_position;
+}
+
+DVec3 DEntity::getScale()
+{
+	return m_scale;
 }
