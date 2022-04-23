@@ -24,7 +24,7 @@ SOFTWARE.*/
 
 #pragma once
 
-#include <DX3D/Game/dGame.h>
+#include <DX3D/Game/DGame.h>
 
 class SpaceshipGame: public DGame
 {

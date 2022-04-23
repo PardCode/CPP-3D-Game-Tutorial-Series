@@ -167,9 +167,10 @@ void DGame::onGraphicsUpdate(f32 deltaTime)
                 gdata.lights[i].lightColor = l->getColor();
                 i++;
             }
+            gdata.numLights = (int)it->second.size();
         }
 
-        gdata.numLights = (int)it->second.size();
+        
 
     }
 

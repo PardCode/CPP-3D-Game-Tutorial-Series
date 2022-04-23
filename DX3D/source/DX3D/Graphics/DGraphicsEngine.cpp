@@ -161,7 +161,7 @@ void DGraphicsEngine::compilePrivateShaders()
 {
 	ID3DBlob* blob = nullptr;
 	ID3DBlob* error_blob = nullptr;
-	if (!SUCCEEDED(D3DCompileFromFile(L"shaders/VertexMeshLayoutShader.hlsl", nullptr, nullptr, "vsmain", "vs_5_0", 0, 0, &blob, &error_blob)))
+	if (!SUCCEEDED(D3DCompileFromFile(L"Engine/Shaders/VertexMeshLayoutShader.hlsl", nullptr, nullptr, "vsmain", "vs_5_0", 0, 0, &blob, &error_blob)))
 	{
 		if (error_blob) error_blob->Release();
 		throw std::runtime_error("Error during shaders building");

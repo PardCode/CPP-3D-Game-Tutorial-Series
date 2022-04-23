@@ -22,9 +22,9 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{b243113f-d55e-4e5d-b41c-0dcb42a0220e}</ProjectGuid>
-    <RootNamespace>DirectXGame</RootNamespace>
+    <RootNamespace>SpaceshipGame</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>DirectXGame</ProjectName>
+    <ProjectName>SpaceshipGame</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -80,16 +80,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)DX3D/libs/DirectXTex/include;$(SolutionDir)DX3D/libs/tinyobjloader/include;$(SolutionDir)DX3D/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)DX3D/libs/DirectXTex/bin;$(LibraryPath)</LibraryPath>
+    <IntDir>$(SolutionDir)Intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)../../DX3D/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)../../DX3D/Bin/$(Platform)/$(Configuration)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)DX3D/libs/DirectXTex/include;$(SolutionDir)DX3D/libs/tinyobjloader/include;$(SolutionDir)DX3D/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)DX3D/libs/DirectXTex/bin;$(LibraryPath)</LibraryPath>
+    <IntDir>$(SolutionDir)Intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)../../DX3D/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)../../DX3D/Bin/$(Platform)/$(Configuration)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -131,12 +131,12 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DirectXTexD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DX3D.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /E /C "$(ProjectDir)Game\Assets" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Assets\"
-xcopy /y "$(SolutionDir)DX3D\shaders\*.hlsl" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\shaders\"</Command>
+      <Command>xcopy /Y /E /C "$(ProjectDir)Assets" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Assets\"
+xcopy /Y /E /C "$(SolutionDir)..\..\DX3D\Bin\$(Platform)\$(Configuration)\Engine" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Engine\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,79 +155,24 @@ xcopy /y "$(SolutionDir)DX3D\shaders\*.hlsl" "$(SolutionDir)Bin\$(Platform)\$(Co
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DX3D.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /E /C "$(ProjectDir)Game\Assets" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Assets\"
-xcopy /y "$(SolutionDir)DX3D\shaders\*.hlsl" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\shaders\"</Command>
+      <Command>xcopy /Y /E /C "$(ProjectDir)Assets" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Assets\"
+xcopy /Y /E /C "$(SolutionDir)..\..\DX3D\Bin\$(Platform)\$(Configuration)\Engine" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Engine\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DX3D\source\DX3D\Game\DEntity.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Game\DCameraEntity.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Game\DDisplay.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Game\DMeshEntity.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Game\DGame.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Game\DLightEntity.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Graphics\DConstantBuffer.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Graphics\DGraphicsEngine.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Graphics\DIndexBuffer.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Graphics\DPixelShader.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Graphics\DSwapChain.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Graphics\DVertexBuffer.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Graphics\DVertexShader.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Input\DInputManager.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Resource\DMaterial.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Resource\DMaterialManager.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Resource\DMesh.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Resource\DMeshManager.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Resource\DResource.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Resource\DResourceManager.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Resource\DTexture.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Resource\DTextureManager.cpp" />
-    <ClCompile Include="DX3D\source\DX3D\Window\DWindow.cpp" />
-    <ClCompile Include="Game\Source\main.cpp" />
-    <ClCompile Include="Game\Source\SpaceshipGame.cpp" />
-    <ClCompile Include="Game\Source\Projectile.cpp" />
-    <ClCompile Include="Game\Source\Spaceship.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Projectile.cpp" />
+    <ClCompile Include="Source\Spaceship.cpp" />
+    <ClCompile Include="Source\SpaceshipGame.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DX3D\include\DX3D\Resource\DGraphicsManager.h" />
-    <ClInclude Include="DX3D\include\DX3D\All.h" />
-    <ClInclude Include="DX3D\include\DX3D\Game\DEntity.h" />
-    <ClInclude Include="DX3D\include\DX3D\Game\DCameraEntity.h" />
-    <ClInclude Include="DX3D\include\DX3D\Game\DDisplay.h" />
-    <ClInclude Include="DX3D\include\DX3D\Game\DMeshEntity.h" />
-    <ClInclude Include="DX3D\include\DX3D\Game\DGame.h" />
-    <ClInclude Include="DX3D\include\DX3D\Game\DLightEntity.h" />
-    <ClInclude Include="DX3D\include\DX3D\Graphics\DConstantBuffer.h" />
-    <ClInclude Include="DX3D\include\DX3D\Graphics\DGraphicsEngine.h" />
-    <ClInclude Include="DX3D\include\DX3D\Graphics\DIndexBuffer.h" />
-    <ClInclude Include="DX3D\include\DX3D\Graphics\DPixelShader.h" />
-    <ClInclude Include="DX3D\include\DX3D\Graphics\DSwapChain.h" />
-    <ClInclude Include="DX3D\include\DX3D\Graphics\DVertexBuffer.h" />
-    <ClInclude Include="DX3D\include\DX3D\Graphics\DVertexShader.h" />
-    <ClInclude Include="DX3D\include\DX3D\Input\DInputManager.h" />
-    <ClInclude Include="DX3D\include\DX3D\Math\DMat4.h" />
-    <ClInclude Include="DX3D\include\DX3D\Math\DRect.h" />
-    <ClInclude Include="DX3D\include\DX3D\Math\DVec2.h" />
-    <ClInclude Include="DX3D\include\DX3D\Math\DVec3.h" />
-    <ClInclude Include="DX3D\include\DX3D\Math\DVec4.h" />
-    <ClInclude Include="DX3D\include\DX3D\Math\DVertexMesh.h" />
-    <ClInclude Include="DX3D\include\DX3D\DPrerequisites.h" />
-    <ClInclude Include="DX3D\include\DX3D\Resource\DMaterial.h" />
-    <ClInclude Include="DX3D\include\DX3D\Resource\DMaterialManager.h" />
-    <ClInclude Include="DX3D\include\DX3D\Resource\DMesh.h" />
-    <ClInclude Include="DX3D\include\DX3D\Resource\DMeshManager.h" />
-    <ClInclude Include="DX3D\include\DX3D\Resource\DResource.h" />
-    <ClInclude Include="DX3D\include\DX3D\Resource\DResourceManager.h" />
-    <ClInclude Include="DX3D\include\DX3D\Resource\DTexture.h" />
-    <ClInclude Include="DX3D\include\DX3D\Resource\DTextureManager.h" />
-    <ClInclude Include="DX3D\include\DX3D\Window\DWindow.h" />
-    <ClInclude Include="Game\Source\SpaceshipGame.h" />
-    <ClInclude Include="Game\Source\Projectile.h" />
-    <ClInclude Include="Game\Source\Spaceship.h" />
+    <ClInclude Include="Source\Projectile.h" />
+    <ClInclude Include="Source\Spaceship.h" />
+    <ClInclude Include="Source\SpaceshipGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
