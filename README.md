@@ -55,7 +55,7 @@ Adam L. - Ahmad A. - Alex G. - Andrey G. - Andrew C. - Andrew M. - Anotherbear G
 Bastien R. - bdfy - Biuret - Carlo S. - Daniel W. - Edward T.O. - Elite Salad - Guarded - hisuzuki - Howl C<br/>
 James B. - JaviFML - Jesse M.C. - Jonas F. - Joshua v. - Kim W. - kuronk cat - Lie - Mackay N. - Manuel H.<br/>
 Mateusz P. - Matthew - Miles H. - Mohammed A. - Murdo M. - Nikhil R. - Neil W. - Oliver H. - Otturd - Patrick B.<br/>
-Ridtichai B. - Rem saigao - REX Li - Robson - Snip - Squeegiefilms - Tentacle Princess - The Spygineer<br/>
+Patrick L. - Ridtichai B. - Rem saigao - REX Li - Robson - Snip - Squeegiefilms - Tentacle Princess - The Spygineer<br/>
 The Tutorial Chef - TheDevUK - Tim. A. - Tom L.Valgard - Werner O. - WyattFlash<br/>
 
 **All YouTube - Discord - GitHub - Twitter - Facebook followers and viewers**  
