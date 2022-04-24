@@ -5,7 +5,7 @@
 [![Docs](https://img.shields.io/badge/docs-wiki-blue)]()
 [![Discord channel](https://img.shields.io/discord/622797245368238082?logo=discord)](https://discord.gg/RymBzwKPyZ)
 [![Patreon](https://img.shields.io/badge/donate-patreon-orange)](https://www.patreon.com/pardcode)
-[![YouTube](https://img.shields.io/badge/tutorial-youtube-red)](https://www.youtube.com/channel/UCs1ssVSR49YItKE7DZ3-Jcw)
+[![YouTube](https://img.shields.io/badge/tutorial-youtube-red)](https://www.youtube.com/PardCode)
 
 
 ## An easy to use C++ 3D Game Framework
