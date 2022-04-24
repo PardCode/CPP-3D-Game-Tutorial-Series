@@ -1,4 +1,4 @@
-![CX3D Framework](cx3d_logo.png)
+![CX3D Framework](Media/cx3d_logo.png)
 
 [![CPP17](https://img.shields.io/badge/c++-17-blue)]()
 [![Build Status](https://github.com/skypjack/entt/workflows/build/badge.svg)]()
@@ -9,7 +9,7 @@
 
 
 ## An easy to use C++ 3D Game Framework
-![CX3D Framework](cx3d_screen.jpg)
+![CX3D Framework](Media/cx3d_screen.jpg)
 The `CX3D Framework` is an easy to use Game Framework for the development of 3D Games in C++.<br>
 The framework is written in C++ 17 and it provides a set of features that allow the users to make games quickly at low-level.<br> 
 At the same time, the users can improve `CX3D` by adding new functionalities or extending the existing ones.<br>
