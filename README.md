@@ -44,7 +44,7 @@ The license is available [here](#license).
 * Phong-Based Lighting
 * Static Meshes Support: `.obj` (all formats supported by `tinyobjloader`)
 * Textures Support: `.jpg`,`.png`,`.bmp`,`.tga` etc. (all formats supported by `DirectXTex`) 
-* Materials Support: `HLSL` Shader Language, Textures, Custom Data Passage
+* Materials Support: `HLSL` Shading Language, Textures, Custom Data Passage
 
 **Input Manager**
 * Mouse Input Events Support
