@@ -1,6 +1,6 @@
 /*MIT License
 
-C++ 3D Game Tutorial Series (https://github.com/PardCode/CPP-3D-Game-Tutorial-Series)
+CX3D Game Framework (https://github.com/PardCode/CX3D)
 
 Copyright (c) 2019-2022, PardCode
 
@@ -23,9 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <DX3D/All.h>
+#include <CX3D/All.h>
 
-class Projectile: public DMeshEntity
+class Projectile: public CXMeshEntity
 {
 public:
 	Projectile();
@@ -34,7 +34,7 @@ public:
 	virtual void onCreate();
 	virtual void onUpdate(f32 deltaTime);
 
-	DVec3 m_dir;
+	CXVec3 m_dir;
 	f32 m_elapsed = 0.0f;
 
 };

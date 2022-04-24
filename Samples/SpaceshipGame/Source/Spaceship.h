@@ -1,6 +1,6 @@
 /*MIT License
 
-C++ 3D Game Tutorial Series (https://github.com/PardCode/CPP-3D-Game-Tutorial-Series)
+CX3D Game Framework (https://github.com/PardCode/CX3D)
 
 Copyright (c) 2019-2022, PardCode
 
@@ -23,9 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <DX3D/All.h>
+#include <CX3D/All.h>
 
-class Spaceship: public DMeshEntity
+class Spaceship: public CXMeshEntity
 {
 public:
 	Spaceship();
@@ -54,6 +54,6 @@ private:
 	f32 m_cam_distance = 18.0f;
 
 
-	DCameraEntity* m_camera = nullptr;
+	CXCameraEntity* m_camera = nullptr;
 };
 

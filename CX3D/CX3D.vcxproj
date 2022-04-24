@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{522F7BB1-43C6-4BC2-A048-B8153727BE78}</ProjectGuid>
+    <RootNamespace>CX3D</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>CX3D</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)Bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)Intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)vendor/DirectXTex/include;$(ProjectDir)vendor/tinyobjloader/include;$(ProjectDir)include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)vendor/DirectXTex/bin;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)Bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)Intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)vendor/DirectXTex/include;$(ProjectDir)vendor/tinyobjloader/include;$(ProjectDir)include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)vendor/DirectXTex/bin;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DirectXTexD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /E /C "$(ProjectDir)assets" "$(ProjectDir)Bin\$(Platform)\$(Configuration)\Engine\"</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DirectXTexD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /E /C "$(ProjectDir)assets" "$(ProjectDir)Bin\$(Platform)\$(Configuration)\Engine\"</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="source\CX3D\Game\CXEntity.cpp" />
+    <ClCompile Include="source\CX3D\Game\CXCameraEntity.cpp" />
+    <ClCompile Include="source\CX3D\Game\CXDisplay.cpp" />
+    <ClCompile Include="source\CX3D\Game\CXMeshEntity.cpp" />
+    <ClCompile Include="source\CX3D\Game\CXGame.cpp" />
+    <ClCompile Include="source\CX3D\Game\CXLightEntity.cpp" />
+    <ClCompile Include="source\CX3D\Graphics\CXConstantBuffer.cpp" />
+    <ClCompile Include="source\CX3D\Graphics\CXGraphicsEngine.cpp" />
+    <ClCompile Include="source\CX3D\Graphics\CXIndexBuffer.cpp" />
+    <ClCompile Include="source\CX3D\Graphics\CXPixelShader.cpp" />
+    <ClCompile Include="source\CX3D\Graphics\CXSwapChain.cpp" />
+    <ClCompile Include="source\CX3D\Graphics\CXVertexBuffer.cpp" />
+    <ClCompile Include="source\CX3D\Graphics\CXVertexShader.cpp" />
+    <ClCompile Include="source\CX3D\Input\CXInputManager.cpp" />
+    <ClCompile Include="source\CX3D\Resource\CXMaterial.cpp" />
+    <ClCompile Include="source\CX3D\Resource\CXMaterialManager.cpp" />
+    <ClCompile Include="source\CX3D\Resource\CXMesh.cpp" />
+    <ClCompile Include="source\CX3D\Resource\CXMeshManager.cpp" />
+    <ClCompile Include="source\CX3D\Resource\CXResource.cpp" />
+    <ClCompile Include="source\CX3D\Resource\CXResourceManager.cpp" />
+    <ClCompile Include="source\CX3D\Resource\CXTexture.cpp" />
+    <ClCompile Include="source\CX3D\Resource\CXTextureManager.cpp" />
+    <ClCompile Include="source\CX3D\Window\CXWindow.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\CX3D\Resource\CXGraphicsManager.h" />
+    <ClInclude Include="include\CX3D\All.h" />
+    <ClInclude Include="include\CX3D\Game\CXEntity.h" />
+    <ClInclude Include="include\CX3D\Game\CXCameraEntity.h" />
+    <ClInclude Include="include\CX3D\Game\CXDisplay.h" />
+    <ClInclude Include="include\CX3D\Game\CXMeshEntity.h" />
+    <ClInclude Include="include\CX3D\Game\CXGame.h" />
+    <ClInclude Include="include\CX3D\Game\CXLightEntity.h" />
+    <ClInclude Include="include\CX3D\Graphics\CXConstantBuffer.h" />
+    <ClInclude Include="include\CX3D\Graphics\CXGraphicsEngine.h" />
+    <ClInclude Include="include\CX3D\Graphics\CXIndexBuffer.h" />
+    <ClInclude Include="include\CX3D\Graphics\CXPixelShader.h" />
+    <ClInclude Include="include\CX3D\Graphics\CXSwapChain.h" />
+    <ClInclude Include="include\CX3D\Graphics\CXVertexBuffer.h" />
+    <ClInclude Include="include\CX3D\Graphics\CXVertexShader.h" />
+    <ClInclude Include="include\CX3D\Input\CXInputManager.h" />
+    <ClInclude Include="include\CX3D\Math\CXMat4.h" />
+    <ClInclude Include="include\CX3D\Math\CXRect.h" />
+    <ClInclude Include="include\CX3D\Math\CXVec2.h" />
+    <ClInclude Include="include\CX3D\Math\CXVec3.h" />
+    <ClInclude Include="include\CX3D\Math\CXVec4.h" />
+    <ClInclude Include="include\CX3D\Math\CXVertexMesh.h" />
+    <ClInclude Include="include\CX3D\CXPrerequisites.h" />
+    <ClInclude Include="include\CX3D\Resource\CXMaterial.h" />
+    <ClInclude Include="include\CX3D\Resource\CXMaterialManager.h" />
+    <ClInclude Include="include\CX3D\Resource\CXMesh.h" />
+    <ClInclude Include="include\CX3D\Resource\CXMeshManager.h" />
+    <ClInclude Include="include\CX3D\Resource\CXResource.h" />
+    <ClInclude Include="include\CX3D\Resource\CXResourceManager.h" />
+    <ClInclude Include="include\CX3D\Resource\CXTexture.h" />
+    <ClInclude Include="include\CX3D\Resource\CXTextureManager.h" />
+    <ClInclude Include="include\CX3D\Window\CXWindow.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

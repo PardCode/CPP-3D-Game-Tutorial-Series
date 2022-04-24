@@ -1,6 +1,6 @@
 /*MIT License
 
-C++ 3D Game Tutorial Series (https://github.com/PardCode/CPP-3D-Game-Tutorial-Series)
+CX3D Game Framework (https://github.com/PardCode/CX3D)
 
 Copyright (c) 2019-2022, PardCode
 
@@ -48,7 +48,7 @@ void Spaceship::onCreate()
 	addMaterial(mat);
 
 	//Create the camera that follows the spaceship
-	m_camera = m_game->createEntity<DCameraEntity>();
+	m_camera = m_game->createEntity<CXCameraEntity>();
 	m_camera->setFarPlane(40000.0f);
 }
 
@@ -61,23 +61,23 @@ void Spaceship::onUpdate(f32 deltaTime)
 	bool turbo = false;
 
 	//Spaceship controls
-	if (m_game->getInputManager()->isKeyDown(DKey::W))
+	if (m_game->getInputManager()->isKeyDown(CXKey::W))
 	{
 		forward = 1.0f;
 	}
-	if (m_game->getInputManager()->isKeyDown(DKey::S))
+	if (m_game->getInputManager()->isKeyDown(CXKey::S))
 	{
 		forward = -1.0f;
 	}
-	if (m_game->getInputManager()->isKeyDown(DKey::A))
+	if (m_game->getInputManager()->isKeyDown(CXKey::A))
 	{
 		rightward = -1.0f;
 	}
-	if (m_game->getInputManager()->isKeyDown(DKey::D))
+	if (m_game->getInputManager()->isKeyDown(CXKey::D))
 	{
 		rightward = 1.0f;
 	}
-	if (m_game->getInputManager()->isKeyDown(DKey::Shift))
+	if (m_game->getInputManager()->isKeyDown(CXKey::Shift))
 	{
 		speed = 3.0f;
 		turbo = true;
@@ -104,8 +104,8 @@ void Spaceship::onUpdate(f32 deltaTime)
 		m_cam_distance = 18.0f;
 	}
 
-	auto vec = DVec3::lerp(DVec3(m_current_cam_distance,0,0),
-		DVec3(m_cam_distance,0,0), 2.0f * deltaTime);
+	auto vec = CXVec3::lerp(CXVec3(m_current_cam_distance,0,0),
+		CXVec3(m_cam_distance,0,0), 2.0f * deltaTime);
 	m_current_cam_distance = vec.x;
 
 
@@ -118,20 +118,20 @@ void Spaceship::onUpdate(f32 deltaTime)
 		m_pitch = 1.57f;
 	
 	
-	auto curr = DVec3::lerp(DVec3(m_oldPitch, m_oldYaw, 0), DVec3(m_pitch, m_yaw, 0), 5.0f * deltaTime);
+	auto curr = CXVec3::lerp(CXVec3(m_oldPitch, m_oldYaw, 0), CXVec3(m_pitch, m_yaw, 0), 5.0f * deltaTime);
 	m_oldPitch = curr.x;
 	m_oldYaw = curr.y;
 
-	setRotation(DVec3(m_oldPitch, m_oldYaw, 0));
+	setRotation(CXVec3(m_oldPitch, m_oldYaw, 0));
 
-	auto curr_cam = DVec3::lerp(DVec3(m_camPitch, m_camYaw, 0), DVec3(m_pitch, m_yaw, 0), 3.0f * deltaTime);
+	auto curr_cam = CXVec3::lerp(CXVec3(m_camPitch, m_camYaw, 0), CXVec3(m_pitch, m_yaw, 0), 3.0f * deltaTime);
 	m_camPitch = curr_cam.x;
 	m_camYaw = curr_cam.y;
 
-	m_camera->setRotation(DVec3(m_camPitch, m_camYaw, 0));
+	m_camera->setRotation(CXVec3(m_camPitch, m_camYaw, 0));
 
 
-	DMat4 w;
+	CXMat4 w;
 	getWorldMatrix(w);
 	auto zdir = w.getZDirection();
 	auto xdir = w.getXDirection();
@@ -142,20 +142,20 @@ void Spaceship::onUpdate(f32 deltaTime)
 	setPosition(pos);
 
 
-	DMat4 w2;
+	CXMat4 w2;
 	m_camera->getWorldMatrix(w2);
 	 zdir = w2.getZDirection();
 	 xdir = w2.getXDirection();
 	 ydir = w2.getYDirection();
 
 
-	auto camPos = DVec3(pos + zdir * -m_current_cam_distance);
+	auto camPos = CXVec3(pos + zdir * -m_current_cam_distance);
 	camPos = camPos + ydir * 6.5f;
 
 	m_camera->setPosition(camPos);
 
 	//On left mouse click, spawn the projectile along the spaceship direction
-	if (m_game->getInputManager()->isMouseUp(DMouseButton::Left))
+	if (m_game->getInputManager()->isMouseUp(CXMouseButton::Left))
 	{
 		auto proj = m_game->createEntity<Projectile>();
 		proj->m_dir = zdir;

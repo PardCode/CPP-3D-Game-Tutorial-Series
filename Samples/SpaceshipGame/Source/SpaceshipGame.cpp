@@ -1,6 +1,6 @@
 /*MIT License
 
-C++ 3D Game Tutorial Series (https://github.com/PardCode/CPP-3D-Game-Tutorial-Series)
+CX3D Game Framework (https://github.com/PardCode/CX3D)
 
 Copyright (c) 2019-2022, PardCode
 
@@ -37,7 +37,7 @@ SpaceshipGame::~SpaceshipGame()
 
 void SpaceshipGame::onCreate()
 {
-	setTitle(L"PardCode | DirectX 3D Game");
+	setTitle(L"Spaceship Game");
 
 	//Adding SkyBox
 	{
@@ -45,26 +45,26 @@ void SpaceshipGame::onCreate()
 		auto mesh = createMesh(L"Assets/Meshes/sphere.obj");
 		auto mat = createMaterial(L"Assets/Shaders/skybox.hlsl");
 		mat->addTexture(tex);
-		mat->setCullMode(DCullMode::Front);
+		mat->setCullMode(CXCullMode::Front);
 
-		auto entity = createEntity<DMeshEntity>();
+		auto entity = createEntity<CXMeshEntity>();
 		entity->setMesh(mesh);
 		entity->addMaterial(mat);
-		entity->setScale(DVec3(20000, 20000, 20000));
+		entity->setScale(CXVec3(20000, 20000, 20000));
 	}
 
 	//Adding DLightEntity
 	{
-		auto entity = createEntity<DLightEntity>();
-		entity->setColor(DVec3(1, 1, 1));
-		entity->setRotation(DVec3(-0.707f, 0.707f, 0));
+		auto entity = createEntity<CXLightEntity>();
+		entity->setColor(CXVec3(1, 1, 1));
+		entity->setRotation(CXVec3(-0.707f, 0.707f, 0));
 	}
 
 	//Adding DLightEntity
 	{
-		auto entity = createEntity<DLightEntity>();
-		entity->setColor(DVec3(1, 0, 0));
-		entity->setRotation(DVec3(0.707f, 0.707f, 0));
+		auto entity = createEntity<CXLightEntity>();
+		entity->setColor(CXVec3(1, 0, 0));
+		entity->setRotation(CXVec3(0.707f, 0.707f, 0));
 	}
 
 	//Adding Asteroids
@@ -78,14 +78,14 @@ void SpaceshipGame::onCreate()
 
 		for (unsigned int i = 0; i < 200; i++)
 		{
-			auto entity = createEntity<DMeshEntity>();
+			auto entity = createEntity<CXMeshEntity>();
 			entity->setMesh(mesh);
 			entity->addMaterial(mat);
 			
-			entity->setPosition(DVec3((rand() % 4000) + (-2000.0f), (rand() % 4000) + (-2000.0f), (rand() % 4000) + (-2000.0f)));
-			entity->setRotation(DVec3((rand() % 628) / 100.0f, (rand() % 628) / 100.0f, (rand() % 628) / 100.0f));
+			entity->setPosition(CXVec3((rand() % 4000) + (-2000.0f), (rand() % 4000) + (-2000.0f), (rand() % 4000) + (-2000.0f)));
+			entity->setRotation(CXVec3((rand() % 628) / 100.0f, (rand() % 628) / 100.0f, (rand() % 628) / 100.0f));
 			float scale = rand() % 20 + (1.0f);
-			entity->setScale(DVec3(scale, scale, scale));
+			entity->setScale(CXVec3(scale, scale, scale));
 		}
 	}
 	//Adding Spaceship
@@ -99,7 +99,7 @@ void SpaceshipGame::onCreate()
 
 void SpaceshipGame::onUpdate(f32 deltaTime)
 {
-	if(getInputManager()->isKeyUp(DKey::Escape))
+	if(getInputManager()->isKeyUp(CXKey::Escape))
 	{
 		m_input = !m_input;
 		getInputManager()->enablePlayMode(m_input);

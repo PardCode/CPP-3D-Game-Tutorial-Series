@@ -81,15 +81,15 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)../../DX3D/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../../DX3D/Bin/$(Platform)/$(Configuration)/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)../../CX3D/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)../../CX3D/Bin/$(Platform)/$(Configuration)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)../../DX3D/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../../DX3D/Bin/$(Platform)/$(Configuration)/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)../../CX3D/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)../../CX3D/Bin/$(Platform)/$(Configuration)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -131,12 +131,12 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>DX3D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CX3D.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y /E /C "$(ProjectDir)Assets" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Assets\"
-xcopy /Y /E /C "$(SolutionDir)..\..\DX3D\Bin\$(Platform)\$(Configuration)\Engine" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Engine\"</Command>
+xcopy /Y /E /C "$(ProjectDir)..\..\CX3D\Bin\$(Platform)\$(Configuration)\Engine" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Engine\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,12 +155,12 @@ xcopy /Y /E /C "$(SolutionDir)..\..\DX3D\Bin\$(Platform)\$(Configuration)\Engine
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>DX3D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CX3D.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y /E /C "$(ProjectDir)Assets" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Assets\"
-xcopy /Y /E /C "$(SolutionDir)..\..\DX3D\Bin\$(Platform)\$(Configuration)\Engine" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Engine\"</Command>
+xcopy /Y /E /C "$(ProjectDir)..\..\CX3D\Bin\$(Platform)\$(Configuration)\Engine" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Engine\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

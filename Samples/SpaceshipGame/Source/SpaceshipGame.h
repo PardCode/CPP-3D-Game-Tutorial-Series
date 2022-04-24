@@ -1,6 +1,6 @@
 /*MIT License
 
-C++ 3D Game Tutorial Series (https://github.com/PardCode/CPP-3D-Game-Tutorial-Series)
+CX3D Game Framework (https://github.com/PardCode/CX3D)
 
 Copyright (c) 2019-2022, PardCode
 
@@ -24,9 +24,9 @@ SOFTWARE.*/
 
 #pragma once
 
-#include <DX3D/Game/DGame.h>
+#include <CX3D/All.h>
 
-class SpaceshipGame: public DGame
+class SpaceshipGame: public CXGame
 {
 public:
 	SpaceshipGame();

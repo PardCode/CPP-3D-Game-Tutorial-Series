@@ -1,6 +1,6 @@
 /*MIT License
 
-C++ 3D Game Tutorial Series (https://github.com/PardCode/CPP-3D-Game-Tutorial-Series)
+CX3D Game Framework (https://github.com/PardCode/CX3D)
 
 Copyright (c) 2019-2022, PardCode
 
@@ -42,7 +42,7 @@ void Projectile::onCreate()
 	setMesh(mesh);
 	addMaterial(mat);
 
-	setScale(DVec3(2, 2, 2));
+	setScale(CXVec3(2, 2, 2));
 }
 
 void Projectile::onUpdate(f32 deltaTime)
