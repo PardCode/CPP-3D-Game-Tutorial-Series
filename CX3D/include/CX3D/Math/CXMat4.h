@@ -155,15 +155,15 @@ public:
 		::memcpy(m_mat, m_matrix.m_mat, sizeof(m_mat));
 	}
 
- CXVec3 getXDirection()
+ CXVec3 getRightwardDirection()
 	{
 		return CXVec3(m_mat[0][0], m_mat[0][1], m_mat[0][2]);
 	}
- CXVec3 getYDirection()
+ CXVec3 getUpDirection()
 	{
 		return CXVec3(m_mat[1][0], m_mat[1][1], m_mat[1][2]);
 	}
- CXVec3 getZDirection()
+ CXVec3 getForwardDirection()
 	{
 		return CXVec3(m_mat[2][0], m_mat[2][1], m_mat[2][2]);
 	}
@@ -182,6 +182,8 @@ public:
 		m_mat[2][2] = zfar / (zfar - znear);
 		m_mat[2][3] = 1.0f;
 		m_mat[3][2] = (-znear*zfar)/ (zfar - znear);
+		m_mat[3][3] = 0.0f;
+
 	}
 
 

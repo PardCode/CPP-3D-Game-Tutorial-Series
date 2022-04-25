@@ -67,6 +67,7 @@ enum class  CXKey
 {
 	 Escape = 0,
 	 Shift,
+	 Space,
 	 A,
 	 B,
 	 C,

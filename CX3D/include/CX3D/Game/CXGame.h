@@ -106,6 +106,8 @@ private:
 	//m_entitiesToDestroy set handles the entities that have been marked for destroy.
 	std::set<CXEntity*> m_entitiesToDestroy;
 	//------------------------------------------
+	f32 m_avgDt = 0.0f;
+	unsigned long long m_avgCount = 0;
 
 	std::chrono::system_clock::time_point m_oldTime;
 

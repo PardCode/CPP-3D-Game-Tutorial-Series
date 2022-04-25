@@ -133,9 +133,9 @@ void Spaceship::onUpdate(f32 deltaTime)
 
 	CXMat4 w;
 	getWorldMatrix(w);
-	auto zdir = w.getZDirection();
-	auto xdir = w.getXDirection();
-	auto ydir = w.getYDirection();
+	auto zdir = w.getForwardDirection();
+	auto xdir = w.getRightwardDirection();
+	auto ydir = w.getUpDirection();
 	
 
 	auto pos = m_position + zdir * forward * deltaTime * 100.0f * speed;
@@ -144,9 +144,9 @@ void Spaceship::onUpdate(f32 deltaTime)
 
 	CXMat4 w2;
 	m_camera->getWorldMatrix(w2);
-	 zdir = w2.getZDirection();
-	 xdir = w2.getXDirection();
-	 ydir = w2.getYDirection();
+	 zdir = w2.getForwardDirection();
+	 xdir = w2.getRightwardDirection();
+	 ydir = w2.getUpDirection();
 
 
 	auto camPos = CXVec3(pos + zdir * -m_current_cam_distance);

@@ -163,7 +163,7 @@ void CXGame::onGraphicsUpdate(f32 deltaTime)
                 CXMat4 w;
                 auto l = dynamic_cast<CXLightEntity*>(light.get());
                 light->getWorldMatrix(w);
-                gdata.lights[i].lightDirection = w.getZDirection();
+                gdata.lights[i].lightDirection = w.getForwardDirection();
                 gdata.lights[i].lightColor = l->getColor();
                 i++;
             }
@@ -181,8 +181,6 @@ void CXGame::onGraphicsUpdate(f32 deltaTime)
         //for each graphics entity
         for (auto& [key, entity] : entities)
         {
-            //  auto e = dynamic_cast<CXMeshEntity*>(entity.get());
-
             if (auto e = dynamic_cast<CXMeshEntity*>(entity.get()))
             {
                 e->getWorldMatrix(gdata.world);
@@ -265,7 +263,7 @@ void CXGame::run()
     {
         MSG msg;
         //WINDOW PROCESSING
-        if (PeekMessage(&msg, HWND(), 0, 0, PM_REMOVE))
+        while (PeekMessage(&msg, HWND(), 0, 0, PM_REMOVE))
         {
             if (msg.message == WM_QUIT)
             {
@@ -307,7 +305,21 @@ void CXGame::onUpdateInternal()
         elapsedSeconds = std::chrono::duration<double>();
     m_oldTime = now; // store the current time in order to be used in the next frame
 
-    f32 deltaTime = (f32)elapsedSeconds.count();
+
+
+    //computing average delta time (dt more stable)
+    //WIP To fix yet.
+    m_avgDt += (f32)elapsedSeconds.count();
+    m_avgCount++;
+
+    f32 deltaTime = m_avgDt / m_avgCount;
+    
+    unsigned long long max =  -1;
+    if (m_avgCount == 2000)
+    {
+        m_avgCount = 0;
+        m_avgDt = (f32)elapsedSeconds.count();
+    }
     //---------------------------------------------
 
     //destroy the entities that have been release in the previous iteration
@@ -320,7 +332,6 @@ void CXGame::onUpdateInternal()
     }
     m_entitiesToDestroy.clear();
     //----------------------------------
-
 
     //update game and entities
     //----------------------------------

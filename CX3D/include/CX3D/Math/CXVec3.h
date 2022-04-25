@@ -58,7 +58,7 @@ public:
 
 	f32 length() const
 	{
-		return (f32)sqrt(x * x + y * y + z * z);
+		return (f32)sqrt((x * x) + (y * y) + (z * z));
 	}
 
 	static CXVec3 normalize(const  CXVec3& vec)

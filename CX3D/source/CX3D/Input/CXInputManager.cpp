@@ -35,13 +35,15 @@ bool CXInputManager::isKeyDown(const  CXKey& key)
 	short keyWin = 0;
 
 	if (key >= CXKey::A && key <= CXKey::Z)
-		keyWin = 'A' + ((short)key - 2);
+		keyWin = 'A' + ((short)key - (short)CXKey::A);
 	else if (key >= CXKey::N0 && key <= CXKey::N9)
-		keyWin = '0' + ((short)key - 28);
+		keyWin = '0' + ((short)key - (short)CXKey::N0);
 	else if (key == CXKey::Shift)
 		keyWin = VK_SHIFT;
 	else if (key == CXKey::Escape)
 		keyWin = VK_ESCAPE;
+	else if (key == CXKey::Space)
+		keyWin = VK_SPACE;
 
 	return  (m_keys_state_res[keyWin] == 0);
 }
@@ -58,6 +60,8 @@ bool CXInputManager::isKeyUp(const  CXKey& key)
 		keyWin = VK_SHIFT;
 	else if (key == CXKey::Escape)
 		keyWin = VK_ESCAPE;
+	else if (key == CXKey::Space)
+		keyWin = VK_SPACE;
 
 	return  (m_keys_state_res[keyWin] == 1);
 }
