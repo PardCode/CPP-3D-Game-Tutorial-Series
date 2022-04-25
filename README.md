@@ -29,6 +29,7 @@ However, these branches must be considered completely unrelated to the framework
 The license is available [here](#license).
 
 ## Features
+![CX3D Framework](Media/cx3d_screen2.jpg)
 `CX3D Framework` is currently composed by the following (yet incomplete) list of features:
 
 **Game System**
