@@ -28,8 +28,7 @@ SOFTWARE.*/
 #include <CX3D/Graphics/CXVertexBuffer.h>
 #include <CX3D/Graphics/CXIndexBuffer.h>
 #include <CX3D/Graphics/CXConstantBuffer.h>
-#include <CX3D/Graphics/CXVertexShader.h>
-#include <CX3D/Graphics/CXPixelShader.h>
+#include <CX3D/Graphics/CXShader.h>
 #include <CX3D/Resource/CXMaterial.h>
 #include <CX3D/Resource/CXTexture.h>
 #include <d3dcompiler.h>
@@ -119,32 +118,9 @@ CXConstantBufferPtr CXGraphicsEngine::createConstantBuffer(const CXConstantBuffe
 	return std::make_shared<CXConstantBuffer>(desc, this);
 }
 
-
-CXVertexShaderPtr CXGraphicsEngine::createVertexShader(const wchar_t* file_name, const char* entry_point_name)
+CXShaderPtr CXGraphicsEngine::createShader(const CXShaderDesc& desc)
 {
-	ID3DBlob* blob = nullptr;
-	ID3DBlob* error_blob = nullptr;
-	if (!SUCCEEDED(D3DCompileFromFile(file_name, nullptr, nullptr, entry_point_name, "vs_5_0", 0, 0, &blob, &error_blob)))
-	{
-		throw std::runtime_error((char*)error_blob->GetBufferPointer());
-		//if (error_blob) error_blob->Release();
-		return CXVertexShaderPtr();
-	}
-
-	return std::make_shared<CXVertexShader>(blob->GetBufferPointer(), blob->GetBufferSize(), this);
-}
-
-CXPixelShaderPtr CXGraphicsEngine::createPixelShader(const wchar_t* file_name, const char* entry_point_name)
-{
-	ID3DBlob* blob = nullptr;
-	ID3DBlob* error_blob = nullptr;
-	if (!SUCCEEDED(D3DCompileFromFile(file_name, nullptr, nullptr, entry_point_name, "ps_5_0", 0, 0, &blob, &error_blob)))
-	{
-		throw std::runtime_error((char*)error_blob->GetBufferPointer());
-		return CXPixelShaderPtr();
-	}
-
-	return std::make_shared<CXPixelShader>(blob->GetBufferPointer(), blob->GetBufferSize(), this);
+	return std::make_shared<CXShader>(desc, this);
 }
 
 
@@ -160,10 +136,35 @@ void CXGraphicsEngine::compilePrivateShaders()
 {
 	ID3DBlob* blob = nullptr;
 	ID3DBlob* error_blob = nullptr;
-	if (!SUCCEEDED(D3DCompileFromFile(L"Engine/Shaders/VertexMeshLayoutShader.hlsl", nullptr, nullptr, "vsmain", "vs_5_0", 0, 0, &blob, &error_blob)))
+
+	auto layoutCode = R"(
+			struct VS_INPUT
+			{
+				float4 position: POSITION0;
+				float2 texcoord: TEXCOORD0;
+				float3 normal: NORMAL0;
+				float3 tangent: TANGENT0;
+				float3 binormal: BINORMAL0;
+			};
+
+			struct VS_OUTPUT
+			{
+				float4 position: SV_POSITION;
+				float2 texcoord: TEXCOORD0;
+			};
+
+			VS_OUTPUT vsmain(VS_INPUT input)
+			{
+				VS_OUTPUT output = (VS_OUTPUT)0;
+				return output;
+			}
+		)";
+
+	auto codeLength = strlen(layoutCode);
+	if (FAILED(D3DCompile(layoutCode, codeLength,"VertexMeshLayoutShader", nullptr, nullptr, "vsmain", "vs_5_0", 0, 0, &blob, &error_blob)))
 	{
 		if (error_blob) error_blob->Release();
-		throw std::runtime_error("Error during shaders building");
+		CX3D_ERROR("VertexMeshLayoutShader compiled with errors.");
 	}
 
 	::memcpy(m_meshLayoutByteCode, blob->GetBufferPointer(), blob->GetBufferSize());
@@ -259,19 +260,14 @@ void CXGraphicsEngine::setViewportSize(ui32 width, ui32 height)
 	m_immContext->RSSetViewports(1, &vp);
 }
 
-void CXGraphicsEngine::setVertexShader(const  CXVertexShaderPtr& vertex_shader)
+void CXGraphicsEngine::setShader(const CXShaderPtr& shader)
 {
-	m_immContext->VSSetShader((ID3D11VertexShader*)vertex_shader->m_vs.Get(), nullptr, 0);
+	m_immContext->VSSetShader((ID3D11VertexShader*)shader->getVertexShader(), nullptr, 0);
+	m_immContext->PSSetShader((ID3D11PixelShader*)shader->getPixelShader(), nullptr, 0);
 }
 
-void CXGraphicsEngine::setPixelShader(const  CXPixelShaderPtr& pixel_shader)
+void CXGraphicsEngine::setTexture(const  CXTexturePtr* texture, unsigned int num_textures)
 {
-	m_immContext->PSSetShader((ID3D11PixelShader*)pixel_shader->m_ps.Get(), nullptr, 0);
-}
-
-void CXGraphicsEngine::setTexture(const  CXVertexShaderPtr& vertex_shader, const  CXTexturePtr* texture, unsigned int num_textures)
-{
-
 	ID3D11ShaderResourceView* list_res[32];
 	ID3D11SamplerState* list_sampler[32];
 	for (unsigned int i = 0; i < num_textures; i++)
@@ -279,55 +275,32 @@ void CXGraphicsEngine::setTexture(const  CXVertexShaderPtr& vertex_shader, const
 		list_res[i] = (ID3D11ShaderResourceView*)texture[i]->m_shader_res_view.Get();
 		list_sampler[i] = (ID3D11SamplerState*)texture[i]->m_sampler_state.Get();
 	}
+
 	m_immContext->VSSetShaderResources(0, num_textures, list_res);
 	m_immContext->VSSetSamplers(0, num_textures, list_sampler);
-}
-
-void CXGraphicsEngine::setTexture(const  CXPixelShaderPtr& pixel_shader, const  CXTexturePtr* texture, unsigned int num_textures)
-{
-
-	ID3D11ShaderResourceView* list_res[32];
-	ID3D11SamplerState* list_sampler[32];
-	for (unsigned int i = 0; i < num_textures; i++)
-	{
-		list_res[i] = (ID3D11ShaderResourceView*)texture[i]->m_shader_res_view.Get();
-		list_sampler[i] = (ID3D11SamplerState*)texture[i]->m_sampler_state.Get();
-	}
 	m_immContext->PSSetShaderResources(0, num_textures, list_res);
 	m_immContext->PSSetSamplers(0, num_textures, list_sampler);
 }
 
-void CXGraphicsEngine::setConstantBuffer(const  CXVertexShaderPtr& vertex_shader, const  CXConstantBufferPtr& buffer)
+void CXGraphicsEngine::setConstantBuffer(const  CXConstantBufferPtr& buffer)
 {
 	auto buf = reinterpret_cast<ID3D11Buffer*>(buffer->getBuffer());
 	m_immContext->VSSetConstantBuffers(0, 1, &buf);
-}
-
-void CXGraphicsEngine::setConstantBuffer(const  CXPixelShaderPtr& pixel_shader, const  CXConstantBufferPtr& buffer)
-{
-	auto buf = reinterpret_cast<ID3D11Buffer*>(buffer->getBuffer());
 	m_immContext->PSSetConstantBuffers(0, 1, &buf);
 }
-
-
 
 void CXGraphicsEngine::setMaterial(const  CXMaterialPtr& material)
 {
 	setRasterizerState((material->m_cull_mode == CXCullMode::Front));
 
 	if (material->m_constant_buffer)
-	{
-		setConstantBuffer(material->m_vertex_shader, material->m_constant_buffer);
-		setConstantBuffer(material->m_pixel_shader, material->m_constant_buffer);
-	}
-	//SET CXEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO CXRAW
-	setVertexShader(material->m_vertex_shader);
-	setPixelShader(material->m_pixel_shader);
+		setConstantBuffer(material->m_constant_buffer);
+
+	setShader(material->m_shader);
 
 	if (material->m_vec_textures.size())
-	{
-		setTexture(material->m_pixel_shader, &material->m_vec_textures[0], (UINT)material->m_vec_textures.size());
-	}
+		setTexture(&material->m_vec_textures[0], (UINT)material->m_vec_textures.size());
+	
 }
 
 void CXGraphicsEngine::drawMesh(const  CXMeshPtr& mesh, const std::vector<CXMaterialPtr>& list_materials)
@@ -339,11 +312,8 @@ void CXGraphicsEngine::drawMesh(const  CXMeshPtr& mesh, const std::vector<CXMate
 		CXMaterialSlot mat = mesh->getMaterialSlot(m);
 
 		setMaterial(list_materials[m]);
-		//SET THE VERTICES OF THE TRIANGLE TO CXRAW
 		setVertexBuffer(mesh->getVertexBuffer());
-		//SET THE INDICES OF THE TRIANGLE TO CXRAW
 		setIndexBuffer(mesh->getIndexBuffer());
-		// FINALLY CXRAW THE TRIANGLE
 		drawIndexedTriangleList((UINT)mat.num_indices, 0, (UINT)mat.start_index);
 	}
 }

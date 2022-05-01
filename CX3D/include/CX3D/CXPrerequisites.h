@@ -24,13 +24,14 @@ SOFTWARE.*/
 
 #pragma once
 #include <memory>
+#include <sstream>
+#include <iostream>
+#include <stdexcept>
 
 class  CXSwapChain;
 class  CXVertexBuffer;
 class  CXIndexBuffer;
 class  CXConstantBuffer;
-class  CXVertexShader;
-class  CXPixelShader;
 class  CXGraphicsEngine;
 class  CXResource;
 class  CXResourceManager;
@@ -40,19 +41,17 @@ class  CXMesh;
 class  CXMeshManager;
 class  CXMaterial;
 class  CXWindow;
-class  CXMeshEntity;
+class  CXShader;
 
 typedef std::shared_ptr<CXSwapChain> CXSwapChainPtr;
 typedef std::shared_ptr<CXVertexBuffer> CXVertexBufferPtr;
 typedef std::shared_ptr<CXIndexBuffer> CXIndexBufferPtr;
 typedef std::shared_ptr<CXConstantBuffer> CXConstantBufferPtr;
-typedef std::shared_ptr<CXVertexShader> CXVertexShaderPtr;
-typedef std::shared_ptr<CXPixelShader> CXPixelShaderPtr;
 typedef std::shared_ptr<CXResource> CXResourcePtr;
 typedef std::shared_ptr<CXTexture> CXTexturePtr;
 typedef std::shared_ptr<CXMesh> CXMeshPtr;
 typedef std::shared_ptr<CXMaterial> CXMaterialPtr;
-
+typedef std::shared_ptr<CXShader> CXShaderPtr;
 
 typedef unsigned int ui32;
 typedef int i32;
@@ -164,9 +163,31 @@ struct CXIndexBufferDesc
 	ui32 listSize = 0;
 };
 
-
+struct CXShaderDesc
+{
+	const wchar_t* vertexShaderFilePath;
+	const char* vertexShaderEntryPointName;
+	
+	const wchar_t* pixelShaderFilePath;
+	const char* pixelShaderEntryPointName;
+};
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <d3d11.h>
 #include <wrl.h>
 #endif
+
+
+#define CX3D_ERROR(message)\
+{\
+std::stringstream m;\
+m << "CX3D Error: " << message << std::endl;\
+throw std::runtime_error(m.str());\
+}
+
+#define CX3D_WARNING(message)\
+std::wclog << "CX3D Warning: " << message << std::endl;
+
+
+#define CX3D_INFO(message)\
+std::wclog << "CX3D Info: " << message << std::endl;

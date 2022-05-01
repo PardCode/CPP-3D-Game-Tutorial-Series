@@ -25,14 +25,16 @@ SOFTWARE.*/
 #pragma once
 #include <CX3D/CXPrerequisites.h>
 
-class  CXPixelShader
+class  CXShader
 {
 public:
-	CXPixelShader(const void* shader_byte_code, size_t byte_code_size, CXGraphicsEngine* system);
-private:
-	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_ps;
-	CXGraphicsEngine* m_system = nullptr;
-private:
-	friend class  CXGraphicsEngine;
+	CXShader(const CXShaderDesc& desc, CXGraphicsEngine* system);
 
+
+	void* getVertexShader();
+	void* getPixelShader();
+private:
+	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
+	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
+	CXGraphicsEngine* m_system = nullptr;
 };

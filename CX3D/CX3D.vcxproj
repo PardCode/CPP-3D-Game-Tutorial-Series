@@ -135,7 +135,8 @@
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /E /C "$(ProjectDir)assets" "$(ProjectDir)Bin\$(Platform)\$(Configuration)\Engine\"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DirectXTexD.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -161,7 +162,8 @@
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /E /C "$(ProjectDir)assets" "$(ProjectDir)Bin\$(Platform)\$(Configuration)\Engine\"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -177,10 +179,9 @@
     <ClCompile Include="source\CX3D\Graphics\CXConstantBuffer.cpp" />
     <ClCompile Include="source\CX3D\Graphics\CXGraphicsEngine.cpp" />
     <ClCompile Include="source\CX3D\Graphics\CXIndexBuffer.cpp" />
-    <ClCompile Include="source\CX3D\Graphics\CXPixelShader.cpp" />
+    <ClCompile Include="source\CX3D\Graphics\CXShader.cpp" />
     <ClCompile Include="source\CX3D\Graphics\CXSwapChain.cpp" />
     <ClCompile Include="source\CX3D\Graphics\CXVertexBuffer.cpp" />
-    <ClCompile Include="source\CX3D\Graphics\CXVertexShader.cpp" />
     <ClCompile Include="source\CX3D\Input\CXInputManager.cpp" />
     <ClCompile Include="source\CX3D\Resource\CXMaterial.cpp" />
     <ClCompile Include="source\CX3D\Resource\CXMaterialManager.cpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="source\CX3D\Window\CXWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\CX3D\Graphics\CXShader.h" />
     <ClInclude Include="include\CX3D\Resource\CXGraphicsManager.h" />
     <ClInclude Include="include\CX3D\All.h" />
     <ClInclude Include="include\CX3D\Game\CXEntity.h" />
@@ -204,10 +206,8 @@
     <ClInclude Include="include\CX3D\Graphics\CXConstantBuffer.h" />
     <ClInclude Include="include\CX3D\Graphics\CXGraphicsEngine.h" />
     <ClInclude Include="include\CX3D\Graphics\CXIndexBuffer.h" />
-    <ClInclude Include="include\CX3D\Graphics\CXPixelShader.h" />
     <ClInclude Include="include\CX3D\Graphics\CXSwapChain.h" />
     <ClInclude Include="include\CX3D\Graphics\CXVertexBuffer.h" />
-    <ClInclude Include="include\CX3D\Graphics\CXVertexShader.h" />
     <ClInclude Include="include\CX3D\Input\CXInputManager.h" />
     <ClInclude Include="include\CX3D\Math\CXMat4.h" />
     <ClInclude Include="include\CX3D\Math\CXRect.h" />

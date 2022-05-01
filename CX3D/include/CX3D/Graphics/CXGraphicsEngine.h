@@ -44,8 +44,7 @@ public:
 	CXVertexBufferPtr createVertexBuffer(const CXVertexBufferDesc& desc);
 	CXIndexBufferPtr createIndexBuffer(const CXIndexBufferDesc& desc);
 	CXConstantBufferPtr createConstantBuffer(const CXConstantBufferDesc& desc);
-	CXVertexShaderPtr createVertexShader(const wchar_t* file_name, const char* entry_point_name);
-	CXPixelShaderPtr createPixelShader(const wchar_t* file_name, const char* entry_point_name);
+	CXShaderPtr createShader(const CXShaderDesc& desc);
 
 public:
 	void clearColor(const  CXSwapChainPtr& swap_chain, const CXVec4& color);
@@ -66,16 +65,11 @@ public:
 
 	void setViewportSize(ui32 width, ui32 height);
 
-	void setVertexShader(const  CXVertexShaderPtr& vertex_shader);
-	void setPixelShader(const  CXPixelShaderPtr& pixel_shader);
+	void setShader(const  CXShaderPtr& shader);
 
-	void setTexture(const CXVertexShaderPtr& vertex_shader, const  CXTexturePtr* texture, unsigned int num_textures);
-	void setTexture(const CXPixelShaderPtr& pixel_shader, const  CXTexturePtr* texture, unsigned int num_textures);
-
-	void setConstantBuffer(const  CXVertexShaderPtr& vertex_shader, const  CXConstantBufferPtr& buffer);
-	void setConstantBuffer(const  CXPixelShaderPtr& pixel_shader, const  CXConstantBufferPtr& buffer);
+	void setTexture(const  CXTexturePtr* texture, unsigned int num_textures);
+	void setConstantBuffer(const  CXConstantBufferPtr& buffer);
 	void setMaterial(const  CXMaterialPtr& material);
-
 	void setRasterizerState(bool cull_front);
 
 	void drawMesh(const  CXMeshPtr& mesh, const std::vector<CXMaterialPtr>& list_materials);
@@ -108,4 +102,5 @@ private:
 	friend class  CXVertexShader;
 	friend class  CXPixelShader;
 	friend class  CXTexture;
+	friend class  CXShader;
 };

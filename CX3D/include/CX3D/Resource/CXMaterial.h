@@ -45,8 +45,7 @@ public:
 	void setCullMode(const  CXCullMode& mode);
 	CXCullMode getCullMode();
 private:
-	CXVertexShaderPtr m_vertex_shader;
-	CXPixelShaderPtr m_pixel_shader;
+	CXShaderPtr m_shader;
 	CXConstantBufferPtr m_constant_buffer;
 	CXConstantBufferPtr m_userBuffer;
 	std::vector<CXTexturePtr> m_vec_textures;

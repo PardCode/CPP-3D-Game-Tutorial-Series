@@ -135,8 +135,7 @@
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /E /C "$(ProjectDir)Assets" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Assets\"
-xcopy /Y /E /C "$(ProjectDir)..\..\CX3D\Bin\$(Platform)\$(Configuration)\Engine" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Engine\"</Command>
+      <Command>xcopy /Y /E /C "$(ProjectDir)Assets" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Assets\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -159,8 +158,7 @@ xcopy /Y /E /C "$(ProjectDir)..\..\CX3D\Bin\$(Platform)\$(Configuration)\Engine"
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /E /C "$(ProjectDir)Assets" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Assets\"
-xcopy /Y /E /C "$(ProjectDir)..\..\CX3D\Bin\$(Platform)\$(Configuration)\Engine" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Engine\"</Command>
+      <Command>xcopy /Y /E /C "$(ProjectDir)Assets" "$(SolutionDir)Bin\$(Platform)\$(Configuration)\Assets\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
