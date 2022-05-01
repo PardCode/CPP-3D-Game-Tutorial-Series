@@ -31,7 +31,7 @@ SOFTWARE.*/
 class  CXInputManager
 {
 public:
- CXInputManager();
+	CXInputManager();
 
 	virtual bool isKeyDown(const  CXKey& key);
 	virtual bool isKeyUp(const  CXKey& key);
@@ -53,9 +53,9 @@ private:
 	short m_keys_state_res[256] = {};
 
 	bool m_playEnable = false;
- CXVec2 m_old_mouse_pos;
+	CXVec2 m_old_mouse_pos;
 	bool m_first_time = true;
- CXRect m_screenArea;
- CXVec2 m_deltaMouse;
+	CXRect m_screenArea;
+	CXVec2 m_deltaMouse;
 	int states_index = 0;
 };

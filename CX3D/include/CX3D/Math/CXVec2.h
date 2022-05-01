@@ -28,19 +28,19 @@ SOFTWARE.*/
 class  CXVec2
 {
 public:
- CXVec2(){}
- CXVec2(f32 x, f32 y) :x(x), y(y){}
- CXVec2(const  CXVec2& vector) :x(vector.x), y(vector.y){}
+	CXVec2() {}
+	CXVec2(f32 x, f32 y) :x(x), y(y) {}
+	CXVec2(const  CXVec2& vector) :x(vector.x), y(vector.y) {}
 
- CXVec2 operator *(f32 num) const
+	CXVec2 operator *(f32 num) const
 	{
-		return CXVec2(x*num, y*num);
+		return CXVec2(x * num, y * num);
 	}
- CXVec2 operator +(const  CXVec2& vec) const
+	CXVec2 operator +(const  CXVec2& vec) const
 	{
 		return CXVec2(x + vec.x, y + vec.y);
 	}
- CXVec2 operator -(const  CXVec2& vec) const
+	CXVec2 operator -(const  CXVec2& vec) const
 	{
 		return CXVec2(x - vec.x, y - vec.y);
 	}

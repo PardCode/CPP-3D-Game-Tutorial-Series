@@ -38,8 +38,8 @@ SOFTWARE.*/
 class  CXGame
 {
 public:
- CXGame();
-	virtual ~ CXGame();
+	CXGame();
+	virtual ~CXGame();
 
 	virtual void onCreate() {}
 	virtual void onUpdate(f32 deltaTime) {}
@@ -60,22 +60,22 @@ public:
 	void quit();
 
 public:
- CXInputManager* getInputManager();
- CXGraphicsEngine* getGraphicsEngine();
+	CXInputManager* getInputManager();
+	CXGraphicsEngine* getGraphicsEngine();
 
- CXMaterialPtr createMaterial(const wchar_t* shader_path);
- CXMaterialPtr createMaterial(const  CXMaterialPtr& material);
- CXTexturePtr createTexture(const wchar_t* file_path);
- CXTexturePtr createTexture(const  CXRect& size, const  CXTextureType& type = CXTextureType::RenderTarget);
+	CXMaterialPtr createMaterial(const wchar_t* shader_path);
+	CXMaterialPtr createMaterial(const  CXMaterialPtr& material);
+	CXTexturePtr createTexture(const wchar_t* file_path);
+	CXTexturePtr createTexture(const  CXRect& size, const  CXTextureType& type = CXTextureType::RenderTarget);
 
- CXMeshPtr createMesh(const wchar_t* file_path);
- CXMeshPtr createMesh(
-	 CXVertexMesh* vertex_list_data, unsigned int vertex_list_size,
+	CXMeshPtr createMesh(const wchar_t* file_path);
+	CXMeshPtr createMesh(
+		CXVertexMesh* vertex_list_data, unsigned int vertex_list_size,
 		unsigned int* index_list_data, unsigned int index_list_size,
-	 CXMaterialSlot* material_slot_list, unsigned int material_slot_list_size
+		CXMaterialSlot* material_slot_list, unsigned int material_slot_list_size
 	);
 
-private:	
+private:
 	void onDisplaySize(const  CXRect& size);
 	//various internal methods of entity system------------
 
@@ -84,7 +84,7 @@ private:
 
 	//function that allows to update only the graphics part of the game
 	void onGraphicsUpdate(f32 deltaTime);
-	
+
 	void createEntityConcrete(CXEntity* entity, size_t id);
 	void removeEntity(CXEntity* entity);
 

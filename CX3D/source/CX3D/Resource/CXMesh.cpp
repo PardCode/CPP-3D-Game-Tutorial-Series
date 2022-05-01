@@ -34,7 +34,7 @@ SOFTWARE.*/
 
 #include <CX3D/Math/CXVertexMesh.h>
 
- CXMesh::CXMesh(const wchar_t* full_path, CXResourceManager* manager): CXResource(full_path, manager)
+CXMesh::CXMesh(const wchar_t* full_path, CXResourceManager* manager) : CXResource(full_path, manager)
 {
 	tinyobj::attrib_t attribs;
 	std::vector<tinyobj::shape_t> shapes;
@@ -57,7 +57,7 @@ SOFTWARE.*/
 
 	std::vector<CXVertexMesh> list_vertices;
 	std::vector<unsigned int> list_indices;
-	
+
 	size_t vertex_buffer_size = 0;
 
 
@@ -65,8 +65,8 @@ SOFTWARE.*/
 	{
 		vertex_buffer_size += shapes[s].mesh.indices.size();
 	}
-	
-	
+
+
 	list_vertices.reserve(vertex_buffer_size);
 	list_indices.reserve(vertex_buffer_size);
 
@@ -88,14 +88,14 @@ SOFTWARE.*/
 			{
 				if (shapes[s].mesh.material_ids[f] != m) {
 					unsigned char num_face_verts = shapes[s].mesh.num_face_vertices[f];
-					index_offset += num_face_verts; 
+					index_offset += num_face_verts;
 					continue;
 				}
 
 				unsigned char num_face_verts = shapes[s].mesh.num_face_vertices[f];
 
-			 CXVec3 vertices_face[3];
-			 CXVec2 texcoords_face[3];
+				CXVec3 vertices_face[3];
+				CXVec2 texcoords_face[3];
 
 				for (unsigned char v = 0; v < num_face_verts; v++)
 				{
@@ -116,7 +116,7 @@ SOFTWARE.*/
 					texcoords_face[v] = CXVec2(tx, ty);
 				}
 
-			 CXVec3 tangent, binormal;
+				CXVec3 tangent, binormal;
 
 				computeTangents(
 					vertices_face[0], vertices_face[1], vertices_face[2],
@@ -132,7 +132,7 @@ SOFTWARE.*/
 					tinyobj::real_t vy = attribs.vertices[(int)index.vertex_index * 3 + 1];
 					tinyobj::real_t vz = -attribs.vertices[(int)index.vertex_index * 3 + 2];
 
-					
+
 
 					m_maxCorner.x = (m_maxCorner.x < vx) ? vx : m_maxCorner.x;
 					m_maxCorner.y = (m_maxCorner.y < vy) ? vy : m_maxCorner.y;
@@ -153,7 +153,7 @@ SOFTWARE.*/
 					tinyobj::real_t nx = 0;
 					tinyobj::real_t ny = 0;
 					tinyobj::real_t nz = 0;
-					
+
 					if (attribs.normals.size())
 					{
 						nx = attribs.normals[(int)index.normal_index * 3 + 0];
@@ -161,12 +161,12 @@ SOFTWARE.*/
 						nz = -attribs.normals[(int)index.normal_index * 3 + 2];
 					}
 
-				 CXVec3 v_tangent, v_binormal;
+					CXVec3 v_tangent, v_binormal;
 					v_binormal = CXVec3::cross(CXVec3(nx, ny, nz), tangent);
-					v_tangent = CXVec3::cross(v_binormal,CXVec3(nx, ny, nz));
+					v_tangent = CXVec3::cross(v_binormal, CXVec3(nx, ny, nz));
 
 
-				 CXVertexMesh vertex(CXVec3(vx, vy, vz), CXVec2(tx, ty), CXVec3(nx, ny, nz),v_tangent,v_binormal);
+					CXVertexMesh vertex(CXVec3(vx, vy, vz), CXVec2(tx, ty), CXVec3(nx, ny, nz), v_tangent, v_binormal);
 					list_vertices.push_back(vertex);
 
 					list_indices.push_back((unsigned int)index_global_offset + v);
@@ -188,10 +188,10 @@ SOFTWARE.*/
 	m_index_buffer = engine->createIndexBuffer(&list_indices[0], (UINT)list_indices.size());
 }
 
- CXMesh::CXMesh(CXVertexMesh * vertex_list_data, unsigned int vertex_list_size, 
-	unsigned int * index_list_data, unsigned int index_list_size, 
- CXMaterialSlot * material_slot_list, unsigned int material_slot_list_size, CXResourceManager* manager) : 
- CXResource(L"",manager)
+CXMesh::CXMesh(CXVertexMesh* vertex_list_data, unsigned int vertex_list_size,
+	unsigned int* index_list_data, unsigned int index_list_size,
+	CXMaterialSlot* material_slot_list, unsigned int material_slot_list_size, CXResourceManager* manager) :
+	CXResource(L"", manager)
 {
 	auto engine = static_cast<CXGraphicsManager*>(m_resManager)->getGraphicsEngine();
 
@@ -212,17 +212,17 @@ SOFTWARE.*/
 
 }
 
-const  CXVertexBufferPtr & CXMesh::getVertexBuffer()
+const  CXVertexBufferPtr& CXMesh::getVertexBuffer()
 {
 	return m_vertex_buffer;
 }
 
-const  CXIndexBufferPtr & CXMesh::getIndexBuffer()
+const  CXIndexBufferPtr& CXMesh::getIndexBuffer()
 {
 	return m_index_buffer;
 }
 
-const  CXMaterialSlot & CXMesh::getMaterialSlot(unsigned int slot)
+const  CXMaterialSlot& CXMesh::getMaterialSlot(unsigned int slot)
 {
 	return m_mat_slots[slot];
 }
@@ -232,32 +232,32 @@ size_t CXMesh::getNumMaterialSlots()
 	return m_mat_slots.size();
 }
 
- CXVec3 CXMesh::getMaxCorner()
+CXVec3 CXMesh::getMaxCorner()
 {
 	return m_maxCorner;
 }
 
- CXVec3 CXMesh::getMinCorner()
+CXVec3 CXMesh::getMinCorner()
 {
 	return m_minCorner;
 }
 
-void CXMesh::computeTangents(const  CXVec3 & v0, 
-	const  CXVec3 & v1, 
-	const  CXVec3 & v2, 
-	const  CXVec2 & t0, 
-	const  CXVec2 & t1, 
-	const  CXVec2 & t2, 
- CXVec3 & tangent, CXVec3 & binormal)
+void CXMesh::computeTangents(const  CXVec3& v0,
+	const  CXVec3& v1,
+	const  CXVec3& v2,
+	const  CXVec2& t0,
+	const  CXVec2& t1,
+	const  CXVec2& t2,
+	CXVec3& tangent, CXVec3& binormal)
 {
- CXVec3 deltaPos1 = v1 - v0;
- CXVec3 deltaPos2 = v2 - v0;
+	CXVec3 deltaPos1 = v1 - v0;
+	CXVec3 deltaPos2 = v2 - v0;
 
- CXVec2 deltaUV1 = t1 - t0;
- CXVec2 deltaUV2 = t2 - t0;
+	CXVec2 deltaUV1 = t1 - t0;
+	CXVec2 deltaUV2 = t2 - t0;
 
 
-	float r = 1.0f / (deltaUV1.x*deltaUV2.y - deltaUV1.y*deltaUV2.x);
+	float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
 	tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y);
 	tangent = CXVec3::normalize(tangent);
 	binormal = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x);

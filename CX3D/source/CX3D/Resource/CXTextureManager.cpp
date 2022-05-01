@@ -26,26 +26,26 @@ SOFTWARE.*/
 #include <CX3D/Resource/CXTexture.h>
 
 
- CXTextureManager::CXTextureManager(CXGraphicsEngine* graphicsEngine): CXGraphicsManager(graphicsEngine)
+CXTextureManager::CXTextureManager(CXGraphicsEngine* graphicsEngine) : CXGraphicsManager(graphicsEngine)
 {
 }
 
 
- CXTextureManager::~ CXTextureManager()
+CXTextureManager::~CXTextureManager()
 {
 }
 
- CXTexturePtr CXTextureManager::createTextureFromFile(const wchar_t * file_path)
+CXTexturePtr CXTextureManager::createTextureFromFile(const wchar_t* file_path)
 {
 	return std::static_pointer_cast<CXTexture>(createResourceFromFile(file_path));
 }
 
- CXTexturePtr CXTextureManager::createTexture(const  CXRect& size, const  CXTextureType& type)
+CXTexturePtr CXTextureManager::createTexture(const  CXRect& size, const  CXTextureType& type)
 {
 	return std::make_shared<CXTexture>(size, type, this);
 }
 
- CXResource * CXTextureManager::createResourceFromFileConcrete(const wchar_t * file_path)
+CXResource* CXTextureManager::createResourceFromFileConcrete(const wchar_t* file_path)
 {
-	return new CXTexture(file_path,this);
+	return new CXTexture(file_path, this);
 }

@@ -25,11 +25,11 @@ SOFTWARE.*/
 #include <CX3D/Game/CXMeshEntity.h>
 #include <CX3D/Resource/CXMesh.h>
 
- CXMeshEntity::CXMeshEntity()
+CXMeshEntity::CXMeshEntity()
 {
 }
 
- CXMeshEntity::~ CXMeshEntity()
+CXMeshEntity::~CXMeshEntity()
 {
 }
 
@@ -46,10 +46,10 @@ void CXMeshEntity::addMaterial(const  CXMaterialPtr& material)
 
 void CXMeshEntity::removeMaterial(ui32 index)
 {
-	m_materials.erase(std::next(m_materials.begin(),index));
+	m_materials.erase(std::next(m_materials.begin(), index));
 }
 
- CXMeshPtr CXMeshEntity::getMesh()
+CXMeshPtr CXMeshEntity::getMesh()
 {
 	return m_mesh;
 }

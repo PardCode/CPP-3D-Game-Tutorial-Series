@@ -28,10 +28,10 @@ SOFTWARE.*/
 class  CXVertexShader
 {
 public:
- CXVertexShader(const void* shader_byte_code, size_t byte_code_size,CXGraphicsEngine * system);
+	CXVertexShader(const void* shader_byte_code, size_t byte_code_size, CXGraphicsEngine* system);
 private:
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vs;
- CXGraphicsEngine * m_system = nullptr;
+	CXGraphicsEngine* m_system = nullptr;
 private:
 	friend class  CXGraphicsEngine;
 };

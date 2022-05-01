@@ -26,7 +26,7 @@ SOFTWARE.*/
 #include <CX3D/Graphics/CXGraphicsEngine.h>
 #include <stdexcept>
 
- CXPixelShader::CXPixelShader(const void* shader_byte_code, size_t byte_code_size,CXGraphicsEngine * system) : m_system(system)
+CXPixelShader::CXPixelShader(const void* shader_byte_code, size_t byte_code_size, CXGraphicsEngine* system) : m_system(system)
 {
 	if (!SUCCEEDED(m_system->m_d3dDevice->CreatePixelShader(shader_byte_code, byte_code_size, nullptr, &m_ps)))
 		throw std::runtime_error("DPixelShader not created successfully");

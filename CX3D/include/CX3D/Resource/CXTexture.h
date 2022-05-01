@@ -29,12 +29,12 @@ SOFTWARE.*/
 #include <wrl.h>
 
 
-class  CXTexture: public  CXResource
+class  CXTexture : public  CXResource
 {
 public:
- CXTexture(const wchar_t* full_path, CXResourceManager* manager);
- CXTexture(const  CXRect& size,const  CXTextureType& type, CXResourceManager* manager);
- CXRect getSize();
+	CXTexture(const wchar_t* full_path, CXResourceManager* manager);
+	CXTexture(const  CXRect& size, const  CXTextureType& type, CXResourceManager* manager);
+	CXRect getSize();
 private:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> m_texture = nullptr;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_shader_res_view = nullptr;
@@ -42,8 +42,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_render_target_view = nullptr;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depth_stencil_view = nullptr;
 
- CXTextureType m_type = CXTextureType::Normal;
- CXRect m_size;
+	CXTextureType m_type = CXTextureType::Normal;
+	CXRect m_size;
 private:
 	friend class  CXGraphicsEngine;
 };

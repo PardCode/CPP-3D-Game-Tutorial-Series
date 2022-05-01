@@ -25,11 +25,11 @@ SOFTWARE.*/
 #include <CX3D/Game/CXEntity.h>
 #include <CX3D/Game/CXGame.h>
 
- CXEntity::CXEntity()
+CXEntity::CXEntity()
 {
 }
 
- CXEntity::~ CXEntity()
+CXEntity::~CXEntity()
 {
 }
 
@@ -40,31 +40,31 @@ void CXEntity::release()
 
 void CXEntity::processWorldMatrix()
 {
-	 CXMat4 temp;
+	CXMat4 temp;
 
-		m_world.setIdentity();
+	m_world.setIdentity();
 
-		temp.setIdentity();
-		temp.setScale(m_scale);
-		m_world *= temp;
-
-
-		temp.setIdentity();
-		temp.setRotationX(m_rotation.x);
-		m_world *= temp;
-
-		temp.setIdentity();
-		temp.setRotationY(m_rotation.y);
-		m_world *= temp;
-
-		temp.setIdentity();
-		temp.setRotationZ(m_rotation.z);
-		m_world *= temp;
+	temp.setIdentity();
+	temp.setScale(m_scale);
+	m_world *= temp;
 
 
-		temp.setIdentity();
-		temp.setTranslation(m_position);
-		m_world *= temp;	
+	temp.setIdentity();
+	temp.setRotationX(m_rotation.x);
+	m_world *= temp;
+
+	temp.setIdentity();
+	temp.setRotationY(m_rotation.y);
+	m_world *= temp;
+
+	temp.setIdentity();
+	temp.setRotationZ(m_rotation.z);
+	m_world *= temp;
+
+
+	temp.setIdentity();
+	temp.setTranslation(m_position);
+	m_world *= temp;
 }
 
 
@@ -96,12 +96,12 @@ void CXEntity::setScale(const  CXVec3& scale)
 	processWorldMatrix();
 }
 
- CXVec3 CXEntity::getPosition()
+CXVec3 CXEntity::getPosition()
 {
 	return m_position;
 }
 
- CXVec3 CXEntity::getScale()
+CXVec3 CXEntity::getScale()
 {
 	return m_scale;
 }

@@ -32,7 +32,7 @@ SOFTWARE.*/
 class  CXMat4
 {
 public:
- CXMat4()
+	CXMat4()
 	{
 		setIdentity();
 	}
@@ -86,7 +86,7 @@ public:
 
 	f32 getDeterminant()
 	{
-	 CXVec4 minor, v1, v2, v3;
+		CXVec4 minor, v1, v2, v3;
 		f32 det = 0.0f;
 
 		v1 = CXVec4(this->m_mat[0][0], this->m_mat[1][0], this->m_mat[2][0], this->m_mat[3][0]);
@@ -102,16 +102,16 @@ public:
 
 	void inverse()
 	{
-		i32 a =0, i = 0, j = 0;
-	 CXMat4 out = {};
-	 CXVec4 v = {}, vec[3] = {};
+		i32 a = 0, i = 0, j = 0;
+		CXMat4 out = {};
+		CXVec4 v = {}, vec[3] = {};
 		f32 det = 0.0f;
 
 		det = this->getDeterminant();
 		if (!det) return;
-		for (i = 0; i<4; i++)
+		for (i = 0; i < 4; i++)
 		{
-			for (j = 0; j<4; j++)
+			for (j = 0; j < 4; j++)
 			{
 				if (j != i)
 				{
@@ -137,13 +137,13 @@ public:
 
 	void operator *=(const  CXMat4& m_matrix)
 	{
-	 CXMat4 out;
+		CXMat4 out;
 		for (i32 i = 0; i < 4; i++)
 		{
 			for (i32 j = 0; j < 4; j++)
 			{
 				out.m_mat[i][j] =
-					m_mat[i][0] * m_matrix.m_mat[0][j] + m_mat[i][1] * m_matrix.m_mat[1][j] + 
+					m_mat[i][0] * m_matrix.m_mat[0][j] + m_mat[i][1] * m_matrix.m_mat[1][j] +
 					m_mat[i][2] * m_matrix.m_mat[2][j] + m_mat[i][3] * m_matrix.m_mat[3][j];
 			}
 		}
@@ -155,20 +155,20 @@ public:
 		::memcpy(m_mat, m_matrix.m_mat, sizeof(m_mat));
 	}
 
- CXVec3 getRightwardDirection()
+	CXVec3 getRightwardDirection()
 	{
 		return CXVec3(m_mat[0][0], m_mat[0][1], m_mat[0][2]);
 	}
- CXVec3 getUpDirection()
+	CXVec3 getUpDirection()
 	{
 		return CXVec3(m_mat[1][0], m_mat[1][1], m_mat[1][2]);
 	}
- CXVec3 getForwardDirection()
+	CXVec3 getForwardDirection()
 	{
 		return CXVec3(m_mat[2][0], m_mat[2][1], m_mat[2][2]);
 	}
-	
- CXVec3 getTranslation()
+
+	CXVec3 getTranslation()
 	{
 		return CXVec3(m_mat[3][0], m_mat[3][1], m_mat[3][2]);
 	}
@@ -181,7 +181,7 @@ public:
 		m_mat[1][1] = yscale;
 		m_mat[2][2] = zfar / (zfar - znear);
 		m_mat[2][3] = 1.0f;
-		m_mat[3][2] = (-znear*zfar)/ (zfar - znear);
+		m_mat[3][2] = (-znear * zfar) / (zfar - znear);
 		m_mat[3][3] = 0.0f;
 
 	}

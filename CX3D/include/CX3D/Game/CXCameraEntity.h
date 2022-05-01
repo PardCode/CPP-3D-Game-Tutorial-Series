@@ -32,12 +32,12 @@ SOFTWARE.*/
 
 #include <vector>
 
-class Game;
-class  CXCameraEntity: public  CXEntity
+class  CXGame;
+class  CXCameraEntity : public  CXEntity
 {
 public:
- CXCameraEntity();
-	virtual ~ CXCameraEntity();
+	CXCameraEntity();
+	virtual ~CXCameraEntity();
 
 	void getViewMatrix(CXMat4& view);
 	void getProjectionMatrix(CXMat4& proj);
@@ -46,9 +46,9 @@ public:
 	void setScreenArea(const  CXRect& screen);
 
 private:
- CXMat4 m_view;
- CXMat4 m_projection;
+	CXMat4 m_view;
+	CXMat4 m_projection;
 
 	f32 m_farPlane = 100.0f;
- CXRect m_screenArea;
+	CXRect m_screenArea;
 };

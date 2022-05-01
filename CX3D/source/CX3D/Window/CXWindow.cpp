@@ -100,7 +100,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 }
 
 
- CXWindow::CXWindow()
+CXWindow::CXWindow()
 {
 	WNDCLASSEX wc = {};
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -113,13 +113,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		classId = RegisterClassEx(&wc);
 		if (!classId) throw std::runtime_error("RegisterClassEx failed");
 	}
-	
+
 	RECT rc = { 0,0,1024,768 };
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
 
 	m_hwnd = CreateWindowEx(NULL, MAKEINTATOM(classId), L"", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
 		rc.right - rc.left, rc.bottom - rc.top, HWND(), HMENU(), HINSTANCE(), NULL);
-	
+
 	if (!m_hwnd) throw std::runtime_error("CreateWindowEx failed");
 
 	SetWindowLongPtr((HWND)m_hwnd, GWLP_USERDATA, (LONG_PTR)this);
@@ -129,7 +129,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 }
 
 
- CXRect CXWindow::getClientSize()
+CXRect CXWindow::getClientSize()
 {
 	RECT rc = {};
 	::GetClientRect((HWND)this->m_hwnd, &rc);
@@ -138,14 +138,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	return CXRect(rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top);
 }
 
- CXRect CXWindow::getScreenSize()
+CXRect CXWindow::getScreenSize()
 {
 	RECT rc = {};
 
 	rc.right = ::GetSystemMetrics(SM_CXSCREEN);
 	rc.bottom = ::GetSystemMetrics(SM_CYSCREEN);
 
-	return CXRect(rc.left,rc.top,rc.right-rc.left,rc.bottom -rc.top);
+	return CXRect(rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top);
 }
 
 void* CXWindow::getHandle()
@@ -158,7 +158,7 @@ void CXWindow::setTitle(const wchar_t* title)
 	::SetWindowText((HWND)m_hwnd, title);
 }
 
- CXWindow::~ CXWindow()
+CXWindow::~CXWindow()
 {
- DestroyWindow((HWND)m_hwnd);
+	DestroyWindow((HWND)m_hwnd);
 }

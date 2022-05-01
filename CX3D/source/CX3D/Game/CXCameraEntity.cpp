@@ -24,17 +24,17 @@ SOFTWARE.*/
 
 #include <CX3D/Game/CXCameraEntity.h>
 
- CXCameraEntity::CXCameraEntity()
+CXCameraEntity::CXCameraEntity()
 {
 }
 
- CXCameraEntity::~ CXCameraEntity()
+CXCameraEntity::~CXCameraEntity()
 {
 }
 
 void CXCameraEntity::getViewMatrix(CXMat4& view)
 {
-	
+
 	m_view = m_world;
 	m_view.inverse();
 	view = m_view;

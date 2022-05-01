@@ -34,8 +34,8 @@ class  CXGame;
 class  CXEntity
 {
 public:
- CXEntity();
-	virtual ~ CXEntity();
+	CXEntity();
+	virtual ~CXEntity();
 
 public:
 	size_t getId();
@@ -44,8 +44,8 @@ public:
 	void setRotation(const  CXVec3& rotation);
 	void setScale(const  CXVec3& scale);
 
- CXVec3 getPosition();
- CXVec3 getScale();
+	CXVec3 getPosition();
+	CXVec3 getScale();
 
 	virtual void onCreate() {}
 	virtual void onUpdate(f32 deltaTime) {}
@@ -53,15 +53,15 @@ public:
 protected:
 	void processWorldMatrix();
 protected:
- CXMat4 m_world;
+	CXMat4 m_world;
 
- CXVec3 m_position;
- CXVec3 m_rotation;
- CXVec3 m_scale = CXVec3(1,1,1);
+	CXVec3 m_position;
+	CXVec3 m_rotation;
+	CXVec3 m_scale = CXVec3(1, 1, 1);
 
 	size_t m_id = 0;
 
- CXGame* m_game = nullptr;
+	CXGame* m_game = nullptr;
 
 	friend class  CXGame;
 };

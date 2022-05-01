@@ -37,9 +37,9 @@ SOFTWARE.*/
 #include <assert.h>
 
 
- CXGraphicsEngine::CXGraphicsEngine()
+CXGraphicsEngine::CXGraphicsEngine()
 {
- D3D_DRIVER_TYPE driver_types[] =
+	D3D_DRIVER_TYPE driver_types[] =
 	{
 	 D3D_DRIVER_TYPE_HARDWARE,
 	 D3D_DRIVER_TYPE_WARP,
@@ -47,14 +47,14 @@ SOFTWARE.*/
 	};
 	UINT num_driver_types = ARRAYSIZE(driver_types);
 
- D3D_FEATURE_LEVEL feature_levels[] =
+	D3D_FEATURE_LEVEL feature_levels[] =
 	{
 	 D3D_FEATURE_LEVEL_11_0
 	};
 	UINT num_feature_levels = ARRAYSIZE(feature_levels);
 
 	HRESULT res = 0;
- D3D_FEATURE_LEVEL m_feature_level;
+	D3D_FEATURE_LEVEL m_feature_level;
 
 	for (UINT driver_type_index = 0; driver_type_index < num_driver_types;)
 	{
@@ -68,7 +68,7 @@ SOFTWARE.*/
 
 	if (FAILED(res))
 		throw std::runtime_error("DGraphicsEngine not created successfully");
-	
+
 
 
 	m_d3dDevice->QueryInterface(__uuidof(IDXGIDevice), (void**)&m_dxgiDevice);
@@ -84,44 +84,44 @@ SOFTWARE.*/
 	m_materialManager = std::make_unique<CXMaterialManager>(this);
 }
 
- CXTextureManager* CXGraphicsEngine::getTextureManager()
+CXTextureManager* CXGraphicsEngine::getTextureManager()
 {
 	return m_texManager.get();
 }
 
- CXMeshManager* CXGraphicsEngine::getMeshManager()
+CXMeshManager* CXGraphicsEngine::getMeshManager()
 {
 	return m_meshManager.get();
 }
 
- CXMaterialManager* CXGraphicsEngine::getMaterialManager()
+CXMaterialManager* CXGraphicsEngine::getMaterialManager()
 {
 	return m_materialManager.get();
 }
 
- CXSwapChainPtr CXGraphicsEngine::createSwapChain(void* hwnd, const  CXRect& size)
+CXSwapChainPtr CXGraphicsEngine::createSwapChain(void* hwnd, const  CXRect& size)
 {
 	return std::make_shared<CXSwapChain>(hwnd, size, this);
 }
 
- CXVertexBufferPtr CXGraphicsEngine::createVertexBuffer(void* list_vertices, UINT size_vertex, 
+CXVertexBufferPtr CXGraphicsEngine::createVertexBuffer(void* list_vertices, UINT size_vertex,
 	UINT size_list)
 {
 	return std::make_shared<CXVertexBuffer>(list_vertices, size_vertex, size_list, this);
 }
 
- CXIndexBufferPtr CXGraphicsEngine::createIndexBuffer(void* list_indices, UINT size_list)
+CXIndexBufferPtr CXGraphicsEngine::createIndexBuffer(void* list_indices, UINT size_list)
 {
 	return std::make_shared<CXIndexBuffer>(list_indices, size_list, this);
 }
 
- CXConstantBufferPtr CXGraphicsEngine::createConstantBuffer(void* buffer, UINT size_buffer)
+CXConstantBufferPtr CXGraphicsEngine::createConstantBuffer(void* buffer, UINT size_buffer)
 {
 	return std::make_shared<CXConstantBuffer>(buffer, size_buffer, this);
 }
 
 
- CXVertexShaderPtr CXGraphicsEngine::createVertexShader(const wchar_t* file_name, const char* entry_point_name)
+CXVertexShaderPtr CXGraphicsEngine::createVertexShader(const wchar_t* file_name, const char* entry_point_name)
 {
 	ID3DBlob* blob = nullptr;
 	ID3DBlob* error_blob = nullptr;
@@ -135,7 +135,7 @@ SOFTWARE.*/
 	return std::make_shared<CXVertexShader>(blob->GetBufferPointer(), blob->GetBufferSize(), this);
 }
 
- CXPixelShaderPtr CXGraphicsEngine::createPixelShader(const wchar_t* file_name, const char* entry_point_name)
+CXPixelShaderPtr CXGraphicsEngine::createPixelShader(const wchar_t* file_name, const char* entry_point_name)
 {
 	ID3DBlob* blob = nullptr;
 	ID3DBlob* error_blob = nullptr;
@@ -172,9 +172,9 @@ void CXGraphicsEngine::compilePrivateShaders()
 }
 
 
-void CXGraphicsEngine::clearRenderTargetColor(const  CXSwapChainPtr& swap_chain, float red, float green, float blue, float alpha)
+void CXGraphicsEngine::clearRenderTargetColor(const  CXSwapChainPtr& swap_chain, const CXVec4& color)
 {
-	FLOAT clear_color[] = { red,green,blue,alpha };
+	FLOAT clear_color[] = { color.x, color.y, color.z, color.w };
 	m_immContext->ClearRenderTargetView(swap_chain->m_rtv.Get(), clear_color);
 	m_immContext->ClearDepthStencilView(swap_chain->m_dsv.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
 	m_immContext->OMSetRenderTargets(1, swap_chain->m_rtv.GetAddressOf(), (ID3D11DepthStencilView*)swap_chain->m_dsv.Get());
@@ -185,11 +185,11 @@ void CXGraphicsEngine::clearDepthStencil(const  CXSwapChainPtr& swap_chain)
 	m_immContext->ClearDepthStencilView(swap_chain->m_dsv.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
 }
 
-void CXGraphicsEngine::clearRenderTarget(const  CXTexturePtr& render_target, float red, float green, float blue, float alpha)
+void CXGraphicsEngine::clearRenderTarget(const  CXTexturePtr& render_target, const CXVec4& color)
 {
 	if (render_target->m_type != CXTextureType::RenderTarget) return;
 
-	FLOAT clear_color[] = { red,green,blue,alpha };
+	FLOAT clear_color[] = { color.x, color.y, color.z, color.w };
 	m_immContext->ClearRenderTargetView(render_target->m_render_target_view.Get(), clear_color);
 }
 
@@ -252,7 +252,7 @@ void CXGraphicsEngine::drawTriangleStrip(ui32 vertex_count, ui32 start_vertex_in
 void CXGraphicsEngine::setViewportSize(ui32 width, ui32 height)
 {
 
- D3D11_VIEWPORT vp = {};
+	D3D11_VIEWPORT vp = {};
 	vp.Width = (FLOAT)width;
 	vp.Height = (FLOAT)height;
 	vp.MinDepth = 0.0f;
@@ -314,20 +314,20 @@ void CXGraphicsEngine::setConstantBuffer(const  CXPixelShaderPtr& pixel_shader, 
 
 void CXGraphicsEngine::setMaterial(const  CXMaterialPtr& material)
 {
-	 setRasterizerState((material->m_cull_mode == CXCullMode::Front));
+	setRasterizerState((material->m_cull_mode == CXCullMode::Front));
 
 	if (material->m_constant_buffer)
 	{
-		  setConstantBuffer(material->m_vertex_shader, material->m_constant_buffer);
-		  setConstantBuffer(material->m_pixel_shader, material->m_constant_buffer);
+		setConstantBuffer(material->m_vertex_shader, material->m_constant_buffer);
+		setConstantBuffer(material->m_pixel_shader, material->m_constant_buffer);
 	}
 	//SET CXEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO CXRAW
-	  setVertexShader(material->m_vertex_shader);
-	  setPixelShader(material->m_pixel_shader);
+	setVertexShader(material->m_vertex_shader);
+	setPixelShader(material->m_pixel_shader);
 
 	if (material->m_vec_textures.size())
 	{
-		  setTexture(material->m_pixel_shader, &material->m_vec_textures[0], (UINT)material->m_vec_textures.size());
+		setTexture(material->m_pixel_shader, &material->m_vec_textures[0], (UINT)material->m_vec_textures.size());
 	}
 }
 
@@ -337,7 +337,7 @@ void CXGraphicsEngine::drawMesh(const  CXMeshPtr& mesh, const std::vector<CXMate
 	{
 		if (m == list_materials.size()) break;
 
-	 CXMaterialSlot mat = mesh->getMaterialSlot(m);
+		CXMaterialSlot mat = mesh->getMaterialSlot(m);
 
 		setMaterial(list_materials[m]);
 		//SET THE VERTICES OF THE TRIANGLE TO CXRAW
@@ -352,7 +352,7 @@ void CXGraphicsEngine::drawMesh(const  CXMeshPtr& mesh, const std::vector<CXMate
 
 void CXGraphicsEngine::initRasterizerState()
 {
- D3D11_RASTERIZER_DESC desc = {};
+	D3D11_RASTERIZER_DESC desc = {};
 	desc.CullMode = D3D11_CULL_FRONT;
 	desc.DepthClipEnable = true;
 	desc.FillMode = D3D11_FILL_SOLID;

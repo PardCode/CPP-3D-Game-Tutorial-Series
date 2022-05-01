@@ -29,18 +29,18 @@ class  CXGraphicsEngine;
 class  CXGraphicsManager : public  CXResourceManager
 {
 public:
- CXGraphicsManager(CXGraphicsEngine* graphicsEngine):m_graphicsEngine(graphicsEngine)
+	CXGraphicsManager(CXGraphicsEngine* graphicsEngine) :m_graphicsEngine(graphicsEngine)
 	{
 	}
-	virtual ~ CXGraphicsManager()
+	virtual ~CXGraphicsManager()
 	{
 	}
 
- CXGraphicsEngine* getGraphicsEngine()
+	CXGraphicsEngine* getGraphicsEngine()
 	{
 		return m_graphicsEngine;
 	}
 protected:
- CXGraphicsEngine* m_graphicsEngine = nullptr;
+	CXGraphicsEngine* m_graphicsEngine = nullptr;
 };
 

@@ -28,7 +28,7 @@ SOFTWARE.*/
 
 #include <stdexcept>
 
- CXTexture::CXTexture(const wchar_t* full_path, CXResourceManager* manager): CXResource(full_path,manager)
+CXTexture::CXTexture(const wchar_t* full_path, CXResourceManager* manager) : CXResource(full_path, manager)
 {
 	auto engine = static_cast<CXGraphicsManager*>(m_resManager)->getGraphicsEngine();
 	DirectX::ScratchImage image_data;
@@ -41,17 +41,17 @@ SOFTWARE.*/
 	if (SUCCEEDED(res))
 	{
 		res = DirectX::CreateTexture(engine->m_d3dDevice.Get(), mip_chain.GetImages(),
-			mip_chain.GetImageCount(), mip_chain.GetMetadata(),(ID3D11Resource**)m_texture.GetAddressOf());
+			mip_chain.GetImageCount(), mip_chain.GetMetadata(), (ID3D11Resource**)m_texture.GetAddressOf());
 
 		if (FAILED(res)) throw std::runtime_error("DTexture not created successfully");
 
-	 D3D11_SHADER_RESOURCE_VIEW_DESC desc = {};
+		D3D11_SHADER_RESOURCE_VIEW_DESC desc = {};
 		desc.Format = image_data.GetMetadata().format;
 		desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 		desc.Texture2D.MipLevels = (UINT)mip_chain.GetMetadata().mipLevels;
 		desc.Texture2D.MostDetailedMip = 0;
 
-	 D3D11_SAMPLER_DESC sampler_desc = {};
+		D3D11_SAMPLER_DESC sampler_desc = {};
 		sampler_desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 		sampler_desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 		sampler_desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -59,7 +59,7 @@ SOFTWARE.*/
 		sampler_desc.MinLOD = 0.0f;
 		sampler_desc.MaxLOD = (FLOAT)mip_chain.GetMetadata().mipLevels;
 
-		res = engine->m_d3dDevice->CreateSamplerState(&sampler_desc,&m_sampler_state);
+		res = engine->m_d3dDevice->CreateSamplerState(&sampler_desc, &m_sampler_state);
 		if (FAILED(res)) throw std::runtime_error("DTexture not created successfully");
 
 		res = engine->m_d3dDevice->CreateShaderResourceView(m_texture.Get(), &desc,
@@ -72,11 +72,11 @@ SOFTWARE.*/
 	}
 }
 
- CXTexture::CXTexture(const  CXRect& size, const  CXTextureType& type, CXResourceManager* manager): CXResource(L"",manager)
+CXTexture::CXTexture(const  CXRect& size, const  CXTextureType& type, CXResourceManager* manager) : CXResource(L"", manager)
 {
 	auto engine = static_cast<CXGraphicsManager*>(m_resManager)->getGraphicsEngine();
 
- D3D11_TEXTURE2D_DESC tex_desc = {};
+	D3D11_TEXTURE2D_DESC tex_desc = {};
 	tex_desc.Width = size.width;
 	tex_desc.Height = size.height;
 
@@ -129,7 +129,7 @@ SOFTWARE.*/
 	m_type = type;
 }
 
- CXRect CXTexture::getSize()
+CXRect CXTexture::getSize()
 {
 	return m_size;
 }

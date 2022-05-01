@@ -30,16 +30,16 @@ SOFTWARE.*/
 #include <CX3D/Window/CXWindow.h>
 #include <set>
 class  CXGame;
-class  CXDisplay: public  CXWindow
+class  CXDisplay : public  CXWindow
 {
 public:
- CXDisplay(CXGame* game);
+	CXDisplay(CXGame* game);
 	//EVENTS
 	virtual void onSize(const  CXRect& size);
 
- CXSwapChainPtr getSwapChain();
+	CXSwapChainPtr getSwapChain();
 private:
- CXGame* m_game = nullptr;
- CXSwapChainPtr m_swapChain;
+	CXGame* m_game = nullptr;
+	CXSwapChainPtr m_swapChain;
 };
 

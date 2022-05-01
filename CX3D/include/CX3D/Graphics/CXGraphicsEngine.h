@@ -24,6 +24,7 @@ SOFTWARE.*/
 
 #pragma once
 #include <CX3D/CXPrerequisites.h>
+#include <CX3D/Math/CXVec4.h>
 #include <CX3D/Math/CXRect.h>
 #include <CX3D/Resource/CXTextureManager.h>
 #include <CX3D/Resource/CXMeshManager.h>
@@ -32,24 +33,24 @@ SOFTWARE.*/
 class  CXGraphicsEngine
 {
 public:
- CXGraphicsEngine();
+	CXGraphicsEngine();
 
- CXTextureManager* getTextureManager();
- CXMeshManager* getMeshManager();
- CXMaterialManager* getMaterialManager();
+	CXTextureManager* getTextureManager();
+	CXMeshManager* getMeshManager();
+	CXMaterialManager* getMaterialManager();
 public:
- CXSwapChainPtr createSwapChain(void* hwnd, const  CXRect& size);
- CXVertexBufferPtr createVertexBuffer(void* list_vertices, ui32 size_vertex, ui32 size_list);
- CXIndexBufferPtr createIndexBuffer(void* list_indices, ui32 size_list);
- CXConstantBufferPtr createConstantBuffer(void* buffer, ui32 size_buffer);
- CXVertexShaderPtr createVertexShader(const wchar_t* file_name, const char* entry_point_name);
- CXPixelShaderPtr createPixelShader(const wchar_t* file_name, const char* entry_point_name);
+	CXSwapChainPtr createSwapChain(void* hwnd, const  CXRect& size);
+	CXVertexBufferPtr createVertexBuffer(void* list_vertices, ui32 size_vertex, ui32 size_list);
+	CXIndexBufferPtr createIndexBuffer(void* list_indices, ui32 size_list);
+	CXConstantBufferPtr createConstantBuffer(void* buffer, ui32 size_buffer);
+	CXVertexShaderPtr createVertexShader(const wchar_t* file_name, const char* entry_point_name);
+	CXPixelShaderPtr createPixelShader(const wchar_t* file_name, const char* entry_point_name);
 
 public:
-	void clearRenderTargetColor(const  CXSwapChainPtr& swap_chain, float red, float green, float blue, float alpha);
+	void clearRenderTargetColor(const  CXSwapChainPtr& swap_chain, const CXVec4& color);
 	void clearDepthStencil(const  CXSwapChainPtr& swap_chain);
 
-	void clearRenderTarget(const  CXTexturePtr& render_target, float red, float green, float blue, float alpha);
+	void clearRenderTarget(const  CXTexturePtr& render_target, const CXVec4& color);
 	void clearDepthStencil(const  CXTexturePtr& depth_stencil);
 
 	void setRenderTarget(const  CXTexturePtr& render_target, const  CXTexturePtr& depth_stencil);

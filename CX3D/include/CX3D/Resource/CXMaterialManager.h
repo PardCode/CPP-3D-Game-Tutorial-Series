@@ -29,10 +29,10 @@ SOFTWARE.*/
 class  CXMaterialManager : public  CXGraphicsManager
 {
 public:
- CXMaterialManager(CXGraphicsEngine* graphicsEngine);
-	~ CXMaterialManager();
- CXMaterialPtr createMaterialFromFile(const wchar_t* file_path);
- CXMaterialPtr createMaterial(const  CXMaterialPtr& material);
+	CXMaterialManager(CXGraphicsEngine* graphicsEngine);
+	~CXMaterialManager();
+	CXMaterialPtr createMaterialFromFile(const wchar_t* file_path);
+	CXMaterialPtr createMaterial(const  CXMaterialPtr& material);
 
 protected:
 	virtual CXResource* createResourceFromFileConcrete(const wchar_t* file_path);

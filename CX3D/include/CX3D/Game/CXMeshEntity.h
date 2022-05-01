@@ -34,19 +34,19 @@ SOFTWARE.*/
 #include <vector>
 
 class  CXGame;
-class  CXMeshEntity: public  CXEntity
+class  CXMeshEntity : public  CXEntity
 {
 public:
- CXMeshEntity();
-	virtual ~ CXMeshEntity();
+	CXMeshEntity();
+	virtual ~CXMeshEntity();
 public:
 	void setMesh(const  CXMeshPtr& mesh);
 	void addMaterial(const  CXMaterialPtr& material);
 	void removeMaterial(ui32 index);
- CXMeshPtr getMesh();
+	CXMeshPtr getMesh();
 	std::vector<CXMaterialPtr>& getMaterials();
 private:
- CXMeshPtr m_mesh;
+	CXMeshPtr m_mesh;
 	std::vector<CXMaterialPtr> m_materials;
 	friend class  CXGame;
 };

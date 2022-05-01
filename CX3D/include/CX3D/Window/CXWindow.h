@@ -32,11 +32,11 @@ SOFTWARE.*/
 class  CXWindow
 {
 public:
- CXWindow();
-	~ CXWindow();
+	CXWindow();
+	~CXWindow();
 
- CXRect getClientSize();
- CXRect getScreenSize();
+	CXRect getClientSize();
+	CXRect getScreenSize();
 
 	//EVENT
 	virtual void onCreate() {}

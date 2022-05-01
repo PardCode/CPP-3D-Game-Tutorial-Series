@@ -26,31 +26,31 @@ SOFTWARE.*/
 #include <CX3D/Resource/CXMesh.h>
 
 
- CXMeshManager::CXMeshManager(CXGraphicsEngine* graphicsEngine) : CXGraphicsManager(graphicsEngine)
+CXMeshManager::CXMeshManager(CXGraphicsEngine* graphicsEngine) : CXGraphicsManager(graphicsEngine)
 {
 }
 
 
- CXMeshManager::~ CXMeshManager()
+CXMeshManager::~CXMeshManager()
 {
 }
 
- CXMeshPtr CXMeshManager::createMeshFromFile(const wchar_t * file_path)
+CXMeshPtr CXMeshManager::createMeshFromFile(const wchar_t* file_path)
 {
 	return std::static_pointer_cast<CXMesh>(createResourceFromFile(file_path));
 }
 
- CXMeshPtr CXMeshManager::createMesh(
- CXVertexMesh * vertex_list_data, unsigned int vertex_list_size, 
-	unsigned int * index_list_data, unsigned int index_list_size, 
- CXMaterialSlot * material_slot_list, unsigned int material_slot_list_size)
+CXMeshPtr CXMeshManager::createMesh(
+	CXVertexMesh* vertex_list_data, unsigned int vertex_list_size,
+	unsigned int* index_list_data, unsigned int index_list_size,
+	CXMaterialSlot* material_slot_list, unsigned int material_slot_list_size)
 {
 	return std::make_shared<CXMesh>(vertex_list_data, vertex_list_size,
 		index_list_data, index_list_size,
 		material_slot_list, material_slot_list_size, this);
 }
 
- CXResource * CXMeshManager::createResourceFromFileConcrete(const wchar_t * file_path)
+CXResource* CXMeshManager::createResourceFromFileConcrete(const wchar_t* file_path)
 {
 	return new CXMesh(file_path, this);
 }

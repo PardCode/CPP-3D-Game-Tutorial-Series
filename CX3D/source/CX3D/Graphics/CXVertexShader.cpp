@@ -26,7 +26,7 @@ SOFTWARE.*/
 #include <CX3D/Graphics/CXGraphicsEngine.h>
 #include <stdexcept>
 
- CXVertexShader::CXVertexShader(const void* shader_byte_code, size_t byte_code_size,CXGraphicsEngine * system): m_system(system)
+CXVertexShader::CXVertexShader(const void* shader_byte_code, size_t byte_code_size, CXGraphicsEngine* system) : m_system(system)
 {
 	if (!SUCCEEDED(m_system->m_d3dDevice->CreateVertexShader(shader_byte_code, byte_code_size, nullptr, &m_vs)))
 		throw std::runtime_error("DVertexShader not created successfully");

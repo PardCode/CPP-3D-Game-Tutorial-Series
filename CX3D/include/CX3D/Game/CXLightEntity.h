@@ -35,12 +35,12 @@ class Game;
 class  CXLightEntity : public  CXEntity
 {
 public:
- CXLightEntity();
-	virtual ~ CXLightEntity();
+	CXLightEntity();
+	virtual ~CXLightEntity();
 
 	void setColor(const  CXVec3& color);
- CXVec3 getColor();
+	CXVec3 getColor();
 private:
- CXVec3 m_color = CXVec3(1,1,1);
+	CXVec3 m_color = CXVec3(1, 1, 1);
 };
 

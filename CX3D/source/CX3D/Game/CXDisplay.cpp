@@ -25,7 +25,7 @@ SOFTWARE.*/
 #include <CX3D/Game/CXDisplay.h>
 #include <CX3D/Game/CXGame.h>
 
- CXDisplay::CXDisplay(CXGame* game)
+CXDisplay::CXDisplay(CXGame* game)
 {
 	m_game = game;
 	m_swapChain = game->getGraphicsEngine()->createSwapChain(m_hwnd, getClientSize());
@@ -33,11 +33,11 @@ SOFTWARE.*/
 
 void CXDisplay::onSize(const  CXRect& size)
 {
-		m_swapChain->resize(size);
-		m_game->onDisplaySize(size);
+	m_swapChain->resize(size);
+	m_game->onDisplaySize(size);
 }
 
- CXSwapChainPtr CXDisplay::getSwapChain()
+CXSwapChainPtr CXDisplay::getSwapChain()
 {
 	return m_swapChain;
 }

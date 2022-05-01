@@ -26,16 +26,16 @@ SOFTWARE.*/
 #include <filesystem>
 
 
- CXResourceManager::CXResourceManager()
+CXResourceManager::CXResourceManager()
 {
 }
 
 
- CXResourceManager::~ CXResourceManager()
+CXResourceManager::~CXResourceManager()
 {
 }
 
- CXResourcePtr CXResourceManager::createResourceFromFile(const wchar_t * file_path)
+CXResourcePtr CXResourceManager::createResourceFromFile(const wchar_t* file_path)
 {
 	std::wstring full_path = std::filesystem::absolute(file_path);
 
@@ -44,11 +44,11 @@ SOFTWARE.*/
 	if (it != m_map_resources.end())
 		return it->second;
 
- CXResource* raw_res = this->createResourceFromFileConcrete(full_path.c_str());
+	CXResource* raw_res = this->createResourceFromFileConcrete(full_path.c_str());
 
 	if (raw_res)
 	{
-	 CXResourcePtr res(raw_res);
+		CXResourcePtr res(raw_res);
 		m_map_resources[full_path] = res;
 		return res;
 	}

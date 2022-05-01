@@ -26,12 +26,12 @@ SOFTWARE.*/
 #include <CX3D/Resource/CXResourceManager.h>
 
 
- CXResource::CXResource(const wchar_t* full_path, CXResourceManager* manager): m_full_path(full_path),m_resManager(manager)
+CXResource::CXResource(const wchar_t* full_path, CXResourceManager* manager) : m_full_path(full_path), m_resManager(manager)
 {
 }
 
 
- CXResource::~ CXResource()
+CXResource::~CXResource()
 {
 }
 

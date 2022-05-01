@@ -27,30 +27,30 @@ SOFTWARE.*/
 #include <filesystem>
 
 
- CXMaterialManager::CXMaterialManager(CXGraphicsEngine* graphicsEngine) : CXGraphicsManager(graphicsEngine)
+CXMaterialManager::CXMaterialManager(CXGraphicsEngine* graphicsEngine) : CXGraphicsManager(graphicsEngine)
 {
 }
 
- CXMaterialManager::~ CXMaterialManager()
+CXMaterialManager::~CXMaterialManager()
 {
 }
 
- CXMaterialPtr CXMaterialManager::createMaterialFromFile(const wchar_t* file_path)
+CXMaterialPtr CXMaterialManager::createMaterialFromFile(const wchar_t* file_path)
 {
 	std::wstring full_path = std::filesystem::absolute(file_path);
 	auto it = m_map_resources.find(full_path);
 	if (it != m_map_resources.end()) return std::make_shared<CXMaterial>(std::static_pointer_cast<CXMaterial>(it->second), this);
-	else return std::static_pointer_cast<CXMaterial>(createResourceFromFile(file_path));	
+	else return std::static_pointer_cast<CXMaterial>(createResourceFromFile(file_path));
 }
 
- CXMaterialPtr CXMaterialManager::createMaterial(const  CXMaterialPtr& material)
+CXMaterialPtr CXMaterialManager::createMaterial(const  CXMaterialPtr& material)
 {
-	return std::make_shared<CXMaterial>(material,this);
+	return std::make_shared<CXMaterial>(material, this);
 }
 
- CXResource* CXMaterialManager::createResourceFromFileConcrete(const wchar_t* file_path)
+CXResource* CXMaterialManager::createResourceFromFileConcrete(const wchar_t* file_path)
 {
 
 	return new CXMaterial(file_path, this);
-	
+
 }

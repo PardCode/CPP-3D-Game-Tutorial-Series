@@ -28,13 +28,13 @@ SOFTWARE.*/
 #include <CX3D/Resource/CXTexture.h>
 #include <map>
 
-class  CXTextureManager: public  CXGraphicsManager
+class  CXTextureManager : public  CXGraphicsManager
 {
 public:
- CXTextureManager(CXGraphicsEngine* graphicsEngine);
-	~ CXTextureManager();
- CXTexturePtr createTextureFromFile(const wchar_t* file_path);
- CXTexturePtr createTexture(const  CXRect& size,const  CXTextureType& type = CXTextureType::RenderTarget);
+	CXTextureManager(CXGraphicsEngine* graphicsEngine);
+	~CXTextureManager();
+	CXTexturePtr createTextureFromFile(const wchar_t* file_path);
+	CXTexturePtr createTexture(const  CXRect& size, const  CXTextureType& type = CXTextureType::RenderTarget);
 protected:
 	virtual CXResource* createResourceFromFileConcrete(const wchar_t* file_path);
 };

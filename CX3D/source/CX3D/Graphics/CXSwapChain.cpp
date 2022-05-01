@@ -27,14 +27,14 @@ SOFTWARE.*/
 #include <stdexcept>
 #include <string>
 
- CXSwapChain::CXSwapChain(void* hwnd, const  CXRect& size,CXGraphicsEngine * system) : m_system(system)
+CXSwapChain::CXSwapChain(void* hwnd, const  CXRect& size, CXGraphicsEngine* system) : m_system(system)
 {
-	auto device= m_system->m_d3dDevice;
+	auto device = m_system->m_d3dDevice;
 
- DXGI_SWAP_CHAIN_DESC desc;
+	DXGI_SWAP_CHAIN_DESC desc;
 	ZeroMemory(&desc, sizeof(desc));
 	desc.BufferCount = 1;
-	desc.BufferDesc.Width = (size.width>0)? size.width:1;
+	desc.BufferDesc.Width = (size.width > 0) ? size.width : 1;
 	desc.BufferDesc.Height = (size.height > 0) ? size.height : 1;
 	desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	desc.BufferDesc.RefreshRate.Numerator = 60;
@@ -46,8 +46,8 @@ SOFTWARE.*/
 	desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 	desc.Windowed = TRUE;
 
-	HRESULT hr= m_system->m_dxgiFactory->CreateSwapChain(device.Get(), &desc, &m_swap_chain);
-	
+	HRESULT hr = m_system->m_dxgiFactory->CreateSwapChain(device.Get(), &desc, &m_swap_chain);
+
 	if (FAILED(hr)) throw std::runtime_error("DSwapChain not created successfully");
 
 	reloadBuffers(size.width, size.height);
@@ -85,15 +85,15 @@ void CXSwapChain::reloadBuffers(unsigned int width, unsigned int height)
 	HRESULT hr = m_swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&buffer);
 
 	if (FAILED(hr))throw std::runtime_error("DSwapChain not created successfully");
-	
+
 
 	hr = device->CreateRenderTargetView(buffer, NULL, &m_rtv);
 	buffer->Release();
 
 	if (FAILED(hr))throw std::runtime_error("DSwapChain not created successfully");
-	
 
- D3D11_TEXTURE2D_DESC tex_desc = {};
+
+	D3D11_TEXTURE2D_DESC tex_desc = {};
 	tex_desc.Width = (width > 0) ? width : 1;
 	tex_desc.Height = (height > 0) ? height : 1;
 	tex_desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -108,7 +108,7 @@ void CXSwapChain::reloadBuffers(unsigned int width, unsigned int height)
 
 
 	hr = device->CreateTexture2D(&tex_desc, nullptr, &buffer);
-	if (FAILED(hr)) 
+	if (FAILED(hr))
 		throw std::runtime_error("DSwapChain not created successfully");
 
 
@@ -116,5 +116,5 @@ void CXSwapChain::reloadBuffers(unsigned int width, unsigned int height)
 	buffer->Release();
 
 	if (FAILED(hr)) throw std::runtime_error("DSwapChain not created successfully");
-	
+
 }

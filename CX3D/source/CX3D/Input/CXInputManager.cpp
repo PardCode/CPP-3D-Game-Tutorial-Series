@@ -25,7 +25,7 @@ SOFTWARE.*/
 #include <CX3D/Input/CXInputManager.h>
 #include <Windows.h>
 
- CXInputManager::CXInputManager()
+CXInputManager::CXInputManager()
 {
 }
 
@@ -65,7 +65,7 @@ bool CXInputManager::isKeyUp(const  CXKey& key)
 
 	return  (m_keys_state_res[keyWin] == 1);
 }
-	
+
 bool CXInputManager::isMouseDown(const  CXMouseButton& button)
 {
 	if (button == CXMouseButton::Left)
@@ -151,7 +151,7 @@ void CXInputManager::update()
 	}
 	else
 	{
-	 CXVec2 center_screen = CXVec2(m_screenArea.left + (f32)m_screenArea.width / 2.0f, m_screenArea.top + (f32)m_screenArea.height / 2.0f);
+		CXVec2 center_screen = CXVec2(m_screenArea.left + (f32)m_screenArea.width / 2.0f, m_screenArea.top + (f32)m_screenArea.height / 2.0f);
 		::SetCursorPos((i32)center_screen.x, (i32)center_screen.y);
 		m_old_mouse_pos = center_screen;
 	}

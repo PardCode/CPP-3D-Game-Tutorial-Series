@@ -28,10 +28,10 @@ SOFTWARE.*/
 class  CXPixelShader
 {
 public:
- CXPixelShader(const void* shader_byte_code, size_t byte_code_size,CXGraphicsEngine * system);
+	CXPixelShader(const void* shader_byte_code, size_t byte_code_size, CXGraphicsEngine* system);
 private:
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_ps;
- CXGraphicsEngine * m_system = nullptr;
+	CXGraphicsEngine* m_system = nullptr;
 private:
 	friend class  CXGraphicsEngine;
 

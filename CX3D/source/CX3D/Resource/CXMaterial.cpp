@@ -27,7 +27,7 @@ SOFTWARE.*/
 #include <CX3D/Graphics/CXGraphicsEngine.h>
 #include <stdexcept>
 
- CXMaterial::CXMaterial(const wchar_t* full_path, CXResourceManager* manager): CXResource(full_path,manager)
+CXMaterial::CXMaterial(const wchar_t* full_path, CXResourceManager* manager) : CXResource(full_path, manager)
 {
 	auto engine = static_cast<CXGraphicsManager*>(m_resManager)->getGraphicsEngine();
 
@@ -38,14 +38,14 @@ SOFTWARE.*/
 	if (!m_pixel_shader) throw std::runtime_error("DMaterial not created successfully");
 }
 
- CXMaterial::CXMaterial(const  CXMaterialPtr & material, CXResourceManager* manager) : CXResource(L"", manager)
+CXMaterial::CXMaterial(const  CXMaterialPtr& material, CXResourceManager* manager) : CXResource(L"", manager)
 {
 	m_vertex_shader = material->m_vertex_shader;
 	m_pixel_shader = material->m_pixel_shader;
 }
 
 
-void CXMaterial::addTexture(const  CXTexturePtr & texture)
+void CXMaterial::addTexture(const  CXTexturePtr& texture)
 {
 	m_vec_textures.push_back(texture);
 }
@@ -56,7 +56,7 @@ void CXMaterial::removeTexture(unsigned int index)
 	m_vec_textures.erase(m_vec_textures.begin() + index);
 }
 
-void CXMaterial::setData(void * data, unsigned int size)
+void CXMaterial::setData(void* data, unsigned int size)
 {
 	auto engine = static_cast<CXGraphicsManager*>(m_resManager)->getGraphicsEngine();
 
@@ -81,7 +81,7 @@ void CXMaterial::setCullMode(const  CXCullMode& mode)
 	m_cull_mode = mode;
 }
 
- CXCullMode CXMaterial::getCullMode()
+CXCullMode CXMaterial::getCullMode()
 {
 	return m_cull_mode;
 }

@@ -31,12 +31,12 @@ SOFTWARE.*/
 class  CXResourceManager
 {
 public:
- CXResourceManager();
-	virtual ~ CXResourceManager();
+	CXResourceManager();
+	virtual ~CXResourceManager();
 
- CXResourcePtr createResourceFromFile(const wchar_t * file_path);
+	CXResourcePtr createResourceFromFile(const wchar_t* file_path);
 protected:
-	virtual CXResource* createResourceFromFileConcrete(const wchar_t * file_path) = 0;
+	virtual CXResource* createResourceFromFileConcrete(const wchar_t* file_path) = 0;
 protected:
 	std::map<std::wstring, CXResourcePtr> m_map_resources;
 };

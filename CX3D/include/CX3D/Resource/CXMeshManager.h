@@ -26,16 +26,16 @@ SOFTWARE.*/
 #include <CX3D/Resource/CXGraphicsManager.h>
 #include <CX3D/Resource/CXMesh.h>
 
-class  CXMeshManager: public  CXGraphicsManager
+class  CXMeshManager : public  CXGraphicsManager
 {
 public:
- CXMeshManager(CXGraphicsEngine* graphicsEngine);
-	~ CXMeshManager();
- CXMeshPtr createMeshFromFile(const wchar_t* file_path);
- CXMeshPtr createMesh(
- CXVertexMesh* vertex_list_data, unsigned int vertex_list_size,
-	unsigned int* index_list_data, unsigned int index_list_size,
- CXMaterialSlot* material_slot_list, unsigned int material_slot_list_size
+	CXMeshManager(CXGraphicsEngine* graphicsEngine);
+	~CXMeshManager();
+	CXMeshPtr createMeshFromFile(const wchar_t* file_path);
+	CXMeshPtr createMesh(
+		CXVertexMesh* vertex_list_data, unsigned int vertex_list_size,
+		unsigned int* index_list_data, unsigned int index_list_size,
+		CXMaterialSlot* material_slot_list, unsigned int material_slot_list_size
 	);
 protected:
 	virtual CXResource* createResourceFromFileConcrete(const wchar_t* file_path);
