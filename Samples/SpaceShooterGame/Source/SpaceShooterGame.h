@@ -26,11 +26,11 @@ SOFTWARE.*/
 
 #include <CX3D/All.h>
 
-class SpaceshipGame: public CXGame
+class SpaceShooterGame : public CXGame
 {
 public:
-	SpaceshipGame();
-	~SpaceshipGame();
+	SpaceShooterGame();
+	~SpaceShooterGame();
 
 	virtual void onCreate();
 	virtual void onUpdate(f32 deltaTime);

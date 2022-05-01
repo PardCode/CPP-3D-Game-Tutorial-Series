@@ -22,22 +22,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include "SpaceshipGame.h"
+#include "SpaceShooterGame.h"
 #include "Spaceship.h"
 #include <time.h>
 
 
-SpaceshipGame::SpaceshipGame()
+SpaceShooterGame::SpaceShooterGame()
 {
 }
 
-SpaceshipGame::~SpaceshipGame()
+SpaceShooterGame::~SpaceShooterGame()
 {
 }
 
-void SpaceshipGame::onCreate()
+void SpaceShooterGame::onCreate()
 {
-	setTitle(L"Spaceship Game");
+	setTitle(L"SpaceShooterGame");
 
 	//Adding SkyBox
 	{
@@ -97,7 +97,7 @@ void SpaceshipGame::onCreate()
 }
 
 
-void SpaceshipGame::onUpdate(f32 deltaTime)
+void SpaceShooterGame::onUpdate(f32 deltaTime)
 {
 	if(getInputManager()->isKeyUp(CXKey::Escape))
 	{
@@ -106,6 +106,6 @@ void SpaceshipGame::onUpdate(f32 deltaTime)
 	}
 }
 
-void SpaceshipGame::onQuit()
+void SpaceShooterGame::onQuit()
 {
 }

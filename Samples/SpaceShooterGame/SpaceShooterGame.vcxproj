@@ -22,9 +22,9 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{b243113f-d55e-4e5d-b41c-0dcb42a0220e}</ProjectGuid>
-    <RootNamespace>SpaceshipGame</RootNamespace>
+    <RootNamespace>SpaceShooterGame</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>SpaceshipGame</ProjectName>
+    <ProjectName>SpaceShooterGame</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -167,12 +167,12 @@ xcopy /Y /E /C "$(ProjectDir)..\..\CX3D\Bin\$(Platform)\$(Configuration)\Engine"
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\Spaceship.cpp" />
-    <ClCompile Include="Source\SpaceshipGame.cpp" />
+    <ClCompile Include="Source\SpaceShooterGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\Spaceship.h" />
-    <ClInclude Include="Source\SpaceshipGame.h" />
+    <ClInclude Include="Source\SpaceShooterGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
