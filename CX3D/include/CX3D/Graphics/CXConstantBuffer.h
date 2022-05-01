@@ -28,12 +28,10 @@ SOFTWARE.*/
 class  CXConstantBuffer
 {
 public:
-	CXConstantBuffer(void* buffer, ui32 size_buffer, CXGraphicsEngine* system);
-
+	CXConstantBuffer(const CXConstantBufferDesc& desc, CXGraphicsEngine* system);
 	void update(void* buffer);
+	void* getBuffer();
 private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> m_buffer;
 	CXGraphicsEngine* m_system = nullptr;
-private:
-	friend class  CXGraphicsEngine;
 };

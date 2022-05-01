@@ -28,13 +28,12 @@ SOFTWARE.*/
 class  CXIndexBuffer
 {
 public:
-	CXIndexBuffer(void* list_indices, ui32 size_list, CXGraphicsEngine* system);
-	ui32 getSizeIndexList();
+	CXIndexBuffer(const CXIndexBufferDesc& desc, CXGraphicsEngine* system);
+	ui32 getIndicesListSize();
+	void* getBuffer();
 private:
-	ui32 m_size_list;
+	CXIndexBufferDesc m_desc;
 private:
 	Microsoft::WRL::ComPtr <ID3D11Buffer> m_buffer;
 	CXGraphicsEngine* m_system = nullptr;
-private:
-	friend class  CXGraphicsEngine;
 };

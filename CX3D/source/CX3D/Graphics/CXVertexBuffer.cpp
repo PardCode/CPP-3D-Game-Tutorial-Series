@@ -26,25 +26,24 @@ SOFTWARE.*/
 #include <CX3D/Graphics/CXGraphicsEngine.h>
 #include <stdexcept>
 
-CXVertexBuffer::CXVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list,
-	CXGraphicsEngine* system) : m_system(system), m_layout(0), m_buffer(0)
+CXVertexBuffer::CXVertexBuffer(const CXVertexBufferDesc& desc,
+	CXGraphicsEngine* system) : m_system(system)
 {
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_DEFAULT;
-	buff_desc.ByteWidth = size_vertex * size_list;
+	buff_desc.ByteWidth = desc.vertexSize * desc.listSize;
 	buff_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	buff_desc.CPUAccessFlags = 0;
 	buff_desc.MiscFlags = 0;
 
 	D3D11_SUBRESOURCE_DATA init_data = {};
-	init_data.pSysMem = list_vertices;
+	init_data.pSysMem = desc.verticesList;
 
-	m_size_vertex = size_vertex;
-	m_size_list = size_list;
+	m_desc = desc;
 
 	if (FAILED(m_system->m_d3dDevice->CreateBuffer(&buff_desc, &init_data, &m_buffer)))
 	{
-		throw std::runtime_error("DVertexBuffer not created successfully");
+		throw std::runtime_error("CXVertexBuffer not created successfully");
 	}
 
 	D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -63,12 +62,26 @@ CXVertexBuffer::CXVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_
 	{
 		throw std::runtime_error("InputLayout not created successfully");
 	}
-
 }
 
 
-UINT CXVertexBuffer::getSizeVertexList()
+ui32 CXVertexBuffer::getVerticesListSize()
 {
-	return this->m_size_list;
+	return m_desc.listSize;
+}
+
+ui32 CXVertexBuffer::getVertexSize()
+{
+	return m_desc.vertexSize;
+}
+
+void* CXVertexBuffer::getBuffer()
+{
+	return m_buffer.Get();
+}
+
+void* CXVertexBuffer::getLayout()
+{
+	return m_layout.Get();
 }
 

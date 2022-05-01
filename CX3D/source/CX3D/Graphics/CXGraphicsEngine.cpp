@@ -99,25 +99,24 @@ CXMaterialManager* CXGraphicsEngine::getMaterialManager()
 	return m_materialManager.get();
 }
 
-CXSwapChainPtr CXGraphicsEngine::createSwapChain(void* hwnd, const  CXRect& size)
+CXSwapChainPtr CXGraphicsEngine::createSwapChain(const CXSwapChainDesc& desc)
 {
-	return std::make_shared<CXSwapChain>(hwnd, size, this);
+	return std::make_shared<CXSwapChain>(desc, this);
 }
 
-CXVertexBufferPtr CXGraphicsEngine::createVertexBuffer(void* list_vertices, UINT size_vertex,
-	UINT size_list)
+CXVertexBufferPtr CXGraphicsEngine::createVertexBuffer(const CXVertexBufferDesc& desc)
 {
-	return std::make_shared<CXVertexBuffer>(list_vertices, size_vertex, size_list, this);
+	return std::make_shared<CXVertexBuffer>(desc, this);
 }
 
-CXIndexBufferPtr CXGraphicsEngine::createIndexBuffer(void* list_indices, UINT size_list)
+CXIndexBufferPtr CXGraphicsEngine::createIndexBuffer(const CXIndexBufferDesc& desc)
 {
-	return std::make_shared<CXIndexBuffer>(list_indices, size_list, this);
+	return std::make_shared<CXIndexBuffer>(desc, this);
 }
 
-CXConstantBufferPtr CXGraphicsEngine::createConstantBuffer(void* buffer, UINT size_buffer)
+CXConstantBufferPtr CXGraphicsEngine::createConstantBuffer(const CXConstantBufferDesc& desc)
 {
-	return std::make_shared<CXConstantBuffer>(buffer, size_buffer, this);
+	return std::make_shared<CXConstantBuffer>(desc, this);
 }
 
 
@@ -172,20 +171,25 @@ void CXGraphicsEngine::compilePrivateShaders()
 }
 
 
-void CXGraphicsEngine::clearRenderTargetColor(const  CXSwapChainPtr& swap_chain, const CXVec4& color)
+void CXGraphicsEngine::clearColor(const  CXSwapChainPtr& swap_chain, const CXVec4& color)
 {
 	FLOAT clear_color[] = { color.x, color.y, color.z, color.w };
-	m_immContext->ClearRenderTargetView(swap_chain->m_rtv.Get(), clear_color);
-	m_immContext->ClearDepthStencilView(swap_chain->m_dsv.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
-	m_immContext->OMSetRenderTargets(1, swap_chain->m_rtv.GetAddressOf(), (ID3D11DepthStencilView*)swap_chain->m_dsv.Get());
+	auto rtv = reinterpret_cast<ID3D11RenderTargetView*>(swap_chain->getRenderTargetView());
+	auto dsv = reinterpret_cast<ID3D11DepthStencilView*>(swap_chain->getDepthStencilView());
+
+	m_immContext->ClearRenderTargetView(rtv, clear_color);
+	m_immContext->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
+	m_immContext->OMSetRenderTargets(1, &rtv, dsv);
 }
 
 void CXGraphicsEngine::clearDepthStencil(const  CXSwapChainPtr& swap_chain)
 {
-	m_immContext->ClearDepthStencilView(swap_chain->m_dsv.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
+	auto dsv = reinterpret_cast<ID3D11DepthStencilView*>(swap_chain->getDepthStencilView());
+
+	m_immContext->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
 }
 
-void CXGraphicsEngine::clearRenderTarget(const  CXTexturePtr& render_target, const CXVec4& color)
+void CXGraphicsEngine::clearColor(const  CXTexturePtr& render_target, const CXVec4& color)
 {
 	if (render_target->m_type != CXTextureType::RenderTarget) return;
 
@@ -209,23 +213,18 @@ void CXGraphicsEngine::setRenderTarget(const  CXTexturePtr& render_target, const
 }
 
 
-
-
-
-
-void CXGraphicsEngine::setVertexBuffer(const  CXVertexBufferPtr& vertex_buffer)
+void CXGraphicsEngine::setVertexBuffer(const  CXVertexBufferPtr& buffer)
 {
-
-	ui32 stride = vertex_buffer->m_size_vertex;
+	ui32 stride = buffer->getVertexSize();
 	ui32 offset = 0;
-	m_immContext->IASetVertexBuffers(0, 1, vertex_buffer->m_buffer.GetAddressOf(), &stride, &offset);
-	m_immContext->IASetInputLayout((ID3D11InputLayout*)vertex_buffer->m_layout.Get());
+	auto buf = reinterpret_cast<ID3D11Buffer*>(buffer->getBuffer());
+	m_immContext->IASetVertexBuffers(0, 1, &buf, &stride, &offset);
+	m_immContext->IASetInputLayout((ID3D11InputLayout*)buffer->getLayout());
 }
 
-void CXGraphicsEngine::setIndexBuffer(const  CXIndexBufferPtr& index_buffer)
+void CXGraphicsEngine::setIndexBuffer(const  CXIndexBufferPtr& buffer)
 {
-
-	m_immContext->IASetIndexBuffer((ID3D11Buffer*)index_buffer->m_buffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	m_immContext->IASetIndexBuffer((ID3D11Buffer*)buffer->getBuffer(), DXGI_FORMAT_R32_UINT, 0);
 }
 
 void CXGraphicsEngine::drawTriangleList(ui32 vertex_count, ui32 start_vertex_index)
@@ -300,14 +299,14 @@ void CXGraphicsEngine::setTexture(const  CXPixelShaderPtr& pixel_shader, const  
 
 void CXGraphicsEngine::setConstantBuffer(const  CXVertexShaderPtr& vertex_shader, const  CXConstantBufferPtr& buffer)
 {
-
-	m_immContext->VSSetConstantBuffers(0, 1, buffer->m_buffer.GetAddressOf());
+	auto buf = reinterpret_cast<ID3D11Buffer*>(buffer->getBuffer());
+	m_immContext->VSSetConstantBuffers(0, 1, &buf);
 }
 
 void CXGraphicsEngine::setConstantBuffer(const  CXPixelShaderPtr& pixel_shader, const  CXConstantBufferPtr& buffer)
 {
-
-	m_immContext->PSSetConstantBuffers(0, 1, buffer->m_buffer.GetAddressOf());
+	auto buf = reinterpret_cast<ID3D11Buffer*>(buffer->getBuffer());
+	m_immContext->PSSetConstantBuffers(0, 1, &buf);
 }
 
 

@@ -183,9 +183,9 @@ CXMesh::CXMesh(const wchar_t* full_path, CXResourceManager* manager) : CXResourc
 
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
-	m_vertex_buffer = engine->createVertexBuffer(&list_vertices[0], sizeof(CXVertexMesh),
-		(UINT)list_vertices.size());
-	m_index_buffer = engine->createIndexBuffer(&list_indices[0], (UINT)list_indices.size());
+	m_vertex_buffer = engine->createVertexBuffer({ &list_vertices[0], sizeof(CXVertexMesh),
+		(UINT)list_vertices.size() });
+	m_index_buffer = engine->createIndexBuffer({ &list_indices[0], (UINT)list_indices.size() });
 }
 
 CXMesh::CXMesh(CXVertexMesh* vertex_list_data, unsigned int vertex_list_size,
@@ -197,11 +197,11 @@ CXMesh::CXMesh(CXVertexMesh* vertex_list_data, unsigned int vertex_list_size,
 
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
-	m_vertex_buffer = engine->createVertexBuffer(vertex_list_data,
+	m_vertex_buffer = engine->createVertexBuffer({ vertex_list_data,
 		sizeof(CXVertexMesh),
-		(UINT)vertex_list_size);
-	m_index_buffer = engine->createIndexBuffer(index_list_data,
-		(UINT)index_list_size);
+		(UINT)vertex_list_size });
+	m_index_buffer = engine->createIndexBuffer({ index_list_data,
+		(UINT)index_list_size });
 
 	m_mat_slots.resize(material_slot_list_size);
 

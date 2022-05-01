@@ -26,7 +26,6 @@ SOFTWARE.*/
 #include <memory>
 
 class  CXSwapChain;
-class  CXeviceContext;
 class  CXVertexBuffer;
 class  CXIndexBuffer;
 class  CXConstantBuffer;
@@ -44,7 +43,6 @@ class  CXWindow;
 class  CXMeshEntity;
 
 typedef std::shared_ptr<CXSwapChain> CXSwapChainPtr;
-typedef std::shared_ptr<CXeviceContext> CXeviceContextPtr;
 typedef std::shared_ptr<CXVertexBuffer> CXVertexBufferPtr;
 typedef std::shared_ptr<CXIndexBuffer> CXIndexBufferPtr;
 typedef std::shared_ptr<CXConstantBuffer> CXConstantBufferPtr;
@@ -54,7 +52,6 @@ typedef std::shared_ptr<CXResource> CXResourcePtr;
 typedef std::shared_ptr<CXTexture> CXTexturePtr;
 typedef std::shared_ptr<CXMesh> CXMeshPtr;
 typedef std::shared_ptr<CXMaterial> CXMaterialPtr;
-typedef std::shared_ptr<CXMeshEntity> CXMeshEntityPtr;
 
 
 typedef unsigned int ui32;
@@ -147,7 +144,25 @@ struct CXMaterialSlot
 	size_t material_id = 0;
 };
 
+struct CXConstantBufferDesc
+{
+	void* buffer = nullptr;
+	ui32 bufferSize = 0;
+};
 
+
+struct CXVertexBufferDesc
+{
+	void* verticesList = nullptr;
+	ui32 vertexSize = 0;
+	ui32 listSize = 0;
+};
+
+struct CXIndexBufferDesc
+{
+	void* indicesList = nullptr;
+	ui32 listSize = 0;
+};
 
 
 

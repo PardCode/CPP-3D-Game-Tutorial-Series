@@ -118,7 +118,7 @@ CXMeshPtr CXGame::createMesh(CXVertexMesh* vertex_list_data, unsigned int vertex
 
 void CXGame::onGraphicsUpdate(f32 deltaTime)
 {
-	m_graphicsEngine->clearRenderTargetColor(
+	m_graphicsEngine->clearColor(
 		m_display->getSwapChain(), CXVec4(0, 0, 0, 1));
 
 	m_graphicsEngine->setViewportSize(m_display->getClientSize().width,

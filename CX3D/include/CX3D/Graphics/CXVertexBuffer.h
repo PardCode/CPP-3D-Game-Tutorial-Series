@@ -28,17 +28,16 @@ SOFTWARE.*/
 class  CXVertexBuffer
 {
 public:
-	CXVertexBuffer(void* list_vertices, ui32 size_vertex, ui32 size_list,
-		CXGraphicsEngine* system);
-	ui32 getSizeVertexList();
+	CXVertexBuffer(const CXVertexBufferDesc& desc,CXGraphicsEngine* system);
+	ui32 getVerticesListSize();
+	ui32 getVertexSize();
+	void* getBuffer();
+	void* getLayout();
 private:
-	ui32 m_size_vertex;
-	ui32 m_size_list;
+	CXVertexBufferDesc m_desc;
 private:
-	Microsoft::WRL::ComPtr < ID3D11Buffer> m_buffer;
-	Microsoft::WRL::ComPtr < ID3D11InputLayout> m_layout;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> m_buffer;
+	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_layout;	
 	CXGraphicsEngine* m_system = nullptr;
-private:
-	friend class  CXGraphicsEngine;
 };
 

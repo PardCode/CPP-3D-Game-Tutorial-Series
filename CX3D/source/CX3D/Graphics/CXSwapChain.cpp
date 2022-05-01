@@ -27,30 +27,29 @@ SOFTWARE.*/
 #include <stdexcept>
 #include <string>
 
-CXSwapChain::CXSwapChain(void* hwnd, const  CXRect& size, CXGraphicsEngine* system) : m_system(system)
+CXSwapChain::CXSwapChain(const CXSwapChainDesc& desc, CXGraphicsEngine* system) : m_system(system)
 {
 	auto device = m_system->m_d3dDevice;
 
-	DXGI_SWAP_CHAIN_DESC desc;
-	ZeroMemory(&desc, sizeof(desc));
-	desc.BufferCount = 1;
-	desc.BufferDesc.Width = (size.width > 0) ? size.width : 1;
-	desc.BufferDesc.Height = (size.height > 0) ? size.height : 1;
-	desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	desc.BufferDesc.RefreshRate.Numerator = 60;
-	desc.BufferDesc.RefreshRate.Denominator = 1;
-	desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	desc.OutputWindow = (HWND)hwnd;
-	desc.SampleDesc.Count = 1;
-	desc.SampleDesc.Quality = 0;
-	desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
-	desc.Windowed = TRUE;
+	DXGI_SWAP_CHAIN_DESC d3d11Desc = {};
+	d3d11Desc.BufferCount = 1;
+	d3d11Desc.BufferDesc.Width = (desc.size.width > 0) ? desc.size.width : 1;
+	d3d11Desc.BufferDesc.Height = (desc.size.height > 0) ? desc.size.height : 1;
+	d3d11Desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	d3d11Desc.BufferDesc.RefreshRate.Numerator = 60;
+	d3d11Desc.BufferDesc.RefreshRate.Denominator = 1;
+	d3d11Desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	d3d11Desc.OutputWindow = (HWND)desc.windowHandle;
+	d3d11Desc.SampleDesc.Count = 1;
+	d3d11Desc.SampleDesc.Quality = 0;
+	d3d11Desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+	d3d11Desc.Windowed = TRUE;
 
-	HRESULT hr = m_system->m_dxgiFactory->CreateSwapChain(device.Get(), &desc, &m_swap_chain);
+	HRESULT hr = m_system->m_dxgiFactory->CreateSwapChain(device.Get(), &d3d11Desc, &m_swap_chain);
 
 	if (FAILED(hr)) throw std::runtime_error("DSwapChain not created successfully");
 
-	reloadBuffers(size.width, size.height);
+	reloadBuffers(desc.size.width, desc.size.height);
 }
 
 
@@ -73,6 +72,16 @@ bool CXSwapChain::present(bool vsync)
 {
 	m_swap_chain->Present(vsync, NULL);
 	return true;
+}
+
+void* CXSwapChain::getRenderTargetView()
+{
+	return m_rtv.Get();
+}
+
+void* CXSwapChain::getDepthStencilView()
+{
+	return m_dsv.Get();
 }
 
 void CXSwapChain::reloadBuffers(unsigned int width, unsigned int height)

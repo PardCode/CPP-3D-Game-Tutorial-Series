@@ -61,7 +61,7 @@ void CXMaterial::setData(void* data, unsigned int size)
 	auto engine = static_cast<CXGraphicsManager*>(m_resManager)->getGraphicsEngine();
 
 	if (!m_constant_buffer)
-		m_constant_buffer = engine->createConstantBuffer(data, size);
+		m_constant_buffer = engine->createConstantBuffer({ data, size });
 	else
 		m_constant_buffer->update(data);
 }
@@ -71,7 +71,7 @@ void CXMaterial::setUserData(void* data, unsigned int size)
 	auto engine = static_cast<CXGraphicsManager*>(m_resManager)->getGraphicsEngine();
 
 	if (!m_userBuffer)
-		m_userBuffer = engine->createConstantBuffer(data, size);
+		m_userBuffer = engine->createConstantBuffer({ data, size });
 	else
 		m_userBuffer->update(data);
 }

@@ -29,6 +29,7 @@ SOFTWARE.*/
 #include <CX3D/Resource/CXTextureManager.h>
 #include <CX3D/Resource/CXMeshManager.h>
 #include <CX3D/Resource/CXMaterialManager.h>
+#include <CX3D/Graphics/CXSwapChain.h>
 
 class  CXGraphicsEngine
 {
@@ -39,24 +40,24 @@ public:
 	CXMeshManager* getMeshManager();
 	CXMaterialManager* getMaterialManager();
 public:
-	CXSwapChainPtr createSwapChain(void* hwnd, const  CXRect& size);
-	CXVertexBufferPtr createVertexBuffer(void* list_vertices, ui32 size_vertex, ui32 size_list);
-	CXIndexBufferPtr createIndexBuffer(void* list_indices, ui32 size_list);
-	CXConstantBufferPtr createConstantBuffer(void* buffer, ui32 size_buffer);
+	CXSwapChainPtr createSwapChain(const CXSwapChainDesc& desc);
+	CXVertexBufferPtr createVertexBuffer(const CXVertexBufferDesc& desc);
+	CXIndexBufferPtr createIndexBuffer(const CXIndexBufferDesc& desc);
+	CXConstantBufferPtr createConstantBuffer(const CXConstantBufferDesc& desc);
 	CXVertexShaderPtr createVertexShader(const wchar_t* file_name, const char* entry_point_name);
 	CXPixelShaderPtr createPixelShader(const wchar_t* file_name, const char* entry_point_name);
 
 public:
-	void clearRenderTargetColor(const  CXSwapChainPtr& swap_chain, const CXVec4& color);
+	void clearColor(const  CXSwapChainPtr& swap_chain, const CXVec4& color);
 	void clearDepthStencil(const  CXSwapChainPtr& swap_chain);
 
-	void clearRenderTarget(const  CXTexturePtr& render_target, const CXVec4& color);
+	void clearColor(const  CXTexturePtr& render_target, const CXVec4& color);
 	void clearDepthStencil(const  CXTexturePtr& depth_stencil);
 
 	void setRenderTarget(const  CXTexturePtr& render_target, const  CXTexturePtr& depth_stencil);
 
-	void setVertexBuffer(const  CXVertexBufferPtr& vertex_buffer);
-	void setIndexBuffer(const  CXIndexBufferPtr& index_buffer);
+	void setVertexBuffer(const  CXVertexBufferPtr& buffer);
+	void setIndexBuffer(const  CXIndexBufferPtr& buffer);
 
 
 	void drawTriangleList(ui32 vertex_count, ui32 start_vertex_index);
@@ -68,8 +69,8 @@ public:
 	void setVertexShader(const  CXVertexShaderPtr& vertex_shader);
 	void setPixelShader(const  CXPixelShaderPtr& pixel_shader);
 
-	void setTexture(const  CXVertexShaderPtr& vertex_shader, const  CXTexturePtr* texture, unsigned int num_textures);
-	void setTexture(const  CXPixelShaderPtr& pixel_shader, const  CXTexturePtr* texture, unsigned int num_textures);
+	void setTexture(const CXVertexShaderPtr& vertex_shader, const  CXTexturePtr* texture, unsigned int num_textures);
+	void setTexture(const CXPixelShaderPtr& pixel_shader, const  CXTexturePtr* texture, unsigned int num_textures);
 
 	void setConstantBuffer(const  CXVertexShaderPtr& vertex_shader, const  CXConstantBufferPtr& buffer);
 	void setConstantBuffer(const  CXPixelShaderPtr& pixel_shader, const  CXConstantBufferPtr& buffer);

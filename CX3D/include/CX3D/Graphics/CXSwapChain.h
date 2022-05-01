@@ -26,23 +26,31 @@ SOFTWARE.*/
 #include <CX3D/CXPrerequisites.h>
 #include <CX3D/Math/CXRect.h>
 
+struct CXSwapChainDesc
+{
+	void* windowHandle = nullptr;
+	CXRect size;
+};
+
+
 class  CXSwapChain
 {
 public:
 	//Initialize CXSwapChain for a window
-	CXSwapChain(void* hwnd, const  CXRect& size, CXGraphicsEngine* system);
+	CXSwapChain(const CXSwapChainDesc& desc, CXGraphicsEngine* system);
 	void setFullScreen(bool fullscreen, const  CXRect& size);
 	void resize(const  CXRect& size);
 	bool present(bool vsync);
+
+	void* getRenderTargetView();
+	void* getDepthStencilView();
+
 private:
 	void reloadBuffers(unsigned int width, unsigned int height);
 private:
-	Microsoft::WRL::ComPtr < IDXGISwapChain> m_swap_chain = nullptr;
-	Microsoft::WRL::ComPtr < ID3D11RenderTargetView> m_rtv = nullptr;
-	Microsoft::WRL::ComPtr < ID3D11DepthStencilView> m_dsv = nullptr;
+	Microsoft::WRL::ComPtr <IDXGISwapChain> m_swap_chain = nullptr;
+	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> m_rtv = nullptr;
+	Microsoft::WRL::ComPtr <ID3D11DepthStencilView> m_dsv = nullptr;
 	CXGraphicsEngine* m_system = nullptr;
-
-private:
-	friend class  CXGraphicsEngine;
 };
 

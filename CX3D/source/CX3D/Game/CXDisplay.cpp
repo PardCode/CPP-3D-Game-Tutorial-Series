@@ -28,7 +28,7 @@ SOFTWARE.*/
 CXDisplay::CXDisplay(CXGame* game)
 {
 	m_game = game;
-	m_swapChain = game->getGraphicsEngine()->createSwapChain(m_hwnd, getClientSize());
+	m_swapChain = game->getGraphicsEngine()->createSwapChain({ m_hwnd, getClientSize() });
 }
 
 void CXDisplay::onSize(const  CXRect& size)
