@@ -48,11 +48,12 @@ public:
 	template <typename T>
 	T* createEntity()
 	{
-		static_assert(std::is_base_of<CXEntity, T>::value, "T must derive from OEntity");
+		static_assert(std::is_base_of<CXEntity, T>::value, "T must derive from CXEntity");
 		auto id = typeid(T).hash_code();
 		auto e = new T();
-		createEntityConcrete(e, id);
-		return e;
+		if (createEntityConcrete(e, id))
+			return e;
+		return nullptr;
 	}
 
 	void setTitle(const wchar_t* title);
@@ -85,7 +86,7 @@ private:
 	//function that allows to update only the graphics part of the game
 	void onGraphicsUpdate(f32 deltaTime);
 
-	void createEntityConcrete(CXEntity* entity, size_t id);
+	bool createEntityConcrete(CXEntity* entity, size_t id);
 	void removeEntity(CXEntity* entity);
 
 	void updateCamerasViewportSize();

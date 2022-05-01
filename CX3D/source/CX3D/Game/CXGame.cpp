@@ -203,7 +203,7 @@ void CXGame::onGraphicsUpdate(f32 deltaTime)
 
 }
 
-void CXGame::createEntityConcrete(CXEntity* entity, size_t id)
+bool CXGame::createEntityConcrete(CXEntity* entity, size_t id)
 {
 	auto entityPtr = std::unique_ptr<CXEntity>(entity);
 	auto camId = typeid(CXCameraEntity).hash_code();
@@ -214,7 +214,7 @@ void CXGame::createEntityConcrete(CXEntity* entity, size_t id)
 		auto it = m_entities.find(camId);
 		if (it != m_entities.end())
 		{
-			if (it->second.size()) return;
+			if (it->second.size()) return false;
 			it->second.emplace(entity, std::move(entityPtr));
 		}
 		else
@@ -227,6 +227,7 @@ void CXGame::createEntityConcrete(CXEntity* entity, size_t id)
 		m_entities[id].emplace(entity, std::move(entityPtr));
 	}
 	entity->onCreate();
+	return true;
 }
 
 void CXGame::removeEntity(CXEntity* entity)
