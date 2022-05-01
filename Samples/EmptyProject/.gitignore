@@ -1,0 +1,11 @@
+/bin/
+/intermediate/
+.vs/
+
+
+*.exe
+*.ilk
+*.exp
+*.log
+*.tlog
+*.ipch
