@@ -45,7 +45,11 @@ public:
 	void setScale(const  CXVec3& scale);
 
 	CXVec3 getPosition();
+	CXVec3 getRotation();
 	CXVec3 getScale();
+
+	CXGame* getGame();
+
 
 	virtual void onCreate() {}
 	virtual void onUpdate(f32 deltaTime) {}

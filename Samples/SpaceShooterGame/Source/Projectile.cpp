@@ -36,8 +36,8 @@ Projectile::~Projectile()
 
 void Projectile::onCreate()
 {
-	auto mesh = m_game->createMesh(L"Assets/Meshes/sphere.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/projectile.hlsl");
+	auto mesh = getGame()->createMesh(L"Assets/Meshes/sphere.obj");
+	auto mat = getGame()->createMaterial(L"Assets/Shaders/projectile.hlsl");
 
 	setMesh(mesh);
 	addMaterial(mat);

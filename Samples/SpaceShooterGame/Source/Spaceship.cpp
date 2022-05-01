@@ -37,9 +37,9 @@ Spaceship::~Spaceship()
 void Spaceship::onCreate()
 {
 	//Load all the assets
-	auto tex = m_game->createTexture(L"Assets/Textures/spaceship.jpg");
-	auto mesh = m_game->createMesh(L"Assets/Meshes/spaceship.obj");
-	auto mat = m_game->createMaterial(L"Assets/Shaders/base.hlsl");
+	auto tex = getGame()->createTexture(L"Assets/Textures/spaceship.jpg");
+	auto mesh = getGame()->createMesh(L"Assets/Meshes/spaceship.obj");
+	auto mat = getGame()->createMaterial(L"Assets/Shaders/base.hlsl");
 	//Add the texture to material
 	mat->addTexture(tex);
 
@@ -48,12 +48,14 @@ void Spaceship::onCreate()
 	addMaterial(mat);
 
 	//Create the camera that follows the spaceship
-	m_camera = m_game->createEntity<CXCameraEntity>();
+	m_camera = getGame()->createEntity<CXCameraEntity>();
 	m_camera->setFarPlane(40000.0f);
 }
 
 void Spaceship::onUpdate(f32 deltaTime)
 {
+	auto input = getGame()->getInputManager();
+
 	f32 forward = 0.0f;
 	f32 rightward = 0.0f;
 
@@ -61,23 +63,23 @@ void Spaceship::onUpdate(f32 deltaTime)
 	bool turbo = false;
 
 	//Spaceship controls
-	if (m_game->getInputManager()->isKeyDown(CXKey::W))
+	if (input->isKeyDown(CXKey::W))
 	{
 		forward = 1.0f;
 	}
-	if (m_game->getInputManager()->isKeyDown(CXKey::S))
+	if (input->isKeyDown(CXKey::S))
 	{
 		forward = -1.0f;
 	}
-	if (m_game->getInputManager()->isKeyDown(CXKey::A))
+	if (input->isKeyDown(CXKey::A))
 	{
 		rightward = -1.0f;
 	}
-	if (m_game->getInputManager()->isKeyDown(CXKey::D))
+	if (input->isKeyDown(CXKey::D))
 	{
 		rightward = 1.0f;
 	}
-	if (m_game->getInputManager()->isKeyDown(CXKey::Shift))
+	if (input->isKeyDown(CXKey::Shift))
 	{
 		speed = 3.0f;
 		turbo = true;
@@ -109,8 +111,8 @@ void Spaceship::onUpdate(f32 deltaTime)
 	m_current_cam_distance = vec.x;
 
 
-	m_yaw += m_game->getInputManager()->getMouseXAxis() * 0.001f;
-	m_pitch += m_game->getInputManager()->getMouseYAxis() * 0.001f;
+	m_yaw += input->getMouseXAxis() * 0.001f;
+	m_pitch += input->getMouseYAxis() * 0.001f;
 
 	if (m_pitch < -1.57f)
 		m_pitch = -1.57f;
@@ -155,7 +157,7 @@ void Spaceship::onUpdate(f32 deltaTime)
 	m_camera->setPosition(camPos);
 
 	//On left mouse click, spawn the projectile along the spaceship direction
-	if (m_game->getInputManager()->isMouseUp(CXMouseButton::Left))
+	if (input->isMouseUp(CXMouseButton::Left))
 	{
 		auto proj = m_game->createEntity<Projectile>();
 		proj->m_dir = zdir;

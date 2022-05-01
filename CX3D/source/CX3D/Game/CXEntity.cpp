@@ -101,7 +101,17 @@ CXVec3 CXEntity::getPosition()
 	return m_position;
 }
 
+CXVec3 CXEntity::getRotation()
+{
+	return m_rotation;
+}
+
 CXVec3 CXEntity::getScale()
 {
 	return m_scale;
+}
+
+CXGame* CXEntity::getGame()
+{
+	return m_game;
 }
