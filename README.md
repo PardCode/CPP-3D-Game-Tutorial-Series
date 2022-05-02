@@ -60,7 +60,7 @@ The license is available [here](#license).
 * Visual Studio 2019 or later.
 * Windows 10 or later.
 
-Open `SpaceshipGame.sln` Project, available under the `Samples/SpaceshipGame` folder.<br>
+Open `SpaceShooterGame.sln` Project, available under the `Samples/SpaceShooterGame` folder.<br>
 In Visual Studio, press the `Local Windows Debugger` button available in the main Toolbar.
 
 ## Public discussion forum
