@@ -36,7 +36,6 @@ struct CXSwapChainDesc
 class  CXSwapChain
 {
 public:
-	//Initialize CXSwapChain for a window
 	CXSwapChain(const CXSwapChainDesc& desc, CXGraphicsEngine* system);
 	void setFullScreen(bool fullscreen, const  CXRect& size);
 	void resize(const  CXRect& size);

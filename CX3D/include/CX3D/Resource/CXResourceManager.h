@@ -33,7 +33,6 @@ class  CXResourceManager
 {
 public:
 	CXResourceManager(CXGame* game);
-	virtual ~CXResourceManager();
 
 	template <typename T>
 	std::shared_ptr<T> createResourceFromFile(const wchar_t* path)
@@ -45,9 +44,7 @@ public:
 private:
 	CXResourcePtr createResourceFromFileConcrete(const wchar_t* path);
 
-//protected:
-//	virtual CXResource* createResourceFromFileConcrete(const wchar_t* file_path) = 0;
-protected:
+private:
 	std::map<std::wstring, CXResourcePtr> m_mapResources;
 	CXGame* m_game = nullptr;
 };

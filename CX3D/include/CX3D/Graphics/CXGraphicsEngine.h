@@ -35,10 +35,6 @@ class  CXGraphicsEngine
 {
 public:
 	CXGraphicsEngine();
-
-	//CXTextureManager* getTextureManager();
-	//CXMeshManager* getMeshManager();
-	//CXMaterialManager* getMaterialManager();
 public:
 	CXSwapChainPtr createSwapChain(const CXSwapChainDesc& desc);
 	CXVertexBufferPtr createVertexBuffer(const CXVertexBufferDesc& desc);
@@ -47,7 +43,6 @@ public:
 	CXShaderPtr createShader(const CXShaderDesc& desc);
 	CXTexture2DPtr createTexture2D(const CXTexture2DDesc& desc);
 	CXTexture2DPtr createTexture2D(const wchar_t* path);
-
 public:
 	void clearColor(const  CXSwapChainPtr& swap_chain, const CXVec4& color);
 	void clearDepthStencil(const  CXSwapChainPtr& swap_chain);
@@ -90,10 +85,6 @@ private:
 
 	unsigned char m_meshLayoutByteCode[1024];
 	size_t m_meshLayoutSize = 0;
-
-	//std::unique_ptr<CXTextureManager> m_texManager = nullptr;
-	//std::unique_ptr<CXMeshManager> m_meshManager = nullptr;
-	//std::unique_ptr<CXMaterialManager> m_materialManager = nullptr;
 
 private:
 	friend class  CXSwapChain;

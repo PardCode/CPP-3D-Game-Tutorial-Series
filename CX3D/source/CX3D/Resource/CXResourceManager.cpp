@@ -35,10 +35,6 @@ CXResourceManager::CXResourceManager(CXGame* game):m_game(game)
 {
 }
 
-CXResourceManager::~CXResourceManager()
-{
-}
-
 CXResourcePtr CXResourceManager::createResourceFromFileConcrete(const wchar_t* path)
 {
 	auto it = m_mapResources.find(path);
