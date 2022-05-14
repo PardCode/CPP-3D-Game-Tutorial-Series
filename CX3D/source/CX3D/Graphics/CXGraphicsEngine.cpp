@@ -31,6 +31,8 @@ SOFTWARE.*/
 #include <CX3D/Graphics/CXShader.h>
 #include <CX3D/Resource/CXMaterial.h>
 #include <CX3D/Resource/CXTexture.h>
+#include <CX3D/Resource/CXMesh.h>
+
 #include <d3dcompiler.h>
 #include <stdexcept>
 #include <assert.h>
@@ -76,26 +78,6 @@ CXGraphicsEngine::CXGraphicsEngine()
 
 	initRasterizerState();
 	compilePrivateShaders();
-
-
-	m_texManager = std::make_unique<CXTextureManager>(this);
-	m_meshManager = std::make_unique<CXMeshManager>(this);
-	m_materialManager = std::make_unique<CXMaterialManager>(this);
-}
-
-CXTextureManager* CXGraphicsEngine::getTextureManager()
-{
-	return m_texManager.get();
-}
-
-CXMeshManager* CXGraphicsEngine::getMeshManager()
-{
-	return m_meshManager.get();
-}
-
-CXMaterialManager* CXGraphicsEngine::getMaterialManager()
-{
-	return m_materialManager.get();
 }
 
 CXSwapChainPtr CXGraphicsEngine::createSwapChain(const CXSwapChainDesc& desc)
@@ -121,6 +103,16 @@ CXConstantBufferPtr CXGraphicsEngine::createConstantBuffer(const CXConstantBuffe
 CXShaderPtr CXGraphicsEngine::createShader(const CXShaderDesc& desc)
 {
 	return std::make_shared<CXShader>(desc, this);
+}
+
+CXTexture2DPtr CXGraphicsEngine::createTexture2D(const CXTexture2DDesc& desc)
+{
+	return std::make_shared<CXTexture2D>(desc, this);
+}
+
+CXTexture2DPtr CXGraphicsEngine::createTexture2D(const wchar_t* path)
+{
+	return std::make_shared<CXTexture2D>(path, this);
 }
 
 
@@ -190,25 +182,25 @@ void CXGraphicsEngine::clearDepthStencil(const  CXSwapChainPtr& swap_chain)
 	m_immContext->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
 }
 
-void CXGraphicsEngine::clearColor(const  CXTexturePtr& render_target, const CXVec4& color)
+void CXGraphicsEngine::clearColor(const  CXTexture2DPtr& render_target, const CXVec4& color)
 {
-	if (render_target->m_type != CXTextureType::RenderTarget) return;
+	if (render_target->m_desc.type != CXTextureType::RenderTarget) return;
 
 	FLOAT clear_color[] = { color.x, color.y, color.z, color.w };
 	m_immContext->ClearRenderTargetView(render_target->m_render_target_view.Get(), clear_color);
 }
 
-void CXGraphicsEngine::clearDepthStencil(const  CXTexturePtr& depth_stencil)
+void CXGraphicsEngine::clearDepthStencil(const  CXTexture2DPtr& depth_stencil)
 {
 
-	if (depth_stencil->m_type != CXTextureType::DepthStencil) return;
+	if (depth_stencil->m_desc.type != CXTextureType::DepthStencil) return;
 	m_immContext->ClearDepthStencilView((ID3D11DepthStencilView*)depth_stencil->m_depth_stencil_view.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
 }
 
-void CXGraphicsEngine::setRenderTarget(const  CXTexturePtr& render_target, const  CXTexturePtr& depth_stencil)
+void CXGraphicsEngine::setRenderTarget(const  CXTexture2DPtr& render_target, const  CXTexture2DPtr& depth_stencil)
 {
-	if (render_target->m_type != CXTextureType::RenderTarget) return;
-	if (depth_stencil->m_type != CXTextureType::DepthStencil) return;
+	if (render_target->m_desc.type != CXTextureType::RenderTarget) return;
+	if (depth_stencil->m_desc.type != CXTextureType::DepthStencil) return;
 
 	m_immContext->OMSetRenderTargets(1, render_target->m_render_target_view.GetAddressOf(), (ID3D11DepthStencilView*)depth_stencil->m_depth_stencil_view.Get());
 }
@@ -272,8 +264,8 @@ void CXGraphicsEngine::setTexture(const  CXTexturePtr* texture, unsigned int num
 	ID3D11SamplerState* list_sampler[32];
 	for (unsigned int i = 0; i < num_textures; i++)
 	{
-		list_res[i] = (ID3D11ShaderResourceView*)texture[i]->m_shader_res_view.Get();
-		list_sampler[i] = (ID3D11SamplerState*)texture[i]->m_sampler_state.Get();
+		list_res[i] = (ID3D11ShaderResourceView*)texture[i]->m_texture->m_shader_res_view.Get();
+		list_sampler[i] = (ID3D11SamplerState*)texture[i]->m_texture->m_sampler_state.Get();
 	}
 
 	m_immContext->VSSetShaderResources(0, num_textures, list_res);
@@ -299,7 +291,10 @@ void CXGraphicsEngine::setMaterial(const  CXMaterialPtr& material)
 	setShader(material->m_shader);
 
 	if (material->m_vec_textures.size())
+	{
+
 		setTexture(&material->m_vec_textures[0], (UINT)material->m_vec_textures.size());
+	}
 	
 }
 

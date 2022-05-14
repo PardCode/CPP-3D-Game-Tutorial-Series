@@ -21,15 +21,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
-#include <CX3D/Resource/CXGraphicsManager.h>
+//#include <CX3D/Resource/CXGraphicsManager.h>
 #include <CX3D/Resource/CXMaterial.h>
 #include <CX3D/Graphics/CXConstantBuffer.h>
 #include <CX3D/Graphics/CXGraphicsEngine.h>
+#include <CX3D/Resource/CXResourceManager.h>
+#include <CX3D/Game/CXGame.h>
 #include <stdexcept>
 
 CXMaterial::CXMaterial(const wchar_t* full_path, CXResourceManager* manager) : CXResource(full_path, manager)
 {
-	auto engine = static_cast<CXGraphicsManager*>(m_resManager)->getGraphicsEngine();
+	auto engine = m_resManager->getGame()->getGraphicsEngine();
 	m_shader = engine->createShader({ full_path, "vsmain" , full_path, "psmain" });
 }
 
@@ -52,7 +54,7 @@ void CXMaterial::removeTexture(unsigned int index)
 
 void CXMaterial::setData(void* data, unsigned int size)
 {
-	auto engine = static_cast<CXGraphicsManager*>(m_resManager)->getGraphicsEngine();
+	auto engine = m_resManager->getGame()->getGraphicsEngine();
 
 	if (!m_constant_buffer)
 		m_constant_buffer = engine->createConstantBuffer({ data, size });
@@ -62,7 +64,7 @@ void CXMaterial::setData(void* data, unsigned int size)
 
 void CXMaterial::setUserData(void* data, unsigned int size)
 {
-	auto engine = static_cast<CXGraphicsManager*>(m_resManager)->getGraphicsEngine();
+	auto engine = m_resManager->getGame()->getGraphicsEngine();
 
 	if (!m_userBuffer)
 		m_userBuffer = engine->createConstantBuffer({ data, size });

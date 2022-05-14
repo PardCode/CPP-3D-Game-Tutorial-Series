@@ -50,6 +50,10 @@ public:
 
 	CXGame* getGame();
 
+	CXMaterialPtr createMaterial(const wchar_t* path);
+	CXTexturePtr createTexture(const wchar_t* path);
+	CXMeshPtr createMesh(const wchar_t* path);
+
 
 	virtual void onCreate() {}
 	virtual void onUpdate(f32 deltaTime) {}

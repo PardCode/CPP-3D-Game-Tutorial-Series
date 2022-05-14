@@ -21,9 +21,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
-#include <CX3D/Resource/CXGraphicsManager.h>
+//#include <CX3D/Resource/CXGraphicsManager.h>
 #include <CX3D/Resource/CXMesh.h>
-#include <CX3D/Graphics/CXGraphicsEngine.h>
+#include <CX3D/Resource/CXResourceManager.h>
+#include <CX3D/Game/CXGame.h>
 
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>
@@ -179,7 +180,7 @@ CXMesh::CXMesh(const wchar_t* full_path, CXResourceManager* manager) : CXResourc
 
 		m_mat_slots[m].num_indices = index_global_offset - m_mat_slots[m].start_index;
 	}
-	auto engine = static_cast<CXGraphicsManager*>(m_resManager)->getGraphicsEngine();
+	auto engine = m_resManager->getGame()->getGraphicsEngine();
 
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
@@ -193,7 +194,7 @@ CXMesh::CXMesh(CXVertexMesh* vertex_list_data, unsigned int vertex_list_size,
 	CXMaterialSlot* material_slot_list, unsigned int material_slot_list_size, CXResourceManager* manager) :
 	CXResource(L"", manager)
 {
-	auto engine = static_cast<CXGraphicsManager*>(m_resManager)->getGraphicsEngine();
+	auto engine = m_resManager->getGame()->getGraphicsEngine();
 
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;

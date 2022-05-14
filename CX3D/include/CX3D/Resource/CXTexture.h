@@ -24,27 +24,17 @@ SOFTWARE.*/
 
 #pragma once
 #include <CX3D/Resource/CXResource.h>
+#include <CX3D/Graphics/CXTexture2D.h>
 #include <CX3D/Math/CXRect.h>
-#include <d3d11.h>
-#include <wrl.h>
-
 
 class  CXTexture : public  CXResource
 {
 public:
 	CXTexture(const wchar_t* full_path, CXResourceManager* manager);
-	CXTexture(const  CXRect& size, const  CXTextureType& type, CXResourceManager* manager);
-	CXRect getSize();
+	CXTexture(const  CXTexture2DDesc& desc, CXResourceManager* manager);
+	CXTexture2DPtr getTexture2D();
 private:
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> m_texture = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_shader_res_view = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11SamplerState> m_sampler_state = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_render_target_view = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depth_stencil_view = nullptr;
-
-	CXTextureType m_type = CXTextureType::Normal;
-	CXRect m_size;
-private:
+	CXTexture2DPtr m_texture;
 	friend class  CXGraphicsEngine;
 };
 

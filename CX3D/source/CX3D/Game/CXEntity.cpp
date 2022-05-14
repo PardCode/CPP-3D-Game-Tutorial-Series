@@ -115,3 +115,18 @@ CXGame* CXEntity::getGame()
 {
 	return m_game;
 }
+
+CXMaterialPtr CXEntity::createMaterial(const wchar_t* path)
+{
+	return m_game->createMaterial(path);
+}
+
+CXTexturePtr CXEntity::createTexture(const wchar_t* path)
+{
+	return m_game->createTexture(path);
+}
+
+CXMeshPtr CXEntity::createMesh(const wchar_t* path)
+{
+	return m_game->createMesh(path);
+}

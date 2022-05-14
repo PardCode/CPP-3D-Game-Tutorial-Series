@@ -63,18 +63,11 @@ public:
 public:
 	CXInputManager* getInputManager();
 	CXGraphicsEngine* getGraphicsEngine();
+	CXResourceManager* getResourceManager();
 
-	CXMaterialPtr createMaterial(const wchar_t* shader_path);
-	CXMaterialPtr createMaterial(const  CXMaterialPtr& material);
-	CXTexturePtr createTexture(const wchar_t* file_path);
-	CXTexturePtr createTexture(const  CXRect& size, const  CXTextureType& type = CXTextureType::RenderTarget);
-
-	CXMeshPtr createMesh(const wchar_t* file_path);
-	CXMeshPtr createMesh(
-		CXVertexMesh* vertex_list_data, unsigned int vertex_list_size,
-		unsigned int* index_list_data, unsigned int index_list_size,
-		CXMaterialSlot* material_slot_list, unsigned int material_slot_list_size
-	);
+	CXMaterialPtr createMaterial(const wchar_t* path);
+	CXTexturePtr createTexture(const wchar_t* path);
+	CXMeshPtr createMesh(const wchar_t* path);
 
 private:
 	void onDisplaySize(const  CXRect& size);
@@ -95,8 +88,8 @@ private:
 
 	std::unique_ptr<CXInputManager> m_inputManager;
 	std::unique_ptr<CXGraphicsEngine> m_graphicsEngine;
-	std::unique_ptr<CXDisplay> m_display;
-
+	std::unique_ptr<CXDisplay> m_display; 
+	std::unique_ptr<CXResourceManager> m_resourceManager;
 	//the core of entity system--------------
 	//this map handles all the types of entities we add to the game.
 	//for each type of entity (type retrieved with typeid function) we have a map

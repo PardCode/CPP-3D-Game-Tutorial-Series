@@ -170,6 +170,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\CX3D\Graphics\CXTexture2D.cpp" />
     <ClCompile Include="source\CX3D\Game\CXEntity.cpp" />
     <ClCompile Include="source\CX3D\Game\CXCameraEntity.cpp" />
     <ClCompile Include="source\CX3D\Game\CXDisplay.cpp" />
@@ -184,18 +185,15 @@
     <ClCompile Include="source\CX3D\Graphics\CXVertexBuffer.cpp" />
     <ClCompile Include="source\CX3D\Input\CXInputManager.cpp" />
     <ClCompile Include="source\CX3D\Resource\CXMaterial.cpp" />
-    <ClCompile Include="source\CX3D\Resource\CXMaterialManager.cpp" />
     <ClCompile Include="source\CX3D\Resource\CXMesh.cpp" />
-    <ClCompile Include="source\CX3D\Resource\CXMeshManager.cpp" />
     <ClCompile Include="source\CX3D\Resource\CXResource.cpp" />
     <ClCompile Include="source\CX3D\Resource\CXResourceManager.cpp" />
     <ClCompile Include="source\CX3D\Resource\CXTexture.cpp" />
-    <ClCompile Include="source\CX3D\Resource\CXTextureManager.cpp" />
     <ClCompile Include="source\CX3D\Window\CXWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\CX3D\Graphics\CXTexture2D.h" />
     <ClInclude Include="include\CX3D\Graphics\CXShader.h" />
-    <ClInclude Include="include\CX3D\Resource\CXGraphicsManager.h" />
     <ClInclude Include="include\CX3D\All.h" />
     <ClInclude Include="include\CX3D\Game\CXEntity.h" />
     <ClInclude Include="include\CX3D\Game\CXCameraEntity.h" />
@@ -217,13 +215,10 @@
     <ClInclude Include="include\CX3D\Math\CXVertexMesh.h" />
     <ClInclude Include="include\CX3D\CXPrerequisites.h" />
     <ClInclude Include="include\CX3D\Resource\CXMaterial.h" />
-    <ClInclude Include="include\CX3D\Resource\CXMaterialManager.h" />
     <ClInclude Include="include\CX3D\Resource\CXMesh.h" />
-    <ClInclude Include="include\CX3D\Resource\CXMeshManager.h" />
     <ClInclude Include="include\CX3D\Resource\CXResource.h" />
     <ClInclude Include="include\CX3D\Resource\CXResourceManager.h" />
     <ClInclude Include="include\CX3D\Resource\CXTexture.h" />
-    <ClInclude Include="include\CX3D\Resource\CXTextureManager.h" />
     <ClInclude Include="include\CX3D\Window\CXWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

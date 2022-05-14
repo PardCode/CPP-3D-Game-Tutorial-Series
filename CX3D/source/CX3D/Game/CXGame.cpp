@@ -23,7 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #include <CX3D/Game/CXGame.h>
+#include <CX3D/Resource/CXResourceManager.h>
 #include <CX3D/Math/CXMat4.h>
+#include <CX3D/Resource/CXMaterial.h>
+#include <CX3D/Resource/CXTexture.h>
+#include <CX3D/Resource/CXMesh.h>
+
 #include <Windows.h>
 
 __declspec(align(16))
@@ -53,6 +58,7 @@ CXGame::CXGame()
 	m_inputManager = std::make_unique<CXInputManager>();
 	m_graphicsEngine = std::make_unique<CXGraphicsEngine>();
 	m_display = std::make_unique<CXDisplay>(this);
+	m_resourceManager = std::make_unique<CXResourceManager>(this);
 
 	auto rc = m_display->getClientSize();
 	m_inputManager->setScreenArea(rc);
@@ -81,40 +87,23 @@ CXGraphicsEngine* CXGame::getGraphicsEngine()
 	return m_graphicsEngine.get();
 }
 
-CXMaterialPtr CXGame::createMaterial(const wchar_t* shader_path)
+CXResourceManager* CXGame::getResourceManager()
 {
-	return m_graphicsEngine->getMaterialManager()->createMaterialFromFile(shader_path);
+	return m_resourceManager.get();
+}
+CXMaterialPtr CXGame::createMaterial(const wchar_t* path)
+{
+	return m_resourceManager->createResourceFromFile<CXMaterial>(path);
+}
+CXTexturePtr CXGame::createTexture(const wchar_t* path)
+{
+	return m_resourceManager->createResourceFromFile<CXTexture>(path);
 }
 
-CXMaterialPtr CXGame::createMaterial(const  CXMaterialPtr& material)
+CXMeshPtr CXGame::createMesh(const wchar_t* path)
 {
-	return m_graphicsEngine->getMaterialManager()->createMaterial(material);
+	return m_resourceManager->createResourceFromFile<CXMesh>(path);
 }
-
-CXTexturePtr CXGame::createTexture(const wchar_t* file_path)
-{
-	return m_graphicsEngine->getTextureManager()->createTextureFromFile(file_path);
-}
-
-CXTexturePtr CXGame::createTexture(const  CXRect& size, const  CXTextureType& type)
-{
-	return m_graphicsEngine->getTextureManager()->createTexture(size, type);
-}
-
-CXMeshPtr CXGame::createMesh(const wchar_t* file_path)
-{
-	return m_graphicsEngine->getMeshManager()->createMeshFromFile(file_path);
-}
-
-CXMeshPtr CXGame::createMesh(CXVertexMesh* vertex_list_data, unsigned int vertex_list_size,
-	unsigned int* index_list_data, unsigned int index_list_size,
-	CXMaterialSlot* material_slot_list, unsigned int material_slot_list_size)
-{
-	return m_graphicsEngine->getMeshManager()->createMesh(vertex_list_data, vertex_list_size,
-		index_list_data, index_list_size,
-		material_slot_list, material_slot_list_size);
-}
-
 
 void CXGame::onGraphicsUpdate(f32 deltaTime)
 {

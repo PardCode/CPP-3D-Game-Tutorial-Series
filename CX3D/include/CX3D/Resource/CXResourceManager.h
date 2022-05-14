@@ -28,16 +28,27 @@ SOFTWARE.*/
 #include <CX3D/CXPrerequisites.h>
 #include <CX3D/Resource/CXResource.h>
 
+
 class  CXResourceManager
 {
 public:
-	CXResourceManager();
+	CXResourceManager(CXGame* game);
 	virtual ~CXResourceManager();
 
-	CXResourcePtr createResourceFromFile(const wchar_t* file_path);
+	template <typename T>
+	std::shared_ptr<T> createResourceFromFile(const wchar_t* path)
+	{
+		return std::dynamic_pointer_cast<T>(createResourceFromFileConcrete(path));
+	}
+
+	CXGame* getGame();
+private:
+	CXResourcePtr createResourceFromFileConcrete(const wchar_t* path);
+
+//protected:
+//	virtual CXResource* createResourceFromFileConcrete(const wchar_t* file_path) = 0;
 protected:
-	virtual CXResource* createResourceFromFileConcrete(const wchar_t* file_path) = 0;
-protected:
-	std::map<std::wstring, CXResourcePtr> m_map_resources;
+	std::map<std::wstring, CXResourcePtr> m_mapResources;
+	CXGame* m_game = nullptr;
 };
 

@@ -23,21 +23,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <CX3D/Resource/CXGraphicsManager.h>
-#include <CX3D/Resource/CXMesh.h>
+#include <CX3D/CXPrerequisites.h>
+#include <CX3D/Math/CXRect.h>
 
-class  CXMeshManager : public  CXGraphicsManager
+struct CXTexture2DDesc
 {
-public:
-	CXMeshManager(CXGraphicsEngine* graphicsEngine);
-	~CXMeshManager();
-	CXMeshPtr createMeshFromFile(const wchar_t* file_path);
-	CXMeshPtr createMesh(
-		CXVertexMesh* vertex_list_data, unsigned int vertex_list_size,
-		unsigned int* index_list_data, unsigned int index_list_size,
-		CXMaterialSlot* material_slot_list, unsigned int material_slot_list_size
-	);
-protected:
-	virtual CXResource* createResourceFromFileConcrete(const wchar_t* file_path);
+	CXRect size = {};
+	CXTextureType type = CXTextureType::Normal;
 };
 
+class  CXTexture2D
+{
+public:
+	CXTexture2D(const CXTexture2DDesc& desc, CXGraphicsEngine* system);
+	CXTexture2D(const wchar_t* path, CXGraphicsEngine* system);
+private:
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> m_texture = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_shader_res_view = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> m_sampler_state = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_render_target_view = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depth_stencil_view = nullptr;
+	CXTexture2DDesc m_desc = {};
+	friend class  CXGraphicsEngine;
+};

@@ -28,11 +28,19 @@ SOFTWARE.*/
 #include <iostream>
 #include <stdexcept>
 
+
+class  CXGraphicsEngine;
+class  CXShader;
 class  CXSwapChain;
 class  CXVertexBuffer;
 class  CXIndexBuffer;
 class  CXConstantBuffer;
-class  CXGraphicsEngine;
+class  CXTexture2D;
+
+class  CXWindow;
+class  CXGame;
+
+
 class  CXResource;
 class  CXResourceManager;
 class  CXTexture;
@@ -40,8 +48,6 @@ class  CXTextureManager;
 class  CXMesh;
 class  CXMeshManager;
 class  CXMaterial;
-class  CXWindow;
-class  CXShader;
 
 typedef std::shared_ptr<CXSwapChain> CXSwapChainPtr;
 typedef std::shared_ptr<CXVertexBuffer> CXVertexBufferPtr;
@@ -52,6 +58,8 @@ typedef std::shared_ptr<CXTexture> CXTexturePtr;
 typedef std::shared_ptr<CXMesh> CXMeshPtr;
 typedef std::shared_ptr<CXMaterial> CXMaterialPtr;
 typedef std::shared_ptr<CXShader> CXShaderPtr;
+typedef std::shared_ptr<CXTexture2D> CXTexture2DPtr;
+
 
 typedef unsigned int ui32;
 typedef int i32;

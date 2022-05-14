@@ -26,34 +26,36 @@ SOFTWARE.*/
 #include <CX3D/CXPrerequisites.h>
 #include <CX3D/Math/CXVec4.h>
 #include <CX3D/Math/CXRect.h>
-#include <CX3D/Resource/CXTextureManager.h>
-#include <CX3D/Resource/CXMeshManager.h>
-#include <CX3D/Resource/CXMaterialManager.h>
+
+#include <CX3D/Graphics/CXTexture2D.h>
 #include <CX3D/Graphics/CXSwapChain.h>
+#include <vector>
 
 class  CXGraphicsEngine
 {
 public:
 	CXGraphicsEngine();
 
-	CXTextureManager* getTextureManager();
-	CXMeshManager* getMeshManager();
-	CXMaterialManager* getMaterialManager();
+	//CXTextureManager* getTextureManager();
+	//CXMeshManager* getMeshManager();
+	//CXMaterialManager* getMaterialManager();
 public:
 	CXSwapChainPtr createSwapChain(const CXSwapChainDesc& desc);
 	CXVertexBufferPtr createVertexBuffer(const CXVertexBufferDesc& desc);
 	CXIndexBufferPtr createIndexBuffer(const CXIndexBufferDesc& desc);
 	CXConstantBufferPtr createConstantBuffer(const CXConstantBufferDesc& desc);
 	CXShaderPtr createShader(const CXShaderDesc& desc);
+	CXTexture2DPtr createTexture2D(const CXTexture2DDesc& desc);
+	CXTexture2DPtr createTexture2D(const wchar_t* path);
 
 public:
 	void clearColor(const  CXSwapChainPtr& swap_chain, const CXVec4& color);
 	void clearDepthStencil(const  CXSwapChainPtr& swap_chain);
 
-	void clearColor(const  CXTexturePtr& render_target, const CXVec4& color);
-	void clearDepthStencil(const  CXTexturePtr& depth_stencil);
+	void clearColor(const  CXTexture2DPtr& render_target, const CXVec4& color);
+	void clearDepthStencil(const  CXTexture2DPtr& depth_stencil);
 
-	void setRenderTarget(const  CXTexturePtr& render_target, const  CXTexturePtr& depth_stencil);
+	void setRenderTarget(const  CXTexture2DPtr& render_target, const  CXTexture2DPtr& depth_stencil);
 
 	void setVertexBuffer(const  CXVertexBufferPtr& buffer);
 	void setIndexBuffer(const  CXIndexBufferPtr& buffer);
@@ -64,14 +66,13 @@ public:
 	void drawTriangleStrip(ui32 vertex_count, ui32 start_vertex_index);
 
 	void setViewportSize(ui32 width, ui32 height);
-
 	void setShader(const  CXShaderPtr& shader);
-
-	void setTexture(const  CXTexturePtr* texture, unsigned int num_textures);
 	void setConstantBuffer(const  CXConstantBufferPtr& buffer);
-	void setMaterial(const  CXMaterialPtr& material);
 	void setRasterizerState(bool cull_front);
 
+
+	void setTexture(const  CXTexturePtr* texture, unsigned int num_textures);
+	void setMaterial(const  CXMaterialPtr& material);
 	void drawMesh(const  CXMeshPtr& mesh, const std::vector<CXMaterialPtr>& list_materials);
 private:
 	void compilePrivateShaders();
@@ -90,9 +91,9 @@ private:
 	unsigned char m_meshLayoutByteCode[1024];
 	size_t m_meshLayoutSize = 0;
 
-	std::unique_ptr<CXTextureManager> m_texManager = nullptr;
-	std::unique_ptr<CXMeshManager> m_meshManager = nullptr;
-	std::unique_ptr<CXMaterialManager> m_materialManager = nullptr;
+	//std::unique_ptr<CXTextureManager> m_texManager = nullptr;
+	//std::unique_ptr<CXMeshManager> m_meshManager = nullptr;
+	//std::unique_ptr<CXMaterialManager> m_materialManager = nullptr;
 
 private:
 	friend class  CXSwapChain;
@@ -101,6 +102,6 @@ private:
 	friend class  CXConstantBuffer;
 	friend class  CXVertexShader;
 	friend class  CXPixelShader;
-	friend class  CXTexture;
+	friend class  CXTexture2D;
 	friend class  CXShader;
 };
