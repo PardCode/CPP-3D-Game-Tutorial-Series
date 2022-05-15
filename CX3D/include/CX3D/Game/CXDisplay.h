@@ -29,6 +29,8 @@ SOFTWARE.*/
 #include <CX3D/Math/CXRect.h>
 #include <CX3D/Window/CXWindow.h>
 #include <set>
+
+
 class  CXGame;
 class  CXDisplay : public  CXWindow
 {

@@ -24,6 +24,7 @@ SOFTWARE.*/
 
 #include "SpaceShooterGame.h"
 #include <iostream>
+#include <Windows.h>
 
 int main()
 {

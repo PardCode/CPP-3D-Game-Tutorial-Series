@@ -26,7 +26,6 @@ SOFTWARE.*/
 
 
 #include <CX3D/Math/CXRect.h>
-#include <CX3D/Graphics/CXSwapChain.h>
 #include <set>
 
 class  CXWindow

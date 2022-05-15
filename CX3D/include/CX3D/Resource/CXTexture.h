@@ -24,14 +24,19 @@ SOFTWARE.*/
 
 #pragma once
 #include <CX3D/Resource/CXResource.h>
-#include <CX3D/Graphics/CXTexture2D.h>
 #include <CX3D/Math/CXRect.h>
+
+struct CXTextureDesc
+{
+	CXRect size = {};
+	CXTextureType type = CXTextureType::Normal;
+};
 
 class  CXTexture : public  CXResource
 {
 public:
 	CXTexture(const wchar_t* full_path, CXResourceManager* manager);
-	CXTexture(const  CXTexture2DDesc& desc, CXResourceManager* manager);
+	CXTexture(const CXTextureDesc& desc, CXResourceManager* manager);
 	CXTexture2DPtr getTexture2D();
 private:
 	CXTexture2DPtr m_texture;

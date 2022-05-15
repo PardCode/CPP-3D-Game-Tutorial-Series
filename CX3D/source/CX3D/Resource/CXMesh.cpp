@@ -25,6 +25,7 @@ SOFTWARE.*/
 #include <CX3D/Resource/CXMesh.h>
 #include <CX3D/Resource/CXResourceManager.h>
 #include <CX3D/Game/CXGame.h>
+#include <CX3D/Graphics/CXGraphicsEngine.h>
 
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>

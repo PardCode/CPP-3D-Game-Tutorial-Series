@@ -27,7 +27,6 @@ SOFTWARE.*/
 #include <CX3D/Math/CXRect.h>
 #include <CX3D/Math/CXMat4.h>
 #include <CX3D/Math/CXVec3.h>
-#include <CX3D/Window/CXWindow.h>
 #include <vector>
 
 class  CXGame;

@@ -24,12 +24,8 @@ SOFTWARE.*/
 
 #pragma once
 #include <CX3D/CXPrerequisites.h>
-#include <CX3D/Game/CXDisplay.h>
-#include <CX3D/Graphics/CXGraphicsEngine.h>
-#include <CX3D/Input/CXInputManager.h>
-#include <CX3D/Game/CXMeshEntity.h>
-#include <CX3D/Game/CXLightEntity.h>
-#include <CX3D/Game/CXCameraEntity.h>
+#include <CX3D/Math/CXRect.h>
+
 #include <map>
 #include <chrono>
 #include <set>

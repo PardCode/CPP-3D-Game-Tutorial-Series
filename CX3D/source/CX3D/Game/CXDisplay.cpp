@@ -23,6 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #include <CX3D/Game/CXDisplay.h>
+#include <CX3D/Graphics/CXGraphicsEngine.h>
+
 #include <CX3D/Game/CXGame.h>
 
 CXDisplay::CXDisplay(CXGame* game)

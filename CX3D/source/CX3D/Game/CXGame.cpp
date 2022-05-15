@@ -28,6 +28,12 @@ SOFTWARE.*/
 #include <CX3D/Resource/CXMaterial.h>
 #include <CX3D/Resource/CXTexture.h>
 #include <CX3D/Resource/CXMesh.h>
+#include <CX3D/Game/CXDisplay.h>
+#include <CX3D/Graphics/CXGraphicsEngine.h>
+#include <CX3D/Input/CXInputManager.h>
+#include <CX3D/Game/CXMeshEntity.h>
+#include <CX3D/Game/CXLightEntity.h>
+#include <CX3D/Game/CXCameraEntity.h>
 
 #include <Windows.h>
 

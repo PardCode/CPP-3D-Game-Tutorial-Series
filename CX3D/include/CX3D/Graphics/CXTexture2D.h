@@ -25,6 +25,9 @@ SOFTWARE.*/
 #pragma once
 #include <CX3D/CXPrerequisites.h>
 #include <CX3D/Math/CXRect.h>
+#include <d3d11.h>
+#include <wrl.h>
+
 
 struct CXTexture2DDesc
 {

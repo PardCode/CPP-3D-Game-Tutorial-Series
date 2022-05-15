@@ -31,6 +31,9 @@ SOFTWARE.*/
 #include <CX3D/Graphics/CXSwapChain.h>
 #include <vector>
 
+#include <d3d11.h>
+#include <wrl.h>
+
 class  CXGraphicsEngine
 {
 public:

@@ -28,6 +28,8 @@ SOFTWARE.*/
 #include <iostream>
 #include <stdexcept>
 
+class  CXWindow;
+class  CXDisplay;
 
 class  CXGraphicsEngine;
 class  CXShader;
@@ -37,17 +39,25 @@ class  CXIndexBuffer;
 class  CXConstantBuffer;
 class  CXTexture2D;
 
-class  CXWindow;
-class  CXGame;
+class CXInputManager;
 
 
-class  CXResource;
 class  CXResourceManager;
+class  CXResource;
 class  CXTexture;
-class  CXTextureManager;
 class  CXMesh;
-class  CXMeshManager;
 class  CXMaterial;
+
+
+
+class  CXGame;
+class  CXEntity;
+class  CXMeshEntity;
+class  CXLightEntity;
+class  CXCameraEntity;
+
+
+
 
 typedef std::shared_ptr<CXSwapChain> CXSwapChainPtr;
 typedef std::shared_ptr<CXVertexBuffer> CXVertexBufferPtr;
@@ -179,11 +189,6 @@ struct CXShaderDesc
 	const wchar_t* pixelShaderFilePath;
 	const char* pixelShaderEntryPointName;
 };
-
-#if defined(_WIN32) || defined(_WIN64)
-#include <d3d11.h>
-#include <wrl.h>
-#endif
 
 
 #define CX3D_ERROR(message)\

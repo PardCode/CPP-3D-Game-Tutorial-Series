@@ -25,8 +25,9 @@ SOFTWARE.*/
 #pragma once
 
 #include <CX3D/CXPrerequisites.h>
-#include <vector>
 #include <CX3D/Resource/CXResource.h>
+#include <vector>
+
 
 
 class  CXGraphicsEngine;

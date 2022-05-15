@@ -26,8 +26,7 @@ SOFTWARE.*/
 #include <CX3D/Resource/CXResourceManager.h>
 #include <CX3D/Graphics/CXGraphicsEngine.h>
 #include <CX3D/Game/CXGame.h>
-
-#include <DirectXTex.h>
+#include <CX3D/Graphics/CXTexture2D.h>
 
 #include <stdexcept>
 
@@ -37,9 +36,13 @@ CXTexture::CXTexture(const wchar_t* full_path, CXResourceManager* manager) : CXR
 	if (!m_texture) CX3D_WARNING(L"CXTexture - Dynamic Texture : Creation failed");
 }
 
-CXTexture::CXTexture(const CXTexture2DDesc& desc, CXResourceManager* manager): CXResource(L"",manager)
+CXTexture::CXTexture(const CXTextureDesc& desc, CXResourceManager* manager): CXResource(L"",manager)
 {
-	m_texture = manager->getGame()->getGraphicsEngine()->createTexture2D(desc);
+	CXTexture2DDesc desc2d = {};
+	desc2d.size = desc.size;
+	desc2d.type = desc.type;
+
+	m_texture = manager->getGame()->getGraphicsEngine()->createTexture2D(desc2d);
 	if (!m_texture) CX3D_WARNING(L"CXTexture - Dynamic Texture : Creation failed");
 }
 

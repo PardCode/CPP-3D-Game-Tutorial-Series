@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <CX3D/Resource/CXResource.h>
 #include <CX3D/CXPrerequisites.h>
+#include <CX3D/Resource/CXResource.h>
 #include <CX3D/Math/CXVec3.h>
 #include <CX3D/Math/CXVec2.h>
 #include <CX3D/Math/CXVertexMesh.h>
