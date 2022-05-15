@@ -19,7 +19,7 @@ The project aims to give the developers a complete and total control over the de
 
 This repository contains:
 * Source Code of `CX3D Framework`,
-* Source Code of a series of `Samples` that show how to use the framework (e.g. SpaceshipGame).
+* Source Code of a series of `Samples` that show how to use the framework (e.g. SpaceShooterGame).
 * Documentation
 
 The repository contains also branches like `AllTutorials` and `AssetsAndLibs`, related to the YouTube Tutorial Series called `C++ 3D Game Tutorial Series`.<br> 
