@@ -22,9 +22,9 @@ This repository contains:
 * Source Code of a series of `Samples` that show how to use the framework (e.g. SpaceShooterGame).
 * Documentation
 
-The repository contains also branches like `AllTutorials` and `AssetsAndLibs`, related to the YouTube Tutorial Series called `C++ 3D Game Tutorial Series`.<br> 
-`CX3D Framework` derives from this Tutorial Series.<br> 
-However, these branches must be considered completely unrelated to the framework.
+The repository contains also branches like `AllTutorials` and `AssetsAndLibs`, related to the YouTube Tutorial Series called `C++ 3D Game Tutorial Series`:<br> 
+These branches must be considered completely unrelated to the framework.<br>
+`CX3D Framework` derives from the Tutorial Series above mentioned.<br> 
 
 The license is available [here](#license).
 
