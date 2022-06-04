@@ -83,10 +83,10 @@ Thank you so much for your huge support!
 
 Adam L. - Ahmad A. - Alex G. - Andrey G. - Andrew C. - Andrew M. - Anotherbear Gamer - Asterot13 - Austin M.<br/>
 Bastien R. - bdfy - Biuret - Carlo S. - Daniel W. - Edward T.O. - Elite Salad - EthanEdits - Guarded - hisuzuki<br/>
-Howl C - James B. - James K. - JaviFML - Jesse M.C. - Jonas F. - Joshua v. - Kim W. - kuronk cat - Lie - Mackay N. - Manuel H.<br/>
-Mateusz P. - Matthew - Michael W. - Miles H. - Mohammed A. - Murdo M. - Nikhil R. - Neil W. - Oliver H. - Otturd<br/>
-Patrick B. - Patrick L. - Ridtichai B. - Rem saigao - REX Li - Robson - SleepingDog - Slotho - Snip - Squeegiefilms<br/>
-Tatsuya - Tentacle Princess - The Spygineer - The Tutorial Chef - TheDevUK - Tim. A. - Tom L.Valgard<br/>
+Howl C - James B. - James K. - JaviFML - Jesse M.C. - Jonas F. - Joshua v. - Kim W. - kuronk cat - Lie - Mackay N.<br/>
+Manuel H. - Mateusz P. - Matthew - Michael W. - Miles H. - Mohammed A. - Murdo M. - Nikhil R. - Neil W. - Oliver H.<br/>
+Otturd - Patrick B. - Patrick L. - Ridtichai B. - Rem saigao - REX Li - Robson - SleepingDog - Slotho - Snip<br/>
+Squeegiefilms - Tatsuya - Tentacle Princess - The Spygineer - The Tutorial Chef - TheDevUK - Tim. A. - Tom L.Valgard<br/>
 Werner O. - WyattFlash<br/>
 
 **All YouTube - Discord - GitHub - Twitter - Facebook followers and viewers**  
