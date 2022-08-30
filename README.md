@@ -86,8 +86,8 @@ Bastien R. - bdfy - Biuret - Carlo S. - Daniel W. - Dennis - Edward T.O. - Elite
 Howl C - Jack - James B. - James K. - JaviFML - Jesse M.C. - Jonas F. - Josh C. - Joshua v. - Katherine M. - Kim W.<br/>
 kuronk cat - Lie - Mackay N. - Manuel H. - Mateusz P. - Matthew - Michael W. - Miles H. - Mohammed A. - Murdo M.<br/>
 Nikhil R. - Neil W. - Oliver H. - Otturd - Patrick B. - Patrick L. - Peterson R. - Ridtichai B. - Rem saigao - REX Li<br/>
-Robson - SleepingDog - Slotho - Snip - Squeegiefilms - Tatsuya - Tentacle Princess - The Spygineer - The Tutorial Chef<br/>
-TheDevUK - Tim. A. - Tom L. - Valgard - Werner O. - WyattFlash<br/>
+Robson - SleepingDog - Slotho - Snip - Squeegiefilms - Tatsuya - Tentacle Princess - The Spygineer<br/>
+The Tutorial Chef - TheDevUK - Tim. A. - Tom L. - Valgard - Werner O. - WyattFlash<br/>
 
 **All YouTube - Discord - GitHub - Twitter - Facebook followers and viewers**  
 
