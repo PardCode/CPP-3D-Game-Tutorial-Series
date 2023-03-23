@@ -71,7 +71,7 @@ In Visual Studio, press the `Local Windows Debugger` button available in the mai
 This project is available under a free and permissive license, but needs a financial support to sustain its development.<br/> 
 If `CX3D Framework` is helpful to you, consider to support it through [`Patreon`](https://www.patreon.com/pardcode).<br/>  
 Every single contribution makes the difference, regardless the amount.<br/>
-Many thanks to all [**these people**](#supporters) who have supported me so far! <br/>
+Many thanks to all **the patrons** who have supported me so far! <br/>
   
 [![Patreon](https://img.shields.io/badge/Donate-Patreon-orange)](https://www.patreon.com/pardcode)  
 
