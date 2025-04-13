@@ -1,0 +1,58 @@
+float getDeterminant()
+{
+	Vector4D minor, v1, v2, v3;
+	float det;
+
+	v1 = Vector4D(this->m_mat[0][0],this->m_mat[1][0],this->m_mat[2][0],this->m_mat[3][0]);
+	v2 = Vector4D(this->m_mat[0][1],this->m_mat[1][1],this->m_mat[2][1],this->m_mat[3][1]);
+	v3 = Vector4D(this->m_mat[0][2], this->m_mat[1][2], this->m_mat[2][2], this->m_mat[3][2]);
+
+
+	minor.cross(v1, v2, v3);
+	det = -(this->m_mat[0][3] * minor.m_x + this->m_mat[1][3] * minor.m_y + this->m_mat[2][3] * minor.m_z +
+		this->m_mat[3][3] * minor.m_w);
+	return det;
+}
+
+void inverse()
+{
+	int a, i, j;
+	Matrix4x4 out;
+	Vector4D v, vec[3];
+	float det=0.0f;
+
+	det = this->getDeterminant();
+	if (!det) return;
+	for (i = 0; i<4; i++)
+	{
+		for (j = 0; j<4; j++)
+		{
+			if (j != i)
+			{
+				a = j;
+				if (j > i) a = a - 1;
+				vec[a].m_x=(this->m_mat[j][0]);
+				vec[a].m_y = (this->m_mat[j][1]);
+				vec[a].m_z = (this->m_mat[j][2]);
+				vec[a].m_w = (this->m_mat[j][3]);
+			}
+		}
+		v.cross(vec[0], vec[1], vec[2]);
+
+		out.m_mat[0][i] = pow(-1.0f, i) * v.m_x / det;
+		out.m_mat[1][i] = pow(-1.0f, i) * v.m_y / det;
+		out.m_mat[2][i] = pow(-1.0f, i) * v.m_z / det;
+		out.m_mat[3][i] = pow(-1.0f, i) * v.m_w / det;
+	}
+
+	this->setMatrix(out);
+}
+
+void cross(Vector4D &v1, Vector4D &v2, Vector4D &v3)
+{
+	this->m_x = v1.m_y * (v2.m_z * v3.m_w - v3.m_z * v2.m_w) - v1.m_z * (v2.m_y * v3.m_w - v3.m_y * v2.m_w) + v1.m_w * (v2.m_y * v3.m_z - v2.m_z *v3.m_y);
+	this->m_y = -(v1.m_x * (v2.m_z * v3.m_w - v3.m_z * v2.m_w) - v1.m_z * (v2.m_x * v3.m_w - v3.m_x * v2.m_w) + v1.m_w * (v2.m_x * v3.m_z - v3.m_x * v2.m_z));
+	this->m_z = v1.m_x * (v2.m_y * v3.m_w - v3.m_y * v2.m_w) - v1.m_y * (v2.m_x *v3.m_w - v3.m_x * v2.m_w) + v1.m_w * (v2.m_x * v3.m_y - v3.m_x * v2.m_y);
+	this->m_w = -(v1.m_x * (v2.m_y * v3.m_z - v3.m_y * v2.m_z) - v1.m_y * (v2.m_x * v3.m_z - v3.m_x *v2.m_z) + v1.m_z * (v2.m_x * v3.m_y - v3.m_x * v2.m_y));
+}
+

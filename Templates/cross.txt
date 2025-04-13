@@ -1,0 +1,8 @@
+static Vector3D cross(const Vector3D& v1, const Vector3D& v2)
+{
+	Vector3D res;
+	res.m_x = (v1.m_y * v2.m_z) - (v1.m_z * v2.m_y);
+	res.m_y = (v1.m_z * v2.m_x) - (v1.m_x * v2.m_z);
+	res.m_z = (v1.m_x * v2.m_y) - (v1.m_y * v2.m_x);
+	return res;
+}
