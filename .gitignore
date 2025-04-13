@@ -1,0 +1,80 @@
+# User-specific files
+*.userosscache
+*.suo
+*.userprefs
+
+# User-specific files for Visual Studio for Mac
+.vscode/
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Dd]Release/
+[Dd]ReleasePublic/
+x64/
+x86/
+ARM/
+arm64/
+*.obj
+*.exe
+*.dll
+*.pdb
+*.idb
+*.ipdb
+*.iobj
+*.so
+*.lib
+*.a
+*.app
+*.dSYM/
+
+# Uncomment if you have CMakeLists.txt
+# CMake specific files
+CMakeFiles/
+CMakeCache.txt
+*.cmake
+*.dir
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Installer files (if you're using a setup project)
+*.wixpdb
+
+# Windows Store app package directory
+AppPackages/
+
+# Windows Store app build output
+Packages/
+
+# Windows User-specific files
+Thumbs.db
+Desktop.ini
+
+# JetBrains Rider / IntelliJ IDEA
+.idea/
+
+# VS for Mac
+.vscode/
+
+# VS Code specific files
+.vscode/
+
+# NPM package directory for node-based build tools (such as Gulp, Grunt)
+node_modules/
+
+# VS2019 files
+.vs2019/
+
+# ASP.NET Core files (can be useful if you use this in a mixed C++/ASP.NET environment)
+wwwroot/
+
+# Temporary folders used by Visual Studio
+.vs/
+
+# Backup files
+*.bak
+*.swp
