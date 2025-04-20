@@ -23,18 +23,27 @@
 //SOFTWARE.
 
 
-#pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Core/Logger.h>
+#include <iostream>
 
-namespace dx3d
+dx3d::Logger::Logger(LogLevel logLevel): m_logLevel(logLevel)
 {
-	class Base;
-	class Window;
-	class Game;
+	std::clog << "PardCode | C++ 3D Game Tutorial Series" << "\n";
+	std::clog << "--------------------------------------" << "\n";
+}
 
-	class GraphicsEngine;
-	class RenderSystem;
+void dx3d::Logger::log(LogLevel level, const char* message) const
+{
+	auto logLevelToString = [](LogLevel level) {
+		switch (level)
+		{
+		case LogLevel::Info: return "Info";
+		case LogLevel::Warning: return "Warning";
+		case LogLevel::Error: return "Error";
+		default: return "Unknown";
+		}
+	};
 
-	class Logger;
+	if (level > m_logLevel) return;
+	std::clog << "[DX3D " << logLevelToString(level) << "]: " << message << "\n";
 }

@@ -23,7 +23,6 @@
 //SOFTWARE.
 
 
-
 #include <DX3D/All.h>
 
 
@@ -31,7 +30,7 @@ int main()
 {
 	try
 	{
-		dx3d::Game game{};
+		dx3d::Game game({dx3d::Logger::LogLevel::Error});
 		game.run();
 	}
 	catch (const std::runtime_error&)

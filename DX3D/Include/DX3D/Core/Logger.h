@@ -24,17 +24,25 @@
 
 
 #pragma once
-#include <stdexcept>
-#include <memory>
+
+
+
 
 namespace dx3d
 {
-	class Base;
-	class Window;
-	class Game;
+	class Logger final
+	{
+	public:
+		enum class LogLevel
+		{
+			Error = 0,
+			Warning,
+			Info
+		};
 
-	class GraphicsEngine;
-	class RenderSystem;
-
-	class Logger;
+		explicit Logger(LogLevel logLevel = LogLevel::Error);
+		void log(LogLevel level, const char* message) const;
+	private:
+		LogLevel m_logLevel = LogLevel::Error;
+	};
 }

@@ -24,17 +24,32 @@
 
 
 #pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Core/Core.h>
+#include <DX3D/Core/Logger.h>
 
 namespace dx3d
 {
-	class Base;
-	class Window;
-	class Game;
+	struct BaseDesc
+	{
+		Logger& logger;
+	};
 
-	class GraphicsEngine;
-	class RenderSystem;
+	struct WindowDesc
+	{
+		BaseDesc base;
+	};
 
-	class Logger;
+	struct GraphicsEngineDesc
+	{
+		BaseDesc base;
+	};
+
+	struct RenderSystemDesc
+	{
+		BaseDesc base;
+	};
+	struct GameDesc
+	{
+		Logger::LogLevel logLevel = Logger::LogLevel::Error;
+	};
 }

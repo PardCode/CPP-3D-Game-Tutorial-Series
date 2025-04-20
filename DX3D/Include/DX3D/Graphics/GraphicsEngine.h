@@ -24,17 +24,19 @@
 
 
 #pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Core/Core.h>
+#include <DX3D/Core/Base.h>
 
 namespace dx3d
 {
-	class Base;
-	class Window;
-	class Game;
+	class GraphicsEngine final: public Base
+	{
+	public:
+		explicit GraphicsEngine(const GraphicsEngineDesc& desc);
+		virtual ~GraphicsEngine() override;
 
-	class GraphicsEngine;
-	class RenderSystem;
-
-	class Logger;
+	private:
+		std::unique_ptr<RenderSystem> m_renderSystem{};
+	};
 }
+

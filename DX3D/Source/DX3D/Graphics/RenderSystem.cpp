@@ -23,18 +23,29 @@
 //SOFTWARE.
 
 
-#pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Graphics/RenderSystem.h>
 
-namespace dx3d
+dx3d::RenderSystem::RenderSystem(const RenderSystemDesc& desc): Base(desc.base)
 {
-	class Base;
-	class Window;
-	class Game;
+	D3D_FEATURE_LEVEL featureLevel{};
+	UINT createDeviceFlags{};
 
-	class GraphicsEngine;
-	class RenderSystem;
+#ifdef _DEBUG
+	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
 
-	class Logger;
+
+	auto hr = D3D11CreateDevice(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, createDeviceFlags, NULL, 0, D3D11_SDK_VERSION,
+		&m_d3dDevice, &featureLevel, &m_d3dContext);
+
+	if (FAILED(hr))
+	{
+		getLogger().log(Logger::LogLevel::Error, "Direct3D11 initialization failed.");
+		throw std::runtime_error("Direct3D11 initialization failed.");
+	}
+
+}
+
+dx3d::RenderSystem::~RenderSystem()
+{
 }

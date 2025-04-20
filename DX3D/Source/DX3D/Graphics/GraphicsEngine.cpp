@@ -23,18 +23,15 @@
 //SOFTWARE.
 
 
-#pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Graphics/GraphicsEngine.h>
+#include <DX3D/Graphics/RenderSystem.h>
 
-namespace dx3d
+
+dx3d::GraphicsEngine::GraphicsEngine(const GraphicsEngineDesc& desc): Base(desc.base)
 {
-	class Base;
-	class Window;
-	class Game;
+	m_renderSystem = std::make_unique<RenderSystem>(RenderSystemDesc{m_logger});
+}
 
-	class GraphicsEngine;
-	class RenderSystem;
-
-	class Logger;
+dx3d::GraphicsEngine::~GraphicsEngine()
+{
 }
