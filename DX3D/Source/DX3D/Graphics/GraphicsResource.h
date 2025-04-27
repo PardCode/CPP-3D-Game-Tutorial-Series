@@ -23,27 +23,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Core/Common.h>
+#include <DX3D/Core/Base.h>
+#include <DX3D/Graphics/GraphicsLogUtils.h>
+
+#include <d3d11.h>
+#include <wrl.h>
 
 namespace dx3d
 {
-	class Base;
-	class Window;
-	class Game;
-	class GraphicsEngine;
-	class RenderSystem;
-	class Logger;
-	class SwapChain;
-	class Display;
+	struct GraphicsResourceDesc
+	{
+		BaseDesc base;
+		std::shared_ptr<const RenderSystem> renderSystem;
+		ID3D11Device& device;
+		IDXGIFactory& factory;
+	};
 
+	class GraphicsResource : public Base
+	{
+	public:
+		explicit GraphicsResource(const GraphicsResourceDesc& desc):
+			Base(desc.base),
+			m_renderSystem(desc.renderSystem),
+			m_device(desc.device),
+			m_factory(desc.factory)
+		{
+		}
 
-	using i32 = int;
-	using ui32 = unsigned int;
-	using f32 = float;
-	using d64 = double;
-
-
-	using SwapChainPtr = std::shared_ptr<SwapChain>;
-
+	protected:
+		std::shared_ptr<const RenderSystem> m_renderSystem;
+		ID3D11Device& m_device;
+		IDXGIFactory& m_factory;
+	};
 }

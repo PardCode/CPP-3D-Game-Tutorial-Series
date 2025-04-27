@@ -23,27 +23,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Core/Core.h>
+
+
 
 namespace dx3d
 {
-	class Base;
-	class Window;
-	class Game;
-	class GraphicsEngine;
-	class RenderSystem;
-	class Logger;
-	class SwapChain;
-	class Display;
+	class Rect
+	{
+	public:
+		Rect() = default;
+		Rect(i32 width, i32 height) : left(0), top(0), width(width), height(height) {}
+		Rect(i32 left, i32 top, i32 width, i32 height) : left(left), top(top), width(width), height(height) {}
+	public:
+		i32 left{}, top{}, width{}, height{};
+	};
 
 
-	using i32 = int;
-	using ui32 = unsigned int;
-	using f32 = float;
-	using d64 = double;
-
-
-	using SwapChainPtr = std::shared_ptr<SwapChain>;
 
 }

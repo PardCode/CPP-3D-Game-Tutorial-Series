@@ -23,27 +23,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Graphics/GraphicsResource.h>
 
 namespace dx3d
 {
-	class Base;
-	class Window;
-	class Game;
-	class GraphicsEngine;
-	class RenderSystem;
-	class Logger;
-	class SwapChain;
-	class Display;
+	class SwapChain final: public GraphicsResource
+	{
+	public:
+		SwapChain(const SwapChainDesc& desc, const GraphicsResourceDesc& gDesc);
 
-
-	using i32 = int;
-	using ui32 = unsigned int;
-	using f32 = float;
-	using d64 = double;
-
-
-	using SwapChainPtr = std::shared_ptr<SwapChain>;
-
+	private:
+		Microsoft::WRL::ComPtr<IDXGISwapChain> m_swapChain{};
+	};
 }
+

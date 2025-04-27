@@ -23,27 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <stdexcept>
-#include <memory>
+#include<DX3D/Core/Logger.h>
+
 
 namespace dx3d
 {
-	class Base;
-	class Window;
-	class Game;
-	class GraphicsEngine;
-	class RenderSystem;
-	class Logger;
-	class SwapChain;
-	class Display;
-
-
-	using i32 = int;
-	using ui32 = unsigned int;
-	using f32 = float;
-	using d64 = double;
-
-
-	using SwapChainPtr = std::shared_ptr<SwapChain>;
+#define DX3DGraphicsLogErrorAndThrow(hr,message)\
+	{\
+	auto res = (hr);\
+	if (FAILED(res))\
+		DX3DLogErrorAndThrow(message);\
+	}
 
 }

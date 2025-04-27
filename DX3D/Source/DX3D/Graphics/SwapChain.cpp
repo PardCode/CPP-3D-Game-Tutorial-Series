@@ -22,28 +22,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Graphics/SwapChain.h>
 
-namespace dx3d
+dx3d::SwapChain::SwapChain(const SwapChainDesc& desc, const GraphicsResourceDesc& gDesc) : 
+	GraphicsResource(gDesc)
 {
-	class Base;
-	class Window;
-	class Game;
-	class GraphicsEngine;
-	class RenderSystem;
-	class Logger;
-	class SwapChain;
-	class Display;
+	DXGI_SWAP_CHAIN_DESC dxgiDesc{};
 
+	dxgiDesc.BufferDesc.Width = std::max(1, desc.winSize.width);
+	dxgiDesc.BufferDesc.Height = std::max(1, desc.winSize.height);
+	dxgiDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	dxgiDesc.BufferCount = 2;
+	dxgiDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 
-	using i32 = int;
-	using ui32 = unsigned int;
-	using f32 = float;
-	using d64 = double;
+	dxgiDesc.OutputWindow = static_cast<HWND>(desc.winHandle);
+	dxgiDesc.SampleDesc.Count = 1;
+	dxgiDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+	dxgiDesc.Windowed = TRUE;
 
-
-	using SwapChainPtr = std::shared_ptr<SwapChain>;
-
+	DX3DGraphicsLogErrorAndThrow(m_factory.CreateSwapChain(&m_device, &dxgiDesc, &m_swapChain),
+		"CreateSwapChain failed.");
 }
+
