@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DX3D\Source\DX3D\Graphics\DeviceContext.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Game\Display.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Core\Base.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Game\Game.cpp" />
@@ -142,11 +143,13 @@
     <ClCompile Include="Game\main.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Window\Win32\Win32Window.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Graphics\GraphicsEngine.cpp" />
-    <ClCompile Include="DX3D\Source\DX3D\Graphics\RenderSystem.cpp" />
+    <ClCompile Include="DX3D\Source\DX3D\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Core\Logger.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Graphics\SwapChain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DX3D\Include\DX3D\Math\Vec4.h" />
+    <ClInclude Include="DX3D\Source\DX3D\Graphics\DeviceContext.h" />
     <ClInclude Include="DX3D\Include\DX3D\Game\Display.h" />
     <ClInclude Include="DX3D\Include\DX3D\All.h" />
     <ClInclude Include="DX3D\Include\DX3D\Core\Base.h" />
@@ -155,10 +158,10 @@
     <ClInclude Include="DX3D\Include\DX3D\Math\Rect.h" />
     <ClInclude Include="DX3D\Include\DX3D\Window\Window.h" />
     <ClInclude Include="DX3D\Include\DX3D\Game\Game.h" />
-    <ClInclude Include="DX3D\Include\DX3D\Graphics\GraphicsEngine.h" />
+    <ClInclude Include="DX3D\Source\DX3D\Graphics\GraphicsEngine.h" />
     <ClInclude Include="DX3D\Source\DX3D\Graphics\GraphicsLogUtils.h" />
     <ClInclude Include="DX3D\Source\DX3D\Graphics\GraphicsResource.h" />
-    <ClInclude Include="DX3D\Source\DX3D\Graphics\RenderSystem.h" />
+    <ClInclude Include="DX3D\Source\DX3D\Graphics\GraphicsDevice.h" />
     <ClInclude Include="DX3D\Include\DX3D\Core\Logger.h" />
     <ClInclude Include="DX3D\Source\DX3D\Graphics\SwapChain.h" />
   </ItemGroup>

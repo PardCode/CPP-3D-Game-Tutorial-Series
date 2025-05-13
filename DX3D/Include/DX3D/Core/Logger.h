@@ -24,9 +24,6 @@ SOFTWARE.*/
 
 #pragma once
 
-
-
-
 namespace dx3d
 {
 	class Logger final
@@ -40,7 +37,16 @@ namespace dx3d
 		};
 
 		explicit Logger(LogLevel logLevel = LogLevel::Error);
-		void log(LogLevel level, const char* message) const;
+		~Logger();
+
+		void log(LogLevel level, const char* message);
+
+	protected:
+		Logger(const Logger&) = delete;
+		Logger(Logger&&) = delete;
+		Logger& operator = (const Logger&) = delete;
+		Logger& operator=(Logger&&) = delete;
+
 	private:
 		LogLevel m_logLevel = LogLevel::Error;
 	};

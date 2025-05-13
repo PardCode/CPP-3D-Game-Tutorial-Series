@@ -23,27 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Core/Core.h>
 
 namespace dx3d
 {
-	class Base;
-	class Window;
-	class Game;
-	class GraphicsEngine;
-	class GraphicsDevice;
-	class Logger;
-	class SwapChain;
-	class Display;
-	class DeviceContext;
-
-	using i32 = int;
-	using ui32 = unsigned int;
-	using f32 = float;
-	using d64 = double;
-
-
-	using SwapChainPtr = std::shared_ptr<SwapChain>;
-	using DeviceContextPtr = std::shared_ptr<DeviceContext>;
+	class Vec4
+	{
+	public:
+		Vec4() = default;
+		Vec4(f32 x, f32 y, f32 z, f32 w) : x(x), y(y), z(z), w(w) {}
+	public:
+		f32 x{}, y{}, z{}, w{};
+	};
 }

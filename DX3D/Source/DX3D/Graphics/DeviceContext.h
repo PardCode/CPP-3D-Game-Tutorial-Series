@@ -23,27 +23,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Graphics/GraphicsResource.h>
+#include <DX3D/Math/Vec4.h>
 
 namespace dx3d
 {
-	class Base;
-	class Window;
-	class Game;
-	class GraphicsEngine;
-	class GraphicsDevice;
-	class Logger;
-	class SwapChain;
-	class Display;
-	class DeviceContext;
+	class DeviceContext final: public GraphicsResource
+	{
+	public:
+		explicit DeviceContext(const GraphicsResourceDesc& gDesc);
+		void clearAndSetBackBuffer(const SwapChain& swapChain, const Vec4& color);
+	private:
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_context{};
 
-	using i32 = int;
-	using ui32 = unsigned int;
-	using f32 = float;
-	using d64 = double;
-
-
-	using SwapChainPtr = std::shared_ptr<SwapChain>;
-	using DeviceContextPtr = std::shared_ptr<DeviceContext>;
+		friend class GraphicsDevice;
+	};
 }
+
