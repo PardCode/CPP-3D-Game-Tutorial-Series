@@ -22,33 +22,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include <DX3D/All.h>
+#include <DX3D/Graphics/GraphicsPipelineState.h>
+#include <DX3D/Graphics/ShaderBinary.h>
 
-int main()
+dx3d::GraphicsPipelineState::GraphicsPipelineState(const GraphicsPipelineStateDesc& desc, 
+	const GraphicsResourceDesc& gDesc):
+	GraphicsResource(gDesc)
 {
-	try
-	{
-		dx3d::Game game({ {1280,720},dx3d::Logger::LogLevel::Info });
-		game.run();
-	}
-	catch (const std::runtime_error&)
-	{
-		return EXIT_FAILURE;
-	}
-	catch (const std::invalid_argument&)
-	{
-		return EXIT_FAILURE;
-	}
-	catch (const std::exception&)
-	{
-		return EXIT_FAILURE;
-	}
-	catch (...)
-	{
-		return EXIT_FAILURE;
-	}
+	if (desc.vs.getType() != ShaderType::VertexShader)
+		DX3DLogThrowInvalidArg("The 'vs' member is not a valid vertex shader binary.");
+	if (desc.ps.getType() != ShaderType::PixelShader)
+		DX3DLogThrowInvalidArg("The 'ps' member is not a valid pixel shader binary.");
 
+	auto vs = desc.vs.getData();
+	auto ps = desc.ps.getData();
 
+	DX3DGraphicsLogThrowOnFail(
+		m_device.CreateVertexShader(vs.data, vs.dataSize, nullptr, &m_vs),
+		"CreateVertexShader failed.");
 
-	return EXIT_SUCCESS;
+	DX3DGraphicsLogThrowOnFail(
+		m_device.CreatePixelShader(ps.data, ps.dataSize, nullptr, &m_ps),
+		"CreatePixelShader failed.");
+
 }

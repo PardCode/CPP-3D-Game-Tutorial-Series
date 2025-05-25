@@ -37,7 +37,7 @@ The license of this repository is available [here](#license).
 ## Quick Guide to build the 3D Game Sample
 
 ### Prerequisites:
-* Visual Studio 2019 or later.
+* Visual Studio 2022.
 * Windows 10 or later.
 
 Open `DirectXGame.sln` project, available under the project root folder.<br>

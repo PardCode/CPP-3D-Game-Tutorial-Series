@@ -22,33 +22,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include <DX3D/All.h>
+#pragma once
+#include <DX3D/Core/Common.h>
 
-int main()
+namespace dx3d
 {
-	try
+	namespace GraphicsUtils
 	{
-		dx3d::Game game({ {1280,720},dx3d::Logger::LogLevel::Info });
-		game.run();
+		inline const char* GetShaderModelTarget(ShaderType type)
+		{
+			switch (type)
+			{
+			case ShaderType::VertexShader: return "vs_5_0";
+			case ShaderType::PixelShader: return "ps_5_0";
+			default: return "";
+			}
+		}
 	}
-	catch (const std::runtime_error&)
-	{
-		return EXIT_FAILURE;
-	}
-	catch (const std::invalid_argument&)
-	{
-		return EXIT_FAILURE;
-	}
-	catch (const std::exception&)
-	{
-		return EXIT_FAILURE;
-	}
-	catch (...)
-	{
-		return EXIT_FAILURE;
-	}
-
-
-
-	return EXIT_SUCCESS;
 }

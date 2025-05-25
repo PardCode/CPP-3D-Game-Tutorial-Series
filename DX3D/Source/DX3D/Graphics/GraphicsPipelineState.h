@@ -22,33 +22,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include <DX3D/All.h>
+#pragma once
+#include <DX3D/Graphics/GraphicsResource.h>
 
-int main()
+namespace dx3d
 {
-	try
+	class GraphicsPipelineState final: public GraphicsResource
 	{
-		dx3d::Game game({ {1280,720},dx3d::Logger::LogLevel::Info });
-		game.run();
-	}
-	catch (const std::runtime_error&)
-	{
-		return EXIT_FAILURE;
-	}
-	catch (const std::invalid_argument&)
-	{
-		return EXIT_FAILURE;
-	}
-	catch (const std::exception&)
-	{
-		return EXIT_FAILURE;
-	}
-	catch (...)
-	{
-		return EXIT_FAILURE;
-	}
+	public:
+		GraphicsPipelineState(const GraphicsPipelineStateDesc& desc, const GraphicsResourceDesc& gDesc);
+	private:
+		Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vs{};
+		Microsoft::WRL::ComPtr<ID3D11PixelShader> m_ps{};
 
-
-
-	return EXIT_SUCCESS;
+		friend class DeviceContext;
+	};
 }
+

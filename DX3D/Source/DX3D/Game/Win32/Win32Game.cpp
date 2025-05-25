@@ -25,7 +25,6 @@ SOFTWARE.*/
 #include <DX3D/Game/Game.h>
 #include <Windows.h>
 
-
 void dx3d::Game::run()
 {
 	MSG msg{};

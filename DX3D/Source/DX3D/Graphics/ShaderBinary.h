@@ -22,33 +22,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#include <DX3D/All.h>
+#pragma once
+#include <DX3D/Graphics/GraphicsResource.h>
 
-int main()
+namespace dx3d
 {
-	try
+	class ShaderBinary final: public GraphicsResource
 	{
-		dx3d::Game game({ {1280,720},dx3d::Logger::LogLevel::Info });
-		game.run();
-	}
-	catch (const std::runtime_error&)
-	{
-		return EXIT_FAILURE;
-	}
-	catch (const std::invalid_argument&)
-	{
-		return EXIT_FAILURE;
-	}
-	catch (const std::exception&)
-	{
-		return EXIT_FAILURE;
-	}
-	catch (...)
-	{
-		return EXIT_FAILURE;
-	}
-
-
-
-	return EXIT_SUCCESS;
+	public:
+		ShaderBinary(const ShaderCompileDesc& desc, const GraphicsResourceDesc& gDesc);
+		ShaderBinaryData getData() const noexcept;
+		ShaderType getType() const noexcept;
+	private:
+		Microsoft::WRL::ComPtr<ID3DBlob> m_blob{};
+		ShaderType m_type{};
+	};
 }
+
