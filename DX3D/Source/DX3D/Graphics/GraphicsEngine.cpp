@@ -26,6 +26,8 @@ SOFTWARE.*/
 #include <DX3D/Graphics/GraphicsDevice.h>
 #include <DX3D/Graphics/DeviceContext.h>
 #include <DX3D/Graphics/SwapChain.h>
+#include <DX3D/Graphics/VertexBuffer.h>
+#include <DX3D/Math/Vec3.h>
 
 using namespace dx3d;
 
@@ -38,11 +40,13 @@ dx3d::GraphicsEngine::GraphicsEngine(const GraphicsEngineDesc& desc): Base(desc.
 
 	constexpr char shaderSourceCode[] =
 		R"(
-void VSMain()
+float4 VSMain(float3 pos: POSITION): SV_Position
 {
+return float4(pos.xyz, 1.0);
 }
-void PSMain()
+float4 PSMain(): SV_Target
 {
+return float4(1.0, 1.0, 1.0, 1.0);
 }
 )";
 	constexpr char shaderSourceName[] = "Basic";
@@ -54,6 +58,15 @@ void PSMain()
 		"PSMain", ShaderType::PixelShader });
 
 	m_pipeline = device.createGraphicsPipelineState({ *vs,*ps });
+
+	const Vec3 vertexList[] =
+	{
+		{-0.5f, -0.5f, 0.0f},
+		{0.0f, 0.5f, 0.0f},
+		{0.5f, -0.5f, 0.0f}
+	};
+
+	m_vb = device.createVertexBuffer({vertexList, std::size(vertexList), sizeof(Vec3)});
 }
 
 dx3d::GraphicsEngine::~GraphicsEngine()
@@ -70,6 +83,12 @@ void dx3d::GraphicsEngine::render(SwapChain& swapChain)
 	auto& context = *m_deviceContext;
 	context.clearAndSetBackBuffer(swapChain, { 1,0,0,1 });
 	context.setGraphicsPipelineState(*m_pipeline);
+
+	context.setViewportSize(swapChain.getSize());
+
+	auto& vb = *m_vb;
+	context.setVertexBuffer(vb);
+	context.drawTriangleList(vb.getVertexListSize(), 0u);
 
 	auto& device = *m_graphicsDevice;
 	device.executeCommandList(context);

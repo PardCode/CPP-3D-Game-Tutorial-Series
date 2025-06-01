@@ -22,34 +22,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Graphics/VertexBuffer.h>
 
-namespace dx3d
+dx3d::VertexBuffer::VertexBuffer(const VertexBufferDesc& desc, const GraphicsResourceDesc& gDesc): 
+	GraphicsResource(gDesc), m_vertexSize(desc.vertexSize), m_vertexListSize(desc.vertexListSize)
 {
-	class Base;
-	class Window;
-	class Game;
-	class GraphicsEngine;
-	class GraphicsDevice;
-	class Logger;
-	class SwapChain;
-	class Display;
-	class DeviceContext;
-	class ShaderBinary;
-	class GraphicsPipelineState;
-	class VertexBuffer;
+	if (!desc.vertexList) DX3DLogThrowInvalidArg("No vertex list provided.");
+	if (!desc.vertexListSize) DX3DLogThrowInvalidArg("Vertex list size must be non-zero.");
+	if (!desc.vertexSize) DX3DLogThrowInvalidArg("Vertex size must be non-zero.");
 
-	using i32 = int;
-	using ui32 = unsigned int;
-	using f32 = float;
-	using d64 = double;
+	D3D11_BUFFER_DESC buffDesc{};
+	buffDesc.ByteWidth = desc.vertexListSize * desc.vertexSize;
+	buffDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
+	D3D11_SUBRESOURCE_DATA initData{};
+	initData.pSysMem = desc.vertexList;
 
-	using SwapChainPtr = std::shared_ptr<SwapChain>;
-	using DeviceContextPtr = std::shared_ptr<DeviceContext>;
-	using ShaderBinaryPtr = std::shared_ptr<ShaderBinary>;
-	using GraphicsPipelineStatePtr = std::shared_ptr<GraphicsPipelineState>;
-	using VertexBufferPtr = std::shared_ptr<VertexBuffer>;
+	DX3DGraphicsLogThrowOnFail(
+		m_device.CreateBuffer(&buffDesc, &initData, &m_buffer),
+		"CreateBuffer failed.");
+}
+
+dx3d::ui32 dx3d::VertexBuffer::getVertexListSize() const noexcept
+{
+	return m_vertexListSize;
 }

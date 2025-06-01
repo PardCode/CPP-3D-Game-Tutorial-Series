@@ -24,6 +24,7 @@ SOFTWARE.*/
 
 #include <DX3D/All.h>
 
+
 int main()
 {
 	try

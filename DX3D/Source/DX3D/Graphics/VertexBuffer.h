@@ -23,33 +23,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Graphics/GraphicsResource.h>
 
 namespace dx3d
 {
-	class Base;
-	class Window;
-	class Game;
-	class GraphicsEngine;
-	class GraphicsDevice;
-	class Logger;
-	class SwapChain;
-	class Display;
-	class DeviceContext;
-	class ShaderBinary;
-	class GraphicsPipelineState;
-	class VertexBuffer;
+	class VertexBuffer final: public GraphicsResource
+	{
+	public:
+		VertexBuffer(const VertexBufferDesc& desc, const GraphicsResourceDesc& gDesc);
+		ui32 getVertexListSize() const noexcept;
+	private:
+		Microsoft::WRL::ComPtr<ID3D11Buffer> m_buffer{};
+		ui32 m_vertexSize{};
+		ui32 m_vertexListSize{};
 
-	using i32 = int;
-	using ui32 = unsigned int;
-	using f32 = float;
-	using d64 = double;
-
-
-	using SwapChainPtr = std::shared_ptr<SwapChain>;
-	using DeviceContextPtr = std::shared_ptr<DeviceContext>;
-	using ShaderBinaryPtr = std::shared_ptr<ShaderBinary>;
-	using GraphicsPipelineStatePtr = std::shared_ptr<GraphicsPipelineState>;
-	using VertexBufferPtr = std::shared_ptr<VertexBuffer>;
+		friend class DeviceContext;
+	};
 }
+

@@ -23,33 +23,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <stdexcept>
-#include <memory>
+#include <DX3D/Core/Core.h>
+
 
 namespace dx3d
 {
-	class Base;
-	class Window;
-	class Game;
-	class GraphicsEngine;
-	class GraphicsDevice;
-	class Logger;
-	class SwapChain;
-	class Display;
-	class DeviceContext;
-	class ShaderBinary;
-	class GraphicsPipelineState;
-	class VertexBuffer;
-
-	using i32 = int;
-	using ui32 = unsigned int;
-	using f32 = float;
-	using d64 = double;
-
-
-	using SwapChainPtr = std::shared_ptr<SwapChain>;
-	using DeviceContextPtr = std::shared_ptr<DeviceContext>;
-	using ShaderBinaryPtr = std::shared_ptr<ShaderBinary>;
-	using GraphicsPipelineStatePtr = std::shared_ptr<GraphicsPipelineState>;
-	using VertexBufferPtr = std::shared_ptr<VertexBuffer>;
+	class Vec3
+	{
+	public:
+		Vec3() = default;
+		Vec3(f32 x, f32 y, f32 z) : x(x), y(y), z(z) {}
+	public:
+		f32 x{}, y{}, z{};
+	};
 }
