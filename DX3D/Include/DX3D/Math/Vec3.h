@@ -34,7 +34,7 @@ namespace dx3d
 		Vec3() = default;
 		Vec3(f32 x, f32 y, f32 z) : x(x), y(y), z(z) {}
 
-		Vec3& operator+=(const Vec3& rhs)
+		Vec3& operator+=(const Vec3& rhs) noexcept
 		{
 			x += rhs.x;
 			y += rhs.y;
@@ -42,7 +42,7 @@ namespace dx3d
 			return *this;
 		}
 
-		Vec3& operator*=(float scalar)
+		Vec3& operator*=(float scalar) noexcept
 		{
 			x *= scalar;
 			y *= scalar;
@@ -50,7 +50,7 @@ namespace dx3d
 			return *this;
 		}
 
-		static Vec3 normalize(const Vec3& v)
+		static Vec3 normalize(const Vec3& v) noexcept
 		{
 			float lenSq = v.x * v.x + v.y * v.y + v.z * v.z;
 
@@ -68,19 +68,19 @@ namespace dx3d
 		f32 x{}, y{}, z{};
 	};
 
-	inline Vec3 operator+(Vec3 lhs, const Vec3& rhs)
+	inline Vec3 operator+(Vec3 lhs, const Vec3& rhs) noexcept
 	{
 		lhs += rhs;
 		return lhs;
 	}
 
-	inline Vec3 operator*(Vec3 v, float scalar)
+	inline Vec3 operator*(Vec3 v, float scalar) noexcept
 	{
 		v *= scalar;
 		return v;
 	}
 
-	inline Vec3 operator*(float scalar, Vec3 v)
+	inline Vec3 operator*(float scalar, Vec3 v) noexcept
 	{
 		v *= scalar;
 		return v;

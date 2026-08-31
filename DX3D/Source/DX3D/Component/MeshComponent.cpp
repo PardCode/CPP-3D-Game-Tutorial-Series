@@ -42,7 +42,7 @@ void dx3d::MeshComponent::setMesh(const RefPtr<MeshResource>& mesh)
 	else m_materials.resize(0);
 }
 
-dx3d::MeshResource* dx3d::MeshComponent::getMesh() const noexcept
+const dx3d::MeshResource* dx3d::MeshComponent::getMesh() const noexcept
 {
 	return m_mesh.get();
 }
@@ -58,7 +58,7 @@ void dx3d::MeshComponent::setMaterial(dx3d::ui32 index, const RefPtr<MaterialRes
 	m_materials[index] = material;
 }
 
-dx3d::MaterialResource* dx3d::MeshComponent::getMaterial(ui32 index) const noexcept
+const dx3d::MaterialResource* dx3d::MeshComponent::getMaterial(ui32 index) const noexcept
 {
 	if (index >= m_materials.size())
 	{

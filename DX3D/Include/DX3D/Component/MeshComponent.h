@@ -36,10 +36,10 @@ namespace dx3d
 		explicit MeshComponent(const ComponentDesc& data);
 
 		void setMesh(const RefPtr<MeshResource>& mesh);
-		MeshResource* getMesh() const noexcept;
+		const MeshResource* getMesh() const noexcept;
 
 		void setMaterial(ui32 index, const RefPtr<MaterialResource>& material);
-		MaterialResource* getMaterial(ui32 index) const noexcept;
+		const MaterialResource* getMaterial(ui32 index) const noexcept;
 	private:
 		RefPtr<MeshResource> m_mesh{};
 		std::vector<RefPtr<MaterialResource>> m_materials{};

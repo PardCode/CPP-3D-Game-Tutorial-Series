@@ -31,9 +31,11 @@ namespace dx3d
 	{
 	public:
 		explicit TextureResource(const TextureResourceDesc& desc);
-		dx3d::Texture& getTexture();
+		const dx3d::Texture& getTexture() const noexcept;
+		Rect getSize() const noexcept;
 	private:
 		RefPtr<Texture> m_texture{};
+		Rect m_size{};
 	};
 }
 

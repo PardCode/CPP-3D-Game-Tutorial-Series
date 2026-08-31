@@ -34,13 +34,13 @@ namespace dx3d
 	public:
 		explicit DirectionaLightComponent(const ComponentDesc& data);
 
-		void setIntensity(dx3d::f32 intensity);
+		void setIntensity(dx3d::f32 intensity) noexcept;
 		f32 getIntensity() const noexcept;
 
-		void setColor(const Vec3& color);
+		void setColor(const Vec3& color) noexcept;
 		Vec3 getColor() const noexcept;
 	private:
 		Vec3 m_color{ 1,1,1 };
-		f32 m_intensity = 1.0f;
+		f32 m_intensity{ 1.0f };
 	};
 }

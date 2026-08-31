@@ -86,7 +86,7 @@ const std::span<const std::byte> dx3d::MaterialResource::getData() const noexcep
 	return m_data;
 }
 
-dx3d::TextureResource* dx3d::MaterialResource::getTexture(size_t index)
+const dx3d::TextureResource* dx3d::MaterialResource::getTexture(size_t index) const
 {
 	if (index >= m_textures.size())
 	{

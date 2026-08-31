@@ -34,7 +34,7 @@ dx3d::DirectionaLightComponent::DirectionaLightComponent(const ComponentDesc& da
 {
 }
 
-void dx3d::DirectionaLightComponent::setIntensity(dx3d::f32 intensity)
+void dx3d::DirectionaLightComponent::setIntensity(dx3d::f32 intensity) noexcept
 {
 	m_intensity = intensity;
 }
@@ -44,7 +44,7 @@ dx3d::f32 dx3d::DirectionaLightComponent::getIntensity() const noexcept
 	return m_intensity;
 }
 
-void dx3d::DirectionaLightComponent::setColor(const Vec3& color)
+void dx3d::DirectionaLightComponent::setColor(const Vec3& color) noexcept
 {
 	m_color = color;
 }

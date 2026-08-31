@@ -57,9 +57,9 @@ namespace dx3d
 	private:		
 		Mat4x4 m_projection{};
 
-		f32 m_nearPlane = 0.01f;
-		f32 m_farPlane = 100.0f;
-		f32 m_fieldOfView = 1.3f;
+		f32 m_nearPlane{ 0.01f };
+		f32 m_farPlane{ 1500.0f };
+		f32 m_fieldOfView{ 1.3f };
 		Rect m_viewportSize { 1,1 };
 
 		bool m_dirty{ true };

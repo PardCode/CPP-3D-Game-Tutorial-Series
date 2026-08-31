@@ -29,7 +29,7 @@ dx3d::Component::Component(const ComponentDesc& desc) : Identifiable(desc.base),
 {
 }
 
-dx3d::GameObject& dx3d::Component::getGameObject() noexcept
+dx3d::GameObject& dx3d::Component::getGameObject() const noexcept
 {
 	return m_object;
 }

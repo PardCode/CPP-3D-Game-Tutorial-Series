@@ -32,7 +32,7 @@ namespace dx3d
 	public:
 		explicit Display(const DisplayDesc& desc);
 
-		SwapChain& getSwapChain() noexcept;
+		SwapChain& getSwapChain() const noexcept;
 	private:
 		RefPtr<SwapChain> m_swapChain{};
 	};

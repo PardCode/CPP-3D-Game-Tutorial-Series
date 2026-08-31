@@ -40,7 +40,7 @@ namespace dx3d
 		void setData(const std::span<const std::byte>& data);
 		const std::span<const std::byte> getData() const noexcept;
 		
-		TextureResource* getTexture(size_t index);
+		const TextureResource* getTexture(size_t index) const;
 		size_t getNumTextures()  const noexcept;
 		void setTexture(size_t index, const dx3d::RefPtr<TextureResource>& texture);
 	public:

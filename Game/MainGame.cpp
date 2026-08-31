@@ -53,13 +53,13 @@ void MainGame::onCreate()
 		pedestal->getTransform().setScale({ 2, 2, 2 });
 		pedestal->getTransform().setPosition({ 0, -1, 0 });
 	}
-	
+
 	//marble bust
 	{
 		auto marbleBustTex = getResourceManager().createResourceFromFile<dx3d::TextureResource>(L"Game/Assets/Textures/marble_bust_01_diff_1k.jpg");
 		auto marbleBustMesh = getResourceManager().createResourceFromFile<dx3d::MeshResource>(L"Game/Assets/Meshes/marble_bust_01.obj");
 		auto marbleBustMat = getResourceManager().createResourceFromFile<dx3d::MaterialResource>(L"Game/Assets/Shaders/MaterialShader.hlsl");
-		if (marbleBustMat) 
+		if (marbleBustMat)
 		{
 			float spec = 1.0f;
 			marbleBustMat->setData(std::as_bytes(std::span(&spec, 1)));
@@ -73,6 +73,19 @@ void MainGame::onCreate()
 		mesh->getTransform().setPosition({ 0, 0, 0 });
 	}
 
+	//terrain
+	{
+		auto rockyTerrainTex = getResourceManager().createResourceFromFile<dx3d::TextureResource>(L"Game/Assets/Textures/rocky_terrain_02_diff_1k.jpg");
+		auto heightMap = getResourceManager().createResourceFromFile<dx3d::TextureResource>(L"Game/Assets/Textures/Hand_made_terrain_heightmap.png");
+		auto rockyTrailTex = getResourceManager().createResourceFromFile<dx3d::TextureResource>(L"Game/Assets/Textures/rocky_trail_02_diff_1k.jpg");
+
+		auto terrain = world.createGameObject<dx3d::GameObject>();
+		auto comp = terrain->createOrGetComponent<dx3d::TerrainComponent>();
+		comp->setHeightMap(heightMap);	
+		comp->setFlatTexture(rockyTerrainTex);
+		comp->setSlopeTexture(rockyTrailTex);
+	}
+
 	//white light
 	{
 		auto light = world.createGameObject<dx3d::GameObject>();
@@ -80,13 +93,13 @@ void MainGame::onCreate()
 		light->createOrGetComponent<dx3d::DirectionaLightComponent>();
 		auto comp = light->createOrGetComponent<dx3d::DirectionaLightComponent>();
 		comp->setColor({ 1,1,1 });
-		light->getTransform().setRotation({0.707f,0.0f,0 });
+		light->getTransform().setRotation({0.785f,0.785f,0 });
 	}
 
 	//player
 	{
 		auto player = world.createGameObject<Player>();
-		player->getTransform().setPosition({ 0, 1, -2 });
+		player->getTransform().setPosition({150, 50, 0 });
 
 		getInputSystem().setCursorLocked(true);
 		getInputSystem().setCursorVisible(false);
@@ -97,6 +110,4 @@ void MainGame::onCreate()
 void MainGame::onUpdate(dx3d::f32 deltaTime)
 {
 	Game::onUpdate(deltaTime);
-	m_roty += 0.57f * deltaTime;
-	m_whiteLight->getTransform().setRotation(dx3d::Vec3(0.707f, m_roty, 0));
 }

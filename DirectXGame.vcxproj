@@ -171,6 +171,7 @@
     <ClCompile Include="DX3D\Source\DX3D\Graphics\GraphicsPipelineLayout.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Resource\MeshResource.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Component\MeshComponent.cpp" />
+    <ClCompile Include="DX3D\Source\DX3D\Component\TerrainComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DX3D\Include\DX3D\Component\DirectionalLightComponent.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="DX3D\Include\DX3D\Game\Component.h" />
     <ClInclude Include="DX3D\Include\DX3D\Input\InputSystem.h" />
     <ClInclude Include="DX3D\Include\DX3D\Math\MathUtils.h" />
+    <ClInclude Include="DX3D\Include\DX3D\Math\MeshUtils.h" />
     <ClInclude Include="DX3D\Include\DX3D\Math\Vec2.h" />
     <ClInclude Include="DX3D\Source\DX3D\Game\WorldRenderer.h" />
     <ClInclude Include="DX3D\Source\DX3D\Graphics\ShaderBinary.h" />
@@ -220,6 +222,7 @@
     <ClInclude Include="DX3D\Source\DX3D\Graphics\GraphicsPipelineLayout.h" />
     <ClInclude Include="DX3D\Include\DX3D\Resource\MeshResource.h" />
     <ClInclude Include="DX3D\Include\DX3D\Component\MeshComponent.h" />
+    <ClInclude Include="DX3D\Include\DX3D\Component\TerrainComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shadertoolsconfig.json" />

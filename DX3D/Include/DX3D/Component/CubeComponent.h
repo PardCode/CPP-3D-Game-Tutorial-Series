@@ -34,11 +34,11 @@ namespace dx3d
 	public:
 		explicit CubeComponent(const ComponentDesc& data);
 
-		void setMaterial(const RefPtr<MaterialResource>& material);
-		MaterialResource* getMaterial();
+		void setMaterial(const RefPtr<MaterialResource>& material) noexcept;
+		const MaterialResource* getMaterial() const noexcept;
 
-		VertexBuffer& getVertexBuffer();
-		IndexBuffer& getIndexBuffer();
+		const VertexBuffer& getVertexBuffer() const noexcept;
+		const IndexBuffer& getIndexBuffer() const noexcept;
 
 	private:
 		RefPtr<MaterialResource> m_material{};

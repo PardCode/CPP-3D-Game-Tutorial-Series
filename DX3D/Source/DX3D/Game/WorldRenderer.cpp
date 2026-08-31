@@ -37,6 +37,7 @@ SOFTWARE.*/
 #include <DX3D/Component/CubeComponent.h>
 #include <DX3D/Component/CameraComponent.h>
 #include <DX3D/Component/MeshComponent.h>
+#include <DX3D/Component/TerrainComponent.h>
 #include <DX3D/Component/DirectionalLightComponent.h>
 
 #include <DX3D/Resource/MaterialResource.h>
@@ -59,6 +60,7 @@ dx3d::WorldRenderer::WorldRenderer(const WorldRendererDesc& desc): Base(desc.bas
 	m_cameraCb = device.createConstantBuffer({ {}, sizeof(CameraData) });
 	m_envCb = device.createConstantBuffer({ {}, sizeof(EnvironmentData) });
 	m_materialCb = device.createConstantBuffer({ {}, dx3d::MaterialResource::MaxDataSize });
+	m_terrainCb = device.createConstantBuffer({ {}, sizeof(TerrainData) });
 
 	m_sampler = device.createSampler({});
 }
@@ -72,8 +74,8 @@ void dx3d::WorldRenderer::render(const World& world, SwapChain& swapChain, f32 d
 	//context.clearAndSetBackBuffer(swapChain, { 0,0,0,1 });
 	context.setViewportSize(size);
 
-	Sampler* samplers[] = { m_sampler.get() };
-	context.setSamplers(std::span<Sampler*>{samplers});
+	const Sampler* samplers[] = { m_sampler.get() };
+	context.setSamplers(std::span<const Sampler*>{samplers});
 
 	auto numComponents = 0u;
 
@@ -137,8 +139,8 @@ void dx3d::WorldRenderer::render(const World& world, SwapChain& swapChain, f32 d
 				context.setGraphicsPipelineState(material->getGraphicsPipelineState());
 				context.updateConstantBuffer(objectCb, std::as_bytes(std::span{&objectData, 1 }));
 				context.updateConstantBuffer(materialCb, material->getData());
-				ConstantBuffer* cbs[] = { &objectCb, &cameraCb, &envCb, &materialCb};
-				context.setConstantBuffers(std::span<ConstantBuffer*>{cbs});
+				const ConstantBuffer* cbs[] = { &objectCb, &cameraCb, &envCb, &materialCb};
+				context.setConstantBuffers(std::span<const ConstantBuffer*>{cbs});
 
 				m_textures.clear();
 				m_textures.resize(material->getNumTextures());
@@ -147,7 +149,7 @@ void dx3d::WorldRenderer::render(const World& world, SwapChain& swapChain, f32 d
 					auto tex = material->getTexture(t);
 					if (tex) m_textures[t] = &tex->getTexture();
 				}
-				context.setTextures(std::span<Texture*>{m_textures});
+				context.setTextures(std::span<const Texture*>{m_textures});
 
 				context.setVertexBuffer(component->getVertexBuffer());
 				context.setIndexBuffer(component->getIndexBuffer());
@@ -188,8 +190,8 @@ void dx3d::WorldRenderer::render(const World& world, SwapChain& swapChain, f32 d
 				context.setGraphicsPipelineState(material->getGraphicsPipelineState());
 				context.updateConstantBuffer(objectCb, std::as_bytes(std::span{&objectData, 1 }));
 				context.updateConstantBuffer(materialCb, material->getData());
-				ConstantBuffer* cbs[] = { &objectCb, &cameraCb, &envCb, &materialCb};
-				context.setConstantBuffers(std::span<ConstantBuffer*>{cbs});
+				const ConstantBuffer* cbs[] = { &objectCb, &cameraCb, &envCb, &materialCb};
+				context.setConstantBuffers(std::span<const ConstantBuffer*>{cbs});
 
 				m_textures.clear();
 				m_textures.resize(material->getNumTextures());
@@ -198,12 +200,57 @@ void dx3d::WorldRenderer::render(const World& world, SwapChain& swapChain, f32 d
 					auto tex = material->getTexture(t);
 					if (tex) m_textures[t] = &tex->getTexture();
 				}
-				context.setTextures(std::span<Texture*>{m_textures});
+				context.setTextures(std::span<const Texture*>{m_textures});
 
 				context.drawIndexedTriangleList(slot.indexCount, 0, slot.startIndex);
 			}
 		}
 	}
+
+
+	//terrains
+	{
+		ObjectData objectData{};
+		TerrainData terrainData{};
+		auto& terrainCb = *m_terrainCb;
+		auto components = world.getComponents<TerrainComponent>(numComponents);
+		for (auto i : std::views::iota(0u, numComponents))
+		{
+			auto comp = components[i];
+
+			objectData.affineWorld = comp->getGameObject().getTransform().getAffineWorldMatrix();
+			objectData.rigidWorld = comp->getGameObject().getTransform().getRigidWorldMatrix();
+
+			terrainData.heightMapSize = static_cast<f32>(comp->getHeightMap()->getSize().width);
+			auto terrainSize = comp->getSize();
+			terrainData.size = { terrainSize.x,terrainSize.y,terrainSize.z, 0 };
+
+			context.setVertexBuffer(comp->getVertexBuffer());
+			context.setIndexBuffer(comp->getIndexBuffer());
+
+			{
+				context.setGraphicsPipelineState(comp->getGraphicsPipelineState());
+				context.updateConstantBuffer(objectCb, std::as_bytes(std::span{ &objectData, 1 }));
+				context.updateConstantBuffer(terrainCb, std::as_bytes(std::span{ &terrainData, 1 }));
+
+				const ConstantBuffer* cbs[] = { &objectCb, &cameraCb, &envCb, &terrainCb };
+				context.setConstantBuffers(std::span<const ConstantBuffer*>{cbs});
+
+				m_textures.clear();
+				m_textures.push_back(&comp->getHeightMap()->getTexture());
+				m_textures.push_back(&comp->getFlatTexture()->getTexture());
+				m_textures.push_back(&comp->getSlopeTexture()->getTexture());
+
+				context.setTextures(std::span<const Texture*>{m_textures});
+				context.drawIndexedTriangleList(comp->getIndexBuffer().getIndexListSize(), 0, 0);
+			}
+		}
+	}
+
+
+
+
+
 
 	m_graphicsDevice.executeCommandList(context);
 	swapChain.present();

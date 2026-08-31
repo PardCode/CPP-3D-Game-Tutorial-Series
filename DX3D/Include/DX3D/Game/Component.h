@@ -34,7 +34,7 @@ namespace dx3d
 		dx3d_typeid(Component)
 	public:
 		explicit Component(const ComponentDesc& desc);
-		GameObject& getGameObject() noexcept;
+		GameObject& getGameObject() const noexcept;
 	
 	protected:
 		GameObject& m_object;

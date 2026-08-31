@@ -47,9 +47,15 @@ dx3d::TextureResource::TextureResource(const TextureResourceDesc& desc) : Resour
 
 	if (!pixels) DX3DLogThrowError("Failed to load texture file {}", textureFileStr.c_str());
 	m_texture = desc.graphicsDevice.createTexture({ {width,height}, pixels });
+	m_size = { width, height };
 }
 
-dx3d::Texture& dx3d::TextureResource::getTexture()
+const dx3d::Texture& dx3d::TextureResource::getTexture() const noexcept
 {
 	return *m_texture;
+}
+
+dx3d::Rect dx3d::TextureResource::getSize() const noexcept
+{
+	return m_size;
 }

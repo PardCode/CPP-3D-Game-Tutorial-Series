@@ -39,9 +39,9 @@ namespace dx3d
 		void setVertexBuffer(const VertexBuffer& buffer);
 		void setIndexBuffer(const IndexBuffer& buffer);
 		void setViewportSize(const Rect& size);
-		void setConstantBuffers(const std::span<ConstantBuffer*>& buffers);
-		void setTextures(const std::span<Texture*>& textures);
-		void setSamplers(const std::span<Sampler*>& samplers);
+		void setConstantBuffers(const std::span<const ConstantBuffer*>& buffers);
+		void setTextures(const std::span<const Texture*>& textures);
+		void setSamplers(const std::span<const Sampler*>& samplers);
 		void updateConstantBuffer(const ConstantBuffer& buffer, const std::span<const std::byte>& data);
 		void drawTriangleList(ui32 vertexCount, ui32 startVertexLocation);
 		void drawIndexedTriangleList(ui32 indexCount, ui32 startVertexIndex, ui32 startIndexLocation);

@@ -88,22 +88,22 @@ dx3d::CubeComponent::CubeComponent(const ComponentDesc& data) : Component(data)
 	m_ib = ib;
 }
 
-void dx3d::CubeComponent::setMaterial(const RefPtr<MaterialResource>& material)
+void dx3d::CubeComponent::setMaterial(const RefPtr<MaterialResource>& material) noexcept
 {
 	m_material = material;
 }
 
-dx3d::MaterialResource* dx3d::CubeComponent::getMaterial()
+const dx3d::MaterialResource* dx3d::CubeComponent::getMaterial() const noexcept
 {
 	return m_material.get();
 }
 
-dx3d::VertexBuffer& dx3d::CubeComponent::getVertexBuffer()
+const dx3d::VertexBuffer& dx3d::CubeComponent::getVertexBuffer() const noexcept
 {
 	return *m_vb;
 }
 
-dx3d::IndexBuffer& dx3d::CubeComponent::getIndexBuffer()
+const dx3d::IndexBuffer& dx3d::CubeComponent::getIndexBuffer() const noexcept
 {
 	return *m_ib;
 }

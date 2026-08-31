@@ -24,58 +24,52 @@ SOFTWARE.*/
 
 #pragma once
 #include <DX3D/Core/Core.h>
-#include <DX3D/Core/Base.h>
-#include <DX3D/Math/Vec3.h>
-#include <DX3D/Math/Vec4.h>
-#include <DX3D/Math/Vec2.h>
-#include <DX3D/Math/Mat4x4.h>
+#include <DX3D/Game/Component.h>
 #include <vector>
 
 namespace dx3d
 {
-	class WorldRenderer final: public Base
+	class TerrainComponent final : public Component
 	{
-	public:
-		explicit WorldRenderer(const WorldRendererDesc& desc);
-		void render(const World& world, SwapChain& swapChain, f32 deltaTime);
-	private:
-		struct alignas(16) ObjectData
-		{
-			Mat4x4 affineWorld{};
-			Mat4x4 rigidWorld{};
-		};
-		struct alignas(16) CameraData
-		{
-			Mat4x4 view{};
-			Mat4x4 proj{};
-			Vec3 position{};
-		};
-		struct alignas(16) DirectionalLightData
-		{
-			Vec3 color{}; f32 pad{};
-			Vec3 direction{};
-			f32 intensity{};
-		};
-		struct alignas(16) EnvironmentData
-		{
-			DirectionalLightData directionalLightData;
-		};
-		struct alignas(16) TerrainData
-		{
-			Vec4 size{};
-			float heightMapSize{};
-		};
-	private:
-		GraphicsDevice& m_graphicsDevice;
-		RefPtr<DeviceContext> m_deviceContext{};
-		RefPtr<ConstantBuffer> m_cameraCb{};
-		RefPtr<ConstantBuffer> m_objectCb{};
-		RefPtr<ConstantBuffer> m_envCb{};
-		RefPtr<ConstantBuffer> m_materialCb{};
-		RefPtr<ConstantBuffer> m_terrainCb{};
-		RefPtr<Sampler> m_sampler{};
+		dx3d_typeid(TerrainComponent)
 
-		std::vector<const Texture*> m_textures{};
+		struct TerrainMesh
+		{
+			RefPtr<VertexBuffer> vb{};
+			RefPtr<IndexBuffer> ib{};
+			RefPtr<GraphicsPipelineState> pipelineState{};
+		};
+
+	public:
+		explicit TerrainComponent(const ComponentDesc& data);
+
+		void setHeightMap(const RefPtr<TextureResource>& map) noexcept;
+		const TextureResource* getHeightMap() const noexcept;
+
+		void setFlatTexture(const RefPtr<TextureResource>& texture) noexcept;
+		const TextureResource* getFlatTexture() const noexcept;
+
+		void setSlopeTexture(const RefPtr<TextureResource>& texture) noexcept;
+		const TextureResource* getSlopeTexture() const noexcept;
+
+		void setSize(const Vec3& size) noexcept;
+		Vec3 getSize() const noexcept;
+
+
+		const VertexBuffer& getVertexBuffer() const noexcept;
+		const IndexBuffer& getIndexBuffer() const noexcept;
+		const GraphicsPipelineState& getGraphicsPipelineState() const noexcept;
+
+	private:
+		TerrainMesh generateTerrainMesh();
+	private:
+		RefPtr<TextureResource> m_heightMap{};
+		RefPtr<TextureResource> m_flatTexture{};
+		RefPtr<TextureResource> m_slopeTexture{};
+
+		Vec3 m_size{ 512, 100, 512 };
+
+		TerrainMesh m_terrainMesh{};
 	};
 }
 

@@ -102,69 +102,41 @@ float3 ComputePhongDirectionalLight(
     return result;
 }
 
-struct MaterialVSOut
+
+float3 ComputeNormalFromHeightMap(
+    Texture2D heightMap,
+    sampler heightMapSampler,
+    float heightMapSize,
+    float2 texcoord,
+    float normalFactor)
 {
-};
+    const float texelSize = 1.0 / heightMapSize;
 
-struct MaterialPSOut
-{
-    float4 diffuse;    
-    float4 specular;
-    float shininess;
-};
+    const float t = heightMap.SampleLevel(
+        heightMapSampler,
+        texcoord + float2(0.0, -texelSize),
+        0).r;
 
-void VSMain(inout MaterialVSOut output);
-void PSMain(inout MaterialPSOut output);
+    const float b = heightMap.SampleLevel(
+        heightMapSampler,
+        texcoord + float2(0.0, texelSize),
+        0).r;
 
-static float2 TextureCoordinate = float2(0, 0);
+    const float l = heightMap.SampleLevel(
+        heightMapSampler,
+        texcoord + float2(-texelSize, 0.0),
+        0).r;
 
-VSOutput _VSMain(VSInput input)
-{
-    VSOutput output;
-    output.position = mul(float4(input.position, 1), affineWorld);
-    output.worldPosition = output.position.xyz;    
-    output.worldNormal = normalize(mul(input.normal, (float3x3) rigidWorld));
+    const float r = heightMap.SampleLevel(
+        heightMapSampler,
+        texcoord + float2(texelSize, 0.0),
+        0).r;
 
-    output.position = mul(output.position, cameraData.view);
-    output.position = mul(output.position, cameraData.proj);
-    output.texcoord = input.texcoord;
+    const float3 normal = float3(
+        -(r - l) * 0.5 * normalFactor,
+        1.0,
+        -(b - t) * 0.5 * normalFactor
+    );
 
-    TextureCoordinate = input.texcoord;  
-    MaterialVSOut vsOut;
-    VSMain(vsOut);
-    
-    return output;
-}
-
-float4 _PSMain(VSOutput input) : SV_TARGET
-{
-    
-    TextureCoordinate = input.texcoord; 
-    MaterialPSOut psOut;
-    psOut.diffuse = float4(1, 1, 1, 1);    
-    psOut.specular = float4(0,0,0,0);
-    psOut.shininess = 0.0; 
-    PSMain(psOut);
-
-    
-    float3 result = float3(0, 0, 0);
-
-	//ambient light
-    float ka = 0.1;
-    float3 ia = float3(0.27f, 0.39f, 0.55f) * psOut.diffuse.rgb;
-    float3 ambientLight = ka * ia;    
-    result = ambientLight;
-
-	//directional light
-    result += ComputePhongDirectionalLight(
-        cameraData, 
-        directionLightData,
-        input.worldPosition,
-        input.worldNormal,
-        1.0, psOut.diffuse.rgb,
-        1.0, psOut.specular.rgb,
-        psOut.shininess
-    );   
-
-    return float4(result, 1);
+    return normalize(normal);
 }

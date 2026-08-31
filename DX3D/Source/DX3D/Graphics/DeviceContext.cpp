@@ -79,7 +79,7 @@ void dx3d::DeviceContext::setViewportSize(const Rect& size)
 	m_context->RSSetViewports(1, &vp);
 }
 
-void dx3d::DeviceContext::setConstantBuffers(const std::span<ConstantBuffer*>& buffers)
+void dx3d::DeviceContext::setConstantBuffers(const std::span<const ConstantBuffer*>& buffers)
 {
 	if (buffers.size() > MaxConstantBuffersPerStage)
 	{
@@ -95,7 +95,7 @@ void dx3d::DeviceContext::setConstantBuffers(const std::span<ConstantBuffer*>& b
 	m_context->PSSetConstantBuffers(0, numBuffers, m_constantBuffers.data());
 }
 
-void dx3d::DeviceContext::setTextures(const std::span<Texture*>& textures)
+void dx3d::DeviceContext::setTextures(const std::span<const Texture*>& textures)
 {
 	if (textures.size() > MaxTexturesPerStage)
 	{
@@ -111,7 +111,7 @@ void dx3d::DeviceContext::setTextures(const std::span<Texture*>& textures)
 	m_context->PSSetShaderResources(0, numTextures, m_srv.data());
 }
 
-void dx3d::DeviceContext::setSamplers(const std::span<Sampler*>& samplers)
+void dx3d::DeviceContext::setSamplers(const std::span<const Sampler*>& samplers)
 {
 	if (samplers.size() > MaxSamplersPerStage)
 	{
