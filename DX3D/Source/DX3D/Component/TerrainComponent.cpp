@@ -23,16 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #include <DX3D/Component/TerrainComponent.h>
-#include <DX3D/Component/TransformComponent.h>
-
-#include <DX3D/Component/MeshComponent.h>
-#include <DX3D/Game/GameObject.h>
-#include <DX3D/Game/World.h>
-#include <DX3D/Game/Game.h>
 #include <DX3D/Graphics/GraphicsDevice.h>
-#include <DX3D/Resource/MaterialResource.h>
-#include <DX3D/Resource/MeshResource.h>
-
 #include <DX3D/Math/MeshUtils.h>
 
 #include <fstream>

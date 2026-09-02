@@ -54,6 +54,7 @@ void dx3d::DeviceContext::setGraphicsPipelineState(const GraphicsPipelineState& 
 	m_context->IASetInputLayout(pipeline.m_layout.Get());
 	m_context->VSSetShader(pipeline.m_vs.Get(), nullptr, 0);
 	m_context->PSSetShader(pipeline.m_ps.Get(), nullptr, 0);
+	m_context->OMSetBlendState(pipeline.m_blendState.Get(), nullptr, 0xffffffff);
 }
 
 void dx3d::DeviceContext::setVertexBuffer(const VertexBuffer& buffer)

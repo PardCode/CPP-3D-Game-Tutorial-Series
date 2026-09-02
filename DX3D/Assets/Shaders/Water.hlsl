@@ -24,32 +24,36 @@ SOFTWARE.*/
 
 #include "DX3D/Assets/Shaders/Common.hlsl"
 
-struct TerrainData
+struct WaterData
 {
-    float4 size;
-    float heightMapSize;
+    float4 areaSize;
+    float wavesDisplacementTexSize;
+    float wavesSpeed;
 };
 
-cbuffer TerrainData : register(b3)
+cbuffer WaterData : register(b3)
 {
-    TerrainData terrainData;
+    WaterData waterData;
 };
 
+Texture2D WavesDisplacement : register(t0);
 
-Texture2D HeightMap : register(t0);
-Texture2D FlatTexture : register(t1);
-Texture2D SlopeTexture : register(t2);
-
-
-VSOutput _TerrainVSMain(VSInput input)
+VSOutput _WaterVSMain(VSInput input)
 {
     VSOutput output;
 
-    float height = HeightMap.SampleLevel(DefaultSampler, input.texcoord, 0).r;
+    float2 texcoord = (input.texcoord * 16) + time * 0.009 * waterData.wavesSpeed;
+    float2 texcoord2 = (float2(-input.texcoord.x, input.texcoord.y) * 16) + time * 0.01 * waterData.wavesSpeed;
+
+    float height1 = WavesDisplacement.SampleLevel(DefaultSampler, texcoord, 0).r;
+    float height2 = WavesDisplacement.SampleLevel(DefaultSampler, texcoord2, 0).r;
+
+    float height = lerp(height1, height2, 0.5);
+
     output.position = mul(float4(
-		input.position.x * terrainData.size.x,
-		height * terrainData.size.y,
-		input.position.z * terrainData.size.z,
+		input.position.x * waterData.areaSize.x,
+		height * waterData.areaSize.y,
+		input.position.z * waterData.areaSize.z,
 		1),
 		affineWorld);
     output.worldPosition = output.position.xyz;
@@ -58,40 +62,47 @@ VSOutput _TerrainVSMain(VSInput input)
     output.position = mul(output.position, cameraData.view);
     output.position = mul(output.position, cameraData.proj);
     output.texcoord = input.texcoord;
-    
+
     return output;
 }
 
 
-float4 _TerrainPSMain(VSOutput input) : SV_TARGET
+float4 _WaterPSMain(VSOutput input) : SV_TARGET
 {
-    float3 normal = ComputeNormalFromHeightMap(
-		HeightMap,
-		DefaultSampler,
-		terrainData.heightMapSize,
-		input.texcoord,
-		terrainData.size.y);
+    float2 texcoord = (input.texcoord * 12) + time * 0.009 * waterData.wavesSpeed;
+    float2 texcoord2 = (float2(-input.texcoord.x, input.texcoord.y) * 12) + time * 0.01 * waterData.wavesSpeed;
 
+    float3 normal1 = ComputeNormalFromHeightMap(
+		WavesDisplacement,
+		DefaultSampler,
+		waterData.wavesDisplacementTexSize,
+		texcoord,
+		24);
+
+    float3 normal2 = ComputeNormalFromHeightMap(
+		WavesDisplacement,
+		DefaultSampler,
+		waterData.wavesDisplacementTexSize,
+		texcoord2,
+		24);
+
+    float3 normal = normalize(normal1 + normal2);
     normal = normalize(mul(normal, (float3x3) rigidWorld));
 
-    float4 flat = FlatTexture.Sample(DefaultSampler, input.texcoord * 100.0);
-    float4 slope = SlopeTexture.Sample(DefaultSampler, input.texcoord * 60.0);
+    float4 waterColor = float4(0.24, 0.37, 0.49, 1);
+    float4 crestColor = float4(1, 1, 1, 1); 
+
     const float upness = abs(normal.y);
-    const float minUpness = 0.8;
+    const float minUpness = 0.7;
     const float maxUpness = 1.0;
     const float slopeBlend = smoothstep(minUpness, maxUpness, upness);
-    float4 color = lerp(slope, flat, slopeBlend);
+    float4 color = lerp(crestColor, waterColor, slopeBlend);
 
     float3 result = float3(0, 0, 0);
-   
-    
-    float height = HeightMap.SampleLevel(DefaultSampler, input.texcoord, 0).r;
-    float alpha = 0.0;
-    if (height >= 0.01) alpha = 1.0;
 
     //ambient light
-    float ka = 0.4;
-    float3 ia = float3(0.27f, 0.39f, 0.55f) * color.rgb;
+    float ka = 3;
+    float3 ia = float3(0.09, 0.09, 0.09) * color.rgb;
     float3 ambientLight = ka * ia;
     result = ambientLight;
 
@@ -102,9 +113,8 @@ float4 _TerrainPSMain(VSOutput input) : SV_TARGET
         input.worldPosition.xyz,
         normal.xyz,
         1.0, color.rgb,
-        0.0, float3(1, 1, 1),
-        0.0
-    );
+        1.0, directionLightData.color.rgb,
+		30.0);
 
-    return float4(result, alpha);
+    return float4(result, 0.8);
 }

@@ -58,13 +58,22 @@ namespace dx3d
 		};
 		struct alignas(16) EnvironmentData
 		{
-			DirectionalLightData directionalLightData;
+			DirectionalLightData directionalLightData{};
+			f32 time{};
 		};
 		struct alignas(16) TerrainData
 		{
 			Vec4 size{};
 			float heightMapSize{};
 		};
+		struct alignas(16) WaterData
+		{
+			Vec4 size{};
+			float wavesDisplacementTexSize{};
+			f32 wavesSpeed{ 1.0f };
+		};
+
+
 	private:
 		GraphicsDevice& m_graphicsDevice;
 		RefPtr<DeviceContext> m_deviceContext{};
@@ -73,9 +82,11 @@ namespace dx3d
 		RefPtr<ConstantBuffer> m_envCb{};
 		RefPtr<ConstantBuffer> m_materialCb{};
 		RefPtr<ConstantBuffer> m_terrainCb{};
+		RefPtr<ConstantBuffer> m_waterCb{};
 		RefPtr<Sampler> m_sampler{};
 
 		std::vector<const Texture*> m_textures{};
+		f32 m_time{};
 	};
 }
 

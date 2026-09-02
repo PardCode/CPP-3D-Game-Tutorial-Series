@@ -39,6 +39,7 @@ SOFTWARE.*/
 #include <DX3D/Component/MeshComponent.h>
 #include <DX3D/Component/DirectionalLightComponent.h>
 #include <DX3D/Component/TerrainComponent.h>
+#include <DX3D/Component/WaterComponent.h>
 
 
 

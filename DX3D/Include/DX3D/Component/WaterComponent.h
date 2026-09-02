@@ -23,21 +23,43 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-#include <DX3D/Graphics/GraphicsResource.h>
+#include <DX3D/Core/Core.h>
+#include <DX3D/Game/Component.h>
+#include <vector>
 
 namespace dx3d
 {
-	class GraphicsPipelineState final: public GraphicsResource
+	class WaterComponent final : public Component
 	{
-	public:
-		GraphicsPipelineState(const GraphicsPipelineStateDesc& desc, const GraphicsResourceDesc& gDesc);
-	private:
-		Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vs{};
-		Microsoft::WRL::ComPtr<ID3D11PixelShader> m_ps{};
-		Microsoft::WRL::ComPtr<ID3D11InputLayout> m_layout{};
-		Microsoft::WRL::ComPtr<ID3D11BlendState> m_blendState{};
+		dx3d_typeid(WaterComponent)
 
-		friend class DeviceContext;
+		struct WaterMesh
+		{
+			RefPtr<VertexBuffer> vb{};
+			RefPtr<IndexBuffer> ib{};
+			RefPtr<GraphicsPipelineState> pipelineState{};
+		};
+
+	public:
+		explicit WaterComponent(const ComponentDesc& data);
+		const TextureResource* getWavesDisplacementTexture() const noexcept;
+		
+		void setWavesSpeed(f32 speed) noexcept;
+		f32 getWavesSpeed() const noexcept;
+
+		void setSize(const Vec3& size) noexcept;
+		Vec3 getSize() const noexcept;
+
+		const VertexBuffer& getVertexBuffer() const noexcept;
+		const IndexBuffer& getIndexBuffer() const noexcept;
+		const GraphicsPipelineState& getGraphicsPipelineState() const noexcept;
+	private:
+		WaterMesh generateWaterMesh();
+	private:
+		RefPtr<TextureResource> m_wavesDisplacementTexture{};
+		Vec3 m_size{ 2048, 8, 2048 };
+		WaterMesh m_waterMesh{};
+		f32 m_wavesSpeed{ 1.0f };
 	};
 }
 

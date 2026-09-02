@@ -172,6 +172,7 @@
     <ClCompile Include="DX3D\Source\DX3D\Resource\MeshResource.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Component\MeshComponent.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Component\TerrainComponent.cpp" />
+    <ClCompile Include="DX3D\Source\DX3D\Component\WaterComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DX3D\Include\DX3D\Component\DirectionalLightComponent.h" />
@@ -223,6 +224,7 @@
     <ClInclude Include="DX3D\Include\DX3D\Resource\MeshResource.h" />
     <ClInclude Include="DX3D\Include\DX3D\Component\MeshComponent.h" />
     <ClInclude Include="DX3D\Include\DX3D\Component\TerrainComponent.h" />
+    <ClInclude Include="DX3D\Include\DX3D\Component\WaterComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shadertoolsconfig.json" />

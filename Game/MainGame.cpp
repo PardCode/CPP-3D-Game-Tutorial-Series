@@ -86,6 +86,14 @@ void MainGame::onCreate()
 		comp->setSlopeTexture(rockyTrailTex);
 	}
 
+	//sea
+	{
+		auto water = world.createGameObject<dx3d::GameObject>();
+		auto comp = water->createOrGetComponent<dx3d::WaterComponent>();
+		water->getTransform().setPosition({ -1024,25,-1024 });
+	}
+
+
 	//white light
 	{
 		auto light = world.createGameObject<dx3d::GameObject>();
@@ -93,6 +101,7 @@ void MainGame::onCreate()
 		light->createOrGetComponent<dx3d::DirectionaLightComponent>();
 		auto comp = light->createOrGetComponent<dx3d::DirectionaLightComponent>();
 		comp->setColor({ 1,1,1 });
+		comp->setIntensity(1.09f);
 		light->getTransform().setRotation({0.785f,0.785f,0 });
 	}
 

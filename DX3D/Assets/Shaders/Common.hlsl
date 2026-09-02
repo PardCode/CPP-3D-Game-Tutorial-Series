@@ -68,7 +68,11 @@ cbuffer CameraData : register(b1)
 cbuffer EnvironmentData : register(b2)
 {    
     DirectionalLightData directionLightData;
+    float time;
 };
+
+
+
 
 
 float3 ComputePhongDirectionalLight(

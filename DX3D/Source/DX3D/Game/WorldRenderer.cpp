@@ -38,6 +38,7 @@ SOFTWARE.*/
 #include <DX3D/Component/CameraComponent.h>
 #include <DX3D/Component/MeshComponent.h>
 #include <DX3D/Component/TerrainComponent.h>
+#include <DX3D/Component/WaterComponent.h>
 #include <DX3D/Component/DirectionalLightComponent.h>
 
 #include <DX3D/Resource/MaterialResource.h>
@@ -61,6 +62,7 @@ dx3d::WorldRenderer::WorldRenderer(const WorldRendererDesc& desc): Base(desc.bas
 	m_envCb = device.createConstantBuffer({ {}, sizeof(EnvironmentData) });
 	m_materialCb = device.createConstantBuffer({ {}, dx3d::MaterialResource::MaxDataSize });
 	m_terrainCb = device.createConstantBuffer({ {}, sizeof(TerrainData) });
+	m_waterCb = device.createConstantBuffer({ {}, sizeof(WaterData) });
 
 	m_sampler = device.createSampler({});
 }
@@ -84,8 +86,10 @@ void dx3d::WorldRenderer::render(const World& world, SwapChain& swapChain, f32 d
 	auto& envCb = *m_envCb;
 	auto& materialCb = *m_materialCb;
 
+	m_time += deltaTime;
 
 	EnvironmentData envData{};
+	envData.time = m_time;
 	//directional lights
 	{
 		auto components = world.getComponents<dx3d::DirectionaLightComponent>(numComponents);
@@ -248,6 +252,45 @@ void dx3d::WorldRenderer::render(const World& world, SwapChain& swapChain, f32 d
 	}
 
 
+
+	//water surfaces
+	{
+
+		ObjectData objectData{};
+		WaterData waterData{};
+		auto& waterCb = *m_waterCb;
+		auto components = world.getComponents<WaterComponent>(numComponents);
+		for (auto i : std::views::iota(0u, numComponents))
+		{
+			auto comp = components[i];
+
+			objectData.affineWorld = comp->getGameObject().getTransform().getAffineWorldMatrix();
+			objectData.rigidWorld = comp->getGameObject().getTransform().getRigidWorldMatrix();
+
+			waterData.wavesDisplacementTexSize = static_cast<f32>(comp->getWavesDisplacementTexture()->getSize().width);
+			auto waterAreaSize = comp->getSize();
+			waterData.size = { waterAreaSize.x,waterAreaSize.y,waterAreaSize.z, 0 };
+			waterData.wavesSpeed = comp->getWavesSpeed();
+
+			context.setVertexBuffer(comp->getVertexBuffer());
+			context.setIndexBuffer(comp->getIndexBuffer());
+
+			{
+				context.setGraphicsPipelineState(comp->getGraphicsPipelineState());
+				context.updateConstantBuffer(objectCb, std::as_bytes(std::span{ &objectData, 1 }));
+				context.updateConstantBuffer(waterCb, std::as_bytes(std::span{ &waterData, 1 }));
+
+				const ConstantBuffer* cbs[] = { &objectCb, &cameraCb, &envCb, &waterCb };
+				context.setConstantBuffers(std::span<const ConstantBuffer*>{cbs});
+
+				m_textures.clear();
+				m_textures.push_back(&comp->getWavesDisplacementTexture()->getTexture());
+		
+				context.setTextures(std::span<const Texture*>{m_textures});
+				context.drawIndexedTriangleList(comp->getIndexBuffer().getIndexListSize(), 0, 0);
+			}
+		}
+	}
 
 
 
