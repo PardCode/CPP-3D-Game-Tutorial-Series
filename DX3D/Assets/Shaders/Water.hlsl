@@ -113,8 +113,8 @@ float4 _WaterPSMain(VSOutput input) : SV_TARGET
         input.worldPosition.xyz,
         normal.xyz,
         1.0, color.rgb,
-        1.0, directionLightData.color.rgb,
+        0.3, directionLightData.color.rgb,
 		30.0);
-
+    result = ComputeFogColor(fogData, cameraData, input.worldPosition.xyz, result);
     return float4(result, 0.8);
 }

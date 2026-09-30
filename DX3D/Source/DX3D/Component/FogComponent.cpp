@@ -22,34 +22,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-#pragma once
-
-
-#include <DX3D/Game/Component.h>
-
-#include <DX3D/Resource/TextureResource.h>
-#include <DX3D/Resource/MaterialResource.h>
-#include <DX3D/Resource/MeshResource.h>
-#include <DX3D/Resource/ResourceManager.h>
-
-
-#include <DX3D/Component/TransformComponent.h>
-#include <DX3D/Component/CubeComponent.h>
-#include <DX3D/Component/CameraComponent.h>
-#include <DX3D/Component/MeshComponent.h>
-#include <DX3D/Component/DirectionalLightComponent.h>
-#include <DX3D/Component/TerrainComponent.h>
-#include <DX3D/Component/WaterComponent.h>
 #include <DX3D/Component/FogComponent.h>
 
+dx3d::FogComponent::FogComponent(const ComponentDesc& data): Component(data)
+{
+}
 
+dx3d::Vec3 dx3d::FogComponent::getColor() const noexcept
+{
+	return m_color;
+}
 
-#include <DX3D/Game/GameObject.h>
-#include <DX3D/Game/World.h>
+void dx3d::FogComponent::setColor(const Vec3& color) noexcept
+{
+	m_color = color;
+}
 
+dx3d::f32 dx3d::FogComponent::getStartDistance() const noexcept
+{
+	return m_startDistance;
+}
 
+void dx3d::FogComponent::setStartDistance(f32 distance) noexcept
+{
+	m_startDistance = distance;
+}
 
-#include <DX3D/Input/InputSystem.h>
-#include <DX3D/Game/Game.h>
+dx3d::f32 dx3d::FogComponent::getEndDistance() const noexcept
+{
+	return m_endDistance;
+}
 
-
+void dx3d::FogComponent::setEndDistance(f32 distance) noexcept
+{
+	m_endDistance = distance;
+}

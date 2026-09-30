@@ -93,6 +93,11 @@ void MainGame::onCreate()
 		water->getTransform().setPosition({ -1024,25,-1024 });
 	}
 
+	//fog
+	{
+		auto water = world.createGameObject<dx3d::GameObject>();
+		auto comp = water->createOrGetComponent<dx3d::FogComponent>();
+	}
 
 	//white light
 	{

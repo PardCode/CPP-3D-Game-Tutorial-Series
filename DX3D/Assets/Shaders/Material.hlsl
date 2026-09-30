@@ -88,5 +88,7 @@ float4 _PSMain(VSOutput input) : SV_TARGET
         psOut.shininess
     );
 
+    result = ComputeFogColor(fogData, cameraData, input.worldPosition.xyz, result);
+
     return float4(result, 1);
 }

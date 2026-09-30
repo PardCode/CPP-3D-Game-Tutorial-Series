@@ -144,6 +144,7 @@
     <ClCompile Include="DX3D\Source\DX3D\Game\WorldRenderer.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Graphics\ShaderBinary.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Input\InputSystem.cpp" />
+    <ClCompile Include="DX3D\Source\DX3D\Component\FogComponent.cpp" />
     <ClCompile Include="Game\Objects\Player.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Game\GameObject.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Game\World.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="DX3D\Source\DX3D\Game\WorldRenderer.h" />
     <ClInclude Include="DX3D\Source\DX3D\Graphics\ShaderBinary.h" />
     <ClInclude Include="DX3D\Source\DX3D\Graphics\ShaderInclude.h" />
+    <ClInclude Include="DX3D\Include\DX3D\Component\FogComponent.h" />
     <ClInclude Include="Game\Objects\Player.h" />
     <ClInclude Include="DX3D\Include\DX3D\Game\GameObject.h" />
     <ClInclude Include="DX3D\Include\DX3D\Game\World.h" />

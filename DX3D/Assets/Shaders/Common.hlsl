@@ -41,16 +41,29 @@ struct CameraData
 {
     row_major float4x4 view;
     row_major float4x4 proj;
+    
     float3 position;
+    
 };
 
 struct DirectionalLightData
 {
     float3 color;
+    float padding;
+    
     float3 direction;
     float intensity;
 };
 
+struct FogData
+{
+    float3 color;
+    float start;
+    
+    float end;
+    bool enable;
+    float2 padding;
+};
 
 sampler DefaultSampler : register(s0);
 
@@ -68,7 +81,11 @@ cbuffer CameraData : register(b1)
 cbuffer EnvironmentData : register(b2)
 {    
     DirectionalLightData directionLightData;
+    
+    FogData fogData;
+    
     float time;
+    float3 padding;
 };
 
 
@@ -143,4 +160,24 @@ float3 ComputeNormalFromHeightMap(
     );
 
     return normalize(normal);
+}
+
+float3 ComputeFogColor(
+	FogData fog,
+	CameraData camera,
+	float3 worldPosition,
+	float3 sceneColor
+)
+{
+    if (!fog.enable)
+        return sceneColor;
+
+    float3 dir = worldPosition - camera.position.xyz;
+    float dist = length(dir);
+
+    float fogAmount = saturate(
+        (fog.end - dist) / (fog.end - fog.start)
+    );
+
+    return lerp(fog.color.rgb, sceneColor.rgb, fogAmount);
 }

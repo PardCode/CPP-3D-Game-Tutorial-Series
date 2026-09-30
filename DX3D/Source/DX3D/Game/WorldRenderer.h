@@ -56,11 +56,23 @@ namespace dx3d
 			Vec3 direction{};
 			f32 intensity{};
 		};
+		struct alignas(16) FogData
+		{
+			Vec3 color{}; f32 startDistance{};
+
+			f32 endDistance{};
+			i32 enable{false};
+			f32 padding[2]{};
+		};
 		struct alignas(16) EnvironmentData
 		{
 			DirectionalLightData directionalLightData{};
+			FogData fogData{};
 			f32 time{};
+			f32 padding[3]{};
 		};
+
+
 		struct alignas(16) TerrainData
 		{
 			Vec4 size{};

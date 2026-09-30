@@ -23,33 +23,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 #pragma once
-
-
+#include <DX3D/Core/Core.h>
 #include <DX3D/Game/Component.h>
 
-#include <DX3D/Resource/TextureResource.h>
-#include <DX3D/Resource/MaterialResource.h>
-#include <DX3D/Resource/MeshResource.h>
-#include <DX3D/Resource/ResourceManager.h>
+namespace dx3d
+{
+	class FogComponent final : public Component
+	{
+		dx3d_typeid(FogComponent)
+	public:
+		explicit FogComponent(const ComponentDesc& data);
 
+		Vec3 getColor() const noexcept;
+		void setColor(const Vec3& color)  noexcept;
 
-#include <DX3D/Component/TransformComponent.h>
-#include <DX3D/Component/CubeComponent.h>
-#include <DX3D/Component/CameraComponent.h>
-#include <DX3D/Component/MeshComponent.h>
-#include <DX3D/Component/DirectionalLightComponent.h>
-#include <DX3D/Component/TerrainComponent.h>
-#include <DX3D/Component/WaterComponent.h>
-#include <DX3D/Component/FogComponent.h>
+		f32 getStartDistance() const noexcept;
+		void setStartDistance(f32 distance)  noexcept;
 
+		f32 getEndDistance() const noexcept;
+		void setEndDistance(f32 distance)  noexcept;
 
-
-#include <DX3D/Game/GameObject.h>
-#include <DX3D/Game/World.h>
-
-
-
-#include <DX3D/Input/InputSystem.h>
-#include <DX3D/Game/Game.h>
-
+	private:
+		Vec3 m_color{ 0.27f, 0.39f, 0.55f };
+		f32 m_startDistance{ 50.0f };
+		f32 m_endDistance{ 300.0f };
+	};
+}
 

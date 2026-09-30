@@ -40,6 +40,7 @@ SOFTWARE.*/
 #include <DX3D/Component/TerrainComponent.h>
 #include <DX3D/Component/WaterComponent.h>
 #include <DX3D/Component/DirectionalLightComponent.h>
+#include <DX3D/Component/FogComponent.h>
 
 #include <DX3D/Resource/MaterialResource.h>
 #include <DX3D/Resource/TextureResource.h>
@@ -88,24 +89,46 @@ void dx3d::WorldRenderer::render(const World& world, SwapChain& swapChain, f32 d
 
 	m_time += deltaTime;
 
-	EnvironmentData envData{};
-	envData.time = m_time;
-	//directional lights
-	{
-		auto components = world.getComponents<dx3d::DirectionaLightComponent>(numComponents);
-		for (auto i : std::views::iota(0u, numComponents))
-		{
-			auto component = components[i];
-			auto& transform = component->getGameObject().getTransform();
-			auto dir = transform.getRigidWorldMatrix().row(2);
 
-			envData.directionalLightData.intensity = component->getIntensity();
-			envData.directionalLightData.direction = { dir.x,dir.y,dir.z };
-			envData.directionalLightData.color = component->getColor();
-			break;
+	//environment data
+	{
+		EnvironmentData envData{};
+		envData.time = m_time;
+		//directional lights
+		{
+			auto components = world.getComponents<dx3d::DirectionaLightComponent>(numComponents);
+			for (auto i : std::views::iota(0u, numComponents))
+			{
+				auto component = components[i];
+				auto& transform = component->getGameObject().getTransform();
+				auto dir = transform.getRigidWorldMatrix().row(2);
+
+				envData.directionalLightData.intensity = component->getIntensity();
+				envData.directionalLightData.direction = { dir.x,dir.y,dir.z };
+				envData.directionalLightData.color = component->getColor();
+				break;
+			}
 		}
+
+		//fog
+		{
+			auto components = world.getComponents<dx3d::FogComponent>(numComponents);
+			for (auto i : std::views::iota(0u, numComponents))
+			{
+				auto component = components[i];
+
+				envData.fogData.enable = true;
+				envData.fogData.startDistance = component->getStartDistance();
+				envData.fogData.endDistance = component->getEndDistance();
+				envData.fogData.color = component->getColor();
+				break;
+			}
+		}
+
 		context.updateConstantBuffer(envCb, std::as_bytes(std::span{ &envData, 1 }));
 	}
+
+
 
 	//cameras
 	{	
