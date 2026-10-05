@@ -60,6 +60,10 @@ namespace dx3d
 		const IndexBuffer& getIndexBuffer() const noexcept;
 		const GraphicsPipelineState& getGraphicsPipelineState() const noexcept;
 
+
+		f32 getHeightFromWorldPos(const Vec3& worldPos) const noexcept;
+		bool findTerrainHitPosition(const Vec3& pos, const Vec3& dir, f32 distance, f32 minHeight, Vec3& hitPosition) const noexcept;
+
 	private:
 		TerrainMesh generateTerrainMesh();
 	private:

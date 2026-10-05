@@ -61,6 +61,8 @@ namespace dx3d
 	class TransformComponent;
 
 	class WorldRenderer;
+	class WorldPhysicsSystem;
+
 
 	class ResourceManager;
 	class Resource;

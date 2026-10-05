@@ -37,7 +37,7 @@ dx3d::TextureResource::TextureResource(const TextureResourceDesc& desc) : Resour
 	auto textureFileStr = textureFile.string();
 
 	auto width{0}, height{0}, channels{0};
-	auto pixels = stbi_load(
+	m_pixels = stbi_load(
 		textureFileStr.c_str(),
 		&width,
 		&height,
@@ -45,14 +45,41 @@ dx3d::TextureResource::TextureResource(const TextureResourceDesc& desc) : Resour
 		STBI_rgb_alpha // Force RGBA
 	);
 
-	if (!pixels) DX3DLogThrowError("Failed to load texture file {}", textureFileStr.c_str());
-	m_texture = desc.graphicsDevice.createTexture({ {width,height}, pixels });
+	if (!m_pixels) DX3DLogThrowError("Failed to load texture file {}", textureFileStr.c_str());
+	m_texture = desc.graphicsDevice.createTexture({ {width,height}, m_pixels });
 	m_size = { width, height };
+}
+
+dx3d::TextureResource::~TextureResource()
+{
+	if (m_pixels) 
+		stbi_image_free(m_pixels);
+}
+
+dx3d::ui32 dx3d::TextureResource::getBitsPerPixel() const noexcept
+{
+	return 4 * 8;
 }
 
 const dx3d::Texture& dx3d::TextureResource::getTexture() const noexcept
 {
 	return *m_texture;
+}
+
+dx3d::Vec4 dx3d::TextureResource::getPixelFromTexCoord(const Vec2& texcoord) const noexcept
+{
+	if (texcoord.x < 0 || texcoord.y < 0 ||
+		texcoord.x >= m_size.width || texcoord.y >= m_size.height) 
+		return {};
+
+	auto bytesPerPixel = getBitsPerPixel() / 8;
+	auto index = static_cast<ui32>((((m_size.width * bytesPerPixel) * texcoord.y) + texcoord.x * bytesPerPixel));
+	return { 
+		static_cast<f32>(m_pixels[index]),
+		static_cast<f32>(m_pixels[index + 1]),
+		static_cast<f32>(m_pixels[index + 2]),
+		static_cast<f32>(m_pixels[index + 3])
+	};
 }
 
 dx3d::Rect dx3d::TextureResource::getSize() const noexcept

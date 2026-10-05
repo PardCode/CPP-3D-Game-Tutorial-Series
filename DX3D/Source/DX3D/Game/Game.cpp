@@ -31,6 +31,7 @@ SOFTWARE.*/
 #include <DX3D/Game/World.h>
 #include <DX3D/Game/GameObject.h>
 #include <DX3D/Game/WorldRenderer.h>
+#include <DX3D/Game/WorldPhysicsSystem.h>
 #include <DX3D/Resource/ResourceManager.h>
 
 
@@ -49,6 +50,8 @@ dx3d::Game::Game(const GameDesc& desc)
 	m_resourceManager = std::make_unique<ResourceManager>(ResourceManagerDesc{ {*m_logger},context });
 
 	m_world = std::make_unique<World>(WorldDesc{ BaseDesc{*m_logger}, GameContext{*m_inputSystem, *m_resourceManager,*m_graphicsDevice} });
+	m_worldPhysicsSystem = std::make_unique<WorldPhysicsSystem>(WorldPhysicsSystemDesc{ {*m_logger} });
+
 	m_worldRenderer = std::make_unique<WorldRenderer>(WorldRendererDesc{ {*m_logger},*m_graphicsDevice });
 
 	m_inputSystem->setCursorLockArea(m_display->getClientAreaInScreenSpace());
@@ -91,8 +94,8 @@ void dx3d::Game::onInternalUpdate()
 	m_inputSystem->update();
 
 	onUpdate(deltaTime);
-
 	m_world->update(deltaTime);
+	m_worldPhysicsSystem->update(*m_world, deltaTime);
 
 	m_worldRenderer->render(*m_world, m_display->getSwapChain(), deltaTime);
 }

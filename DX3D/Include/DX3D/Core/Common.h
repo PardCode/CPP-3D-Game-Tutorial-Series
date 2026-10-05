@@ -152,6 +152,11 @@ namespace dx3d
 		GraphicsDevice& engine;
 	};
 
+	struct WorldPhysicsSystemDesc
+	{
+		BaseDesc base;
+	};
+
 	enum class KeyCode
 	{
 		Unknown = 0,

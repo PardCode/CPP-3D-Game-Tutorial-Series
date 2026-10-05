@@ -54,7 +54,7 @@ namespace dx3d
 		UniquePtr<Display> m_display{};
 		UniquePtr<ResourceManager> m_resourceManager{};
 		UniquePtr<World> m_world{};	
-		
+		UniquePtr<WorldPhysicsSystem> m_worldPhysicsSystem{};	
 		UniquePtr<WorldRenderer> m_worldRenderer{};
 
 		bool m_isRunning{ true };

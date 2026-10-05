@@ -35,6 +35,7 @@ Player::~Player()
 void Player::onCreate()
 {
 	createOrGetComponent<dx3d::CameraComponent>();
+	m_characterControllerComponent = createOrGetComponent<dx3d::CharacterControllerComponent>();
 }
 
 void Player::onUpdate(dx3d::f32 deltaTime)
@@ -58,10 +59,8 @@ void Player::onUpdate(dx3d::f32 deltaTime)
 	if (getInputSystem().isKeyDown(dx3d::KeyCode::D)) right = 1.0f;
 	if (getInputSystem().isKeyDown(dx3d::KeyCode::A)) right = -1.0f;
 
-
 	auto forwardDir = getTransform().forward() * forward;
 	auto rightDir = getTransform().right() * right;
 	auto direction = dx3d::Vec3::normalize(forwardDir + rightDir);
-	pos = pos + direction * speed * deltaTime;
-	getTransform().setPosition(pos);
+	m_characterControllerComponent->move(direction, speed * deltaTime);
 }

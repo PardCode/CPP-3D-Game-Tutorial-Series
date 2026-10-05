@@ -71,8 +71,6 @@ namespace dx3d
 			f32 time{};
 			f32 padding[3]{};
 		};
-
-
 		struct alignas(16) TerrainData
 		{
 			Vec4 size{};

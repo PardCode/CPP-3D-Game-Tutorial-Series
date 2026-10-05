@@ -106,5 +106,5 @@ float4 _TerrainPSMain(VSOutput input) : SV_TARGET
         0.0
     );
     result = ComputeFogColor(fogData, cameraData, input.worldPosition.xyz, result);
-    return float4(result, alpha);
+    return float4(result, 1);
 }

@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DX3D\Source\DX3D\Component\CharacterControllerComponent.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Component\DirectionalLightComponent.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Component\CameraComponent.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Component\CubeComponent.cpp" />
@@ -174,8 +175,10 @@
     <ClCompile Include="DX3D\Source\DX3D\Component\MeshComponent.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Component\TerrainComponent.cpp" />
     <ClCompile Include="DX3D\Source\DX3D\Component\WaterComponent.cpp" />
+    <ClCompile Include="DX3D\Source\DX3D\Game\WorldPhysicsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DX3D\Include\DX3D\Component\CharacterControllerComponent.h" />
     <ClInclude Include="DX3D\Include\DX3D\Component\DirectionalLightComponent.h" />
     <ClInclude Include="DX3D\Include\DX3D\Component\CameraComponent.h" />
     <ClInclude Include="DX3D\Include\DX3D\Component\CubeComponent.h" />
@@ -227,6 +230,7 @@
     <ClInclude Include="DX3D\Include\DX3D\Component\MeshComponent.h" />
     <ClInclude Include="DX3D\Include\DX3D\Component\TerrainComponent.h" />
     <ClInclude Include="DX3D\Include\DX3D\Component\WaterComponent.h" />
+    <ClInclude Include="DX3D\Source\DX3D\Game\WorldPhysicsSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shadertoolsconfig.json" />

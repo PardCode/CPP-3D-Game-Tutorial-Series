@@ -73,17 +73,24 @@ void MainGame::onCreate()
 		mesh->getTransform().setPosition({ 0, 0, 0 });
 	}
 
-	//terrain
+	//terrains
 	{
 		auto rockyTerrainTex = getResourceManager().createResourceFromFile<dx3d::TextureResource>(L"Game/Assets/Textures/rocky_terrain_02_diff_1k.jpg");
 		auto heightMap = getResourceManager().createResourceFromFile<dx3d::TextureResource>(L"Game/Assets/Textures/Hand_made_terrain_heightmap.png");
 		auto rockyTrailTex = getResourceManager().createResourceFromFile<dx3d::TextureResource>(L"Game/Assets/Textures/rocky_trail_02_diff_1k.jpg");
 
-		auto terrain = world.createGameObject<dx3d::GameObject>();
-		auto comp = terrain->createOrGetComponent<dx3d::TerrainComponent>();
-		comp->setHeightMap(heightMap);	
-		comp->setFlatTexture(rockyTerrainTex);
-		comp->setSlopeTexture(rockyTrailTex);
+		for (auto x = 0; x < 2; x++)
+		{
+			for (auto y = 0; y < 2; y++)
+			{
+				auto terrain = world.createGameObject<dx3d::GameObject>();
+				auto comp = terrain->createOrGetComponent<dx3d::TerrainComponent>();
+				comp->setHeightMap(heightMap);
+				comp->setFlatTexture(rockyTerrainTex);
+				comp->setSlopeTexture(rockyTrailTex);
+				terrain->getTransform().setPosition({ (dx3d::f32)x*512,0,(dx3d::f32)y*512 });
+			}
+		}
 	}
 
 	//sea
@@ -102,7 +109,6 @@ void MainGame::onCreate()
 	//white light
 	{
 		auto light = world.createGameObject<dx3d::GameObject>();
-		m_whiteLight = light;
 		light->createOrGetComponent<dx3d::DirectionaLightComponent>();
 		auto comp = light->createOrGetComponent<dx3d::DirectionaLightComponent>();
 		comp->setColor({ 1,1,1 });
@@ -113,7 +119,7 @@ void MainGame::onCreate()
 	//player
 	{
 		auto player = world.createGameObject<Player>();
-		player->getTransform().setPosition({150, 50, 0 });
+		player->getTransform().setPosition({512, 50, 512 });
 
 		getInputSystem().setCursorLocked(true);
 		getInputSystem().setCursorVisible(false);

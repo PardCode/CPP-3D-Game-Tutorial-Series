@@ -41,6 +41,7 @@ SOFTWARE.*/
 #include <DX3D/Component/TerrainComponent.h>
 #include <DX3D/Component/WaterComponent.h>
 #include <DX3D/Component/FogComponent.h>
+#include <DX3D/Component/CharacterControllerComponent.h>
 
 
 

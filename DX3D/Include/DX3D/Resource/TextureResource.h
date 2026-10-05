@@ -24,6 +24,7 @@ SOFTWARE.*/
 
 #pragma once
 #include <DX3D/Resource/Resource.h>
+#include <DX3D/Math/Vec4.h>
 
 namespace dx3d
 {
@@ -31,11 +32,16 @@ namespace dx3d
 	{
 	public:
 		explicit TextureResource(const TextureResourceDesc& desc);
+		virtual ~TextureResource() override;
+
+		ui32 getBitsPerPixel() const noexcept;
 		const dx3d::Texture& getTexture() const noexcept;
+		Vec4 getPixelFromTexCoord(const Vec2& texcoord) const noexcept;
 		Rect getSize() const noexcept;
 	private:
 		RefPtr<Texture> m_texture{};
 		Rect m_size{};
+		unsigned char* m_pixels{};
 	};
 }
 

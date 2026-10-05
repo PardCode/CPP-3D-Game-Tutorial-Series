@@ -25,6 +25,10 @@ SOFTWARE.*/
 #include <DX3D/Component/TerrainComponent.h>
 #include <DX3D/Graphics/GraphicsDevice.h>
 #include <DX3D/Math/MeshUtils.h>
+#include <DX3D/Resource/TextureResource.h>
+#include <DX3D/Graphics/Texture.h>
+#include <DX3D/Game/GameObject.h>
+#include <DX3D/Component/TransformComponent.h>
 
 #include <fstream>
 #include <filesystem>
@@ -88,6 +92,66 @@ const dx3d::GraphicsPipelineState& dx3d::TerrainComponent::getGraphicsPipelineSt
 {
 	return *m_terrainMesh.pipelineState;
 }
+
+
+dx3d::f32 dx3d::TerrainComponent::getHeightFromWorldPos(const Vec3& worldPos) const noexcept
+{
+	const auto mapSize = m_heightMap->getSize();
+	const auto scaleSize = m_size;
+
+	const auto terrainWorldPos = getGameObject().getTransform().getPosition();
+	const auto scale = Vec2(scaleSize.x / mapSize.width,  scaleSize.z / mapSize.height);
+	const auto heightMapTexCoord = Vec2{
+		(worldPos.x - terrainWorldPos.x) / scale.x,
+		(worldPos.z - terrainWorldPos.z) / scale.y
+	};
+
+	if (heightMapTexCoord.x < 0 || heightMapTexCoord.y < 0)
+		return 0;
+
+	const auto x = static_cast<f32>(static_cast<ui32>(heightMapTexCoord.x)) ;
+	const auto y = static_cast<f32>(static_cast<ui32>(heightMapTexCoord.y)) ;
+
+	const auto deltaX = heightMapTexCoord.x - static_cast<ui32>(heightMapTexCoord.x);
+	const auto deltaY = heightMapTexCoord.y - static_cast<ui32>(heightMapTexCoord.y);
+
+	const auto height0 = m_heightMap->getPixelFromTexCoord({ x, y }).x;
+	const auto height1 = m_heightMap->getPixelFromTexCoord({ x + 1, y }).x;
+
+	const auto height2 = m_heightMap->getPixelFromTexCoord({ x, y + 1 }).x;
+	const auto height3 = m_heightMap->getPixelFromTexCoord({ x + 1, y + 1 }).x;
+
+	const auto heightX1 = MathUtils::lerp(height0, height1, deltaX);
+	const auto heightX2 = MathUtils::lerp(height2, height3, deltaX);
+	const auto height = MathUtils::lerp(heightX1, heightX2, deltaY) / 255.0f;
+
+	return height * scaleSize.y;
+}
+
+
+bool dx3d::TerrainComponent::findTerrainHitPosition(const Vec3& pos, const Vec3& dir, f32 distance, f32 minHeight, Vec3& hitPosition) const noexcept
+{
+	if (distance <= 0.0f) return false;
+	const auto step = distance / 10.0f;
+
+	for (auto dist = 0.0f; dist <= distance; dist += step)
+	{
+		auto p = pos + dir * dist;
+
+		const auto terrainHeight =
+			getHeightFromWorldPos(p) + minHeight;
+
+		if (p.y <= terrainHeight)
+		{
+			hitPosition = { p.x, terrainHeight, p.z };
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
 
 dx3d::TerrainComponent::TerrainMesh dx3d::TerrainComponent::generateTerrainMesh()
 {

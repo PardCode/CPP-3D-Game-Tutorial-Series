@@ -33,9 +33,5 @@ public:
 protected:
 	virtual void onCreate();
 	virtual void onUpdate(dx3d::f32 deltaTime);
-
-private:
-	dx3d::GameObject* m_whiteLight{};
-	dx3d::f32 m_roty = 0;
 };
 
